@@ -1383,7 +1383,7 @@ void merge(int[] arr1, int[] arr2) {
 }
 ```
 
-**Time Complexity:** O((m+n) log(m+n)) — Logarithmic number of gap reductions, each pass O(m+n)
+**Time Complexity:** O((m+n) log(m+n)) — Logarithmic number of gap reductions, each pass O(m+n)
 **Space Complexity:** O(1) — In-place swap; no extra buffer.
 
 ---
@@ -2002,3 +2002,44 @@ int kthSmallest(int[][] matrix, int k) {
 
 **Time Complexity:** O(k log n)
 **Space Complexity:** O(n)
+**Java (binary search approach):**
+
+```java
+int kthSmallest(int[][] matrix, int k) {
+    int n = matrix.length;
+    int low = matrix[0][0];
+    int high = matrix[n-1][n-1];
+    
+    while (low < high) {
+        int mid = low + (high - low) / 2;
+        int count = countLessOrEqual(matrix, mid);
+        
+        if (count < k) {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+    return low;
+}
+
+private int countLessOrEqual(int[][] matrix, int target) {
+    int n = matrix.length;
+    int row = n - 1;
+    int col = 0;
+    int count = 0;
+    
+    // Start from bottom-left corner
+    while (row >= 0 && col < n) {
+        if (matrix[row][col] <= target) {
+            count += row + 1;  // All elements in this column up to row
+            col++;
+        } else {
+            row--;
+        }
+    }
+    return count;
+}
+```
+**Time Complexity:** O(n log(Max-Min)) - The while loop runs log(Range) times. The countLessOrEqual runs in O(N) per iteration.
+**Space Complexity:** O(1)
