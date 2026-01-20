@@ -10,8 +10,8 @@
 # Part 1: Heap Fundamentals
 
 ## Introduction to Heap & Priority Queue
-**Question:** What is a Heap? What is Priority Queue?  
-**Intuition:** **Heap** is a **complete binary tree** that satisfies the heap property! **Max Heap**: parent â‰¥ children (root = maximum). **Min Heap**: parent â‰¤ children (root = minimum). **Priority Queue** is an **abstract data type** (ADT) where elements have priorities - higher priority served first. **Heap is the most common implementation** of Priority Queue!  
+**Question:** What is a Heap? What is Priority Queue?
+**Intuition:** **Heap** is a **complete binary tree** that satisfies the heap property! **Max Heap**: parent >= children (root = maximum). **Min Heap**: parent <= children (root = minimum). **Priority Queue** is an **abstract data type** (ADT) where elements have priorities - higher priority served first. **Heap is the most common implementation** of Priority Queue!
 
 **Real-World Use Cases:**
 - **Operating Systems** - CPU scheduling, task prioritization
@@ -28,9 +28,9 @@
 2. **Heap Property** - Parent-child relationship maintained
 3. **Array Representation** - Efficient storage without pointers!
 4. **Parent-Child Formulas** (0-indexed):
-   - Parent of i: `(i-1)/2`
-   - Left child of i: `2*i + 1`
-   - Right child of i: `2*i + 2`
+ - Parent of i: `(i-1)/2`
+ - Left child of i: `2*i + 1`
+ - Right child of i: `2*i + 2`
 
 **Why Heap Over BST for Priority Queue?**
 - Heap: O(1) peek, O(log n) insert/delete
@@ -39,6 +39,7 @@
 - Heap has **better cache locality**
 
 **Java PriorityQueue:**
+
 ```java
 // Min Heap (default)
 PriorityQueue<Integer> minHeap = new PriorityQueue<>();
@@ -50,20 +51,21 @@ PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
 
 // Custom comparator
 PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
-    if (a[0] != b[0]) return a[0] - b[0]; // Compare first element
-    return a[1] - b[1]; // Tie-breaker: compare second
+ if (a[0] != b[0]) return a[0] - b[0]; // Compare first element
+ return a[1] - b[1]; // Tie-breaker: compare second
 });
 
 // Common operations
-pq.offer(element);      // Insert - O(log n)
-pq.peek();              // Get min/max - O(1)
-pq.poll();              // Remove min/max - O(log n)
-pq.size();              // Size - O(1)
-pq.isEmpty();           // Check empty - O(1)
-pq.contains(element);   // Check existence - O(n)
+pq.offer(element); // Insert - O(log n)
+pq.peek(); // Get min/max - O(1)
+pq.poll(); // Remove min/max - O(log n)
+pq.size(); // Size - O(1)
+pq.isEmpty(); // Check empty - O(1)
+pq.contains(element); // Check existence - O(n)
 ```
 
 **Heap Implementation (for understanding):**
+
 ```java
 class MinHeap {
     int[] heap;
@@ -176,19 +178,20 @@ class MinHeap {
 - "Find minimum/maximum repeatedly"
 
 ðŸŽ¯ **When NOT to use Heap:**
-- Need full sorted order â†’ Use sorting
-- Need fast search â†’ Use HashMap/TreeMap
-- Range queries â†’ Use Segment Tree
+- Need full sorted order -> Use sorting
+- Need fast search -> Use HashMap/TreeMap
+- Range queries -> Use Segment Tree
 
 ---
 
 # Part 2: K-Pattern Problems
 
 ## Problem 1: Kth Smallest Element
-**Question:** Find Kth smallest element in unsorted array.  
-**Intuition:** **Core Heap Pattern!** Use **Max Heap of size K**. Why max heap? Keep K smallest elements. If new element smaller than heap top (largest among K smallest), replace! At end, heap top = Kth smallest.  
-**Logic:** Maintain max heap of size K. For each element: if heap size < K, add. Else if element < heap.peek(), remove top and add element.  
+**Question:** Find Kth smallest element in unsorted array.
+**Intuition:** **Core Heap Pattern!** Use **Max Heap of size K**. Why max heap? Keep K smallest elements. If new element smaller than heap top (largest among K smallest), replace! At end, heap top = Kth smallest.
+**Logic:** Maintain max heap of size K. For each element: if heap size < K, add. Else if element < heap.peek(), remove top and add element.
 **Java:**
+
 ```java
 int kthSmallest(int[] arr, int k) {
     // Max heap of size k
@@ -210,24 +213,26 @@ int kthSmallest(int[] arr, int k) {
 ```
 
 **Example:**
+
 ```
 Array: [7, 10, 4, 3, 20, 15], k = 3
 Step by step with max heap of size 3:
 - Add 7: [7]
 - Add 10: [10, 7]
 - Add 4: [10, 7, 4]
-- Add 3: [10, 7, 4] â†’ 3 < 10 â†’ [7, 4, 3]
-- Add 20: [7, 4, 3] â†’ 20 > 7 â†’ skip
-- Add 15: [7, 4, 3] â†’ 15 > 7 â†’ skip
+- Add 3: [10, 7, 4] -> 3 < 10 -> [7, 4, 3]
+- Add 20: [7, 4, 3] -> 20 > 7 -> skip
+- Add 15: [7, 4, 3] -> 15 > 7 -> skip
 Answer: 7 (3rd smallest)
 ```
 
 ---
 
 ## Problem 2: Kth Largest Element
-**Question:** Find Kth largest element.  
-**Intuition:** **Opposite of Kth smallest!** Use **Min Heap of size K**. Keep K largest elements. If new element larger than heap top (smallest among K largest), replace!  
+**Question:** Find Kth largest element.
+**Intuition:** **Opposite of Kth smallest!** Use **Min Heap of size K**. Keep K largest elements. If new element larger than heap top (smallest among K largest), replace!
 **Java:**
+
 ```java
 int kthLargest(int[] arr, int k) {
     // Min heap of size k
@@ -248,9 +253,10 @@ int kthLargest(int[] arr, int k) {
 ---
 
 ## Problem 3: K Largest Elements (Return All)
-**Question:** Return K largest elements (in any order).  
-**Intuition:** Same as Kth largest but return entire heap!  
+**Question:** Return K largest elements (in any order).
+**Intuition:** Same as Kth largest but return entire heap!
 **Java:**
+
 ```java
 List<Integer> kLargest(int[] arr, int k) {
     PriorityQueue<Integer> minHeap = new PriorityQueue<>();
@@ -269,8 +275,9 @@ List<Integer> kLargest(int[] arr, int k) {
 ---
 
 ## Problem 4: K Smallest Elements (Return All)
-**Question:** Return K smallest elements.  
+**Question:** Return K smallest elements.
 **Java:**
+
 ```java
 List<Integer> kSmallest(int[] arr, int k) {
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
@@ -289,14 +296,15 @@ List<Integer> kSmallest(int[] arr, int k) {
 ---
 
 ## Problem 5: K Closest Numbers to X
-**Question:** Given sorted array and target X, find K closest numbers.  
-**Intuition:** "Closest" means minimum absolute difference! Use **Max Heap** storing pairs (difference, number). Keep K closest = smallest differences.  
+**Question:** Given sorted array and target X, find K closest numbers.
+**Intuition:** "Closest" means minimum absolute difference! Use **Max Heap** storing pairs (difference, number). Keep K closest = smallest differences.
 **Java:**
+
 ```java
 List<Integer> kClosest(int[] arr, int k, int x) {
     // Max heap based on distance from x
     PriorityQueue<int[]> maxHeap = new PriorityQueue<>(
-        (a, b) -> b[0] - a[0] // Compare by distance
+            (a, b) -> b[0] - a[0] // Compare by distance
     );
 
     for (int num : arr) {
@@ -318,24 +326,26 @@ List<Integer> kClosest(int[] arr, int k, int x) {
 ```
 
 **Example:**
+
 ```
 arr = [5, 6, 7, 8, 9], k = 3, x = 7
 Distances: [2, 1, 0, 1, 2]
 Max heap of size 3 (store 3 smallest distances):
-After processing: distances [0, 1, 1] â†’ numbers [7, 6, 8]
+After processing: distances [0, 1, 1] -> numbers [7, 6, 8]
 ```
 
 ---
 
 ## Problem 6: K Closest Points to Origin
-**Question:** Find K closest points to origin (0, 0).  
-**Intuition:** Distance = âˆš(xÂ² + yÂ²). Can skip sqrt since relative ordering same! Use **Max Heap** on squared distances.  
+**Question:** Find K closest points to origin (0, 0).
+**Intuition:** Distance = ˆš(x² + y²). Can skip sqrt since relative ordering same! Use **Max Heap** on squared distances.
 **Java:**
+
 ```java
 int[][] kClosest(int[][] points, int k) {
     // Max heap based on distance squared
     PriorityQueue<int[]> maxHeap = new PriorityQueue<>(
-        (a, b) -> (b[0]*b[0] + b[1]*b[1]) - (a[0]*a[0] + a[1]*a[1])
+            (a, b) -> (b[0] * b[0] + b[1] * b[1]) - (a[0] * a[0] + a[1] * a[1])
     );
 
     for (int[] point : points) {
@@ -360,9 +370,10 @@ int[][] kClosest(int[][] points, int k) {
 ---
 
 ## Problem 7: Sort K-Sorted (Nearly Sorted) Array
-**Question:** Array where each element is at most K positions away from target position. Sort it efficiently.  
-**Intuition:** Element at index i can only be in range [i-k, i+k]! Use **Min Heap of size K+1**. First K+1 elements â†’ heap min must be at position 0! Continue sliding window.  
+**Question:** Array where each element is at most K positions away from target position. Sort it efficiently.
+**Intuition:** Element at index i can only be in range [i-k, i+k]! Use **Min Heap of size K+1**. First K+1 elements -> heap min must be at position 0! Continue sliding window.
 **Java:**
+
 ```java
 int[] sortKSorted(int[] arr, int k) {
     int n = arr.length;
@@ -394,14 +405,15 @@ int[] sortKSorted(int[] arr, int k) {
 ```
 
 **Example:**
+
 ```
 arr = [6, 5, 3, 2, 8, 10, 9], k = 3
 Each element at most 3 positions away from sorted position.
 Sorted: [2, 3, 5, 6, 8, 9, 10]
 
 Heap of size k+1 = 4:
-[6, 5, 3, 2] â†’ min = 2 â†’ output 2, add 8
-[6, 5, 3, 8] â†’ min = 3 â†’ output 3, add 10
+[6, 5, 3, 2] -> min = 2 -> output 2, add 8
+[6, 5, 3, 8] -> min = 3 -> output 3, add 10
 ... continues
 ```
 
@@ -410,9 +422,10 @@ Heap of size k+1 = 4:
 # Part 3: Frequency-Based Problems
 
 ## Problem 8: Top K Frequent Elements
-**Question:** Given array, return K most frequent elements.  
-**Intuition:** **Two-step approach**: (1) Count frequencies using HashMap, (2) Use **Min Heap of size K** on frequencies! Min heap because we keep K largest frequencies.  
+**Question:** Given array, return K most frequent elements.
+**Intuition:** **Two-step approach**: (1) Count frequencies using HashMap, (2) Use **Min Heap of size K** on frequencies! Min heap because we keep K largest frequencies.
 **Java:**
+
 ```java
 int[] topKFrequent(int[] nums, int k) {
     // Step 1: Count frequencies
@@ -423,7 +436,7 @@ int[] topKFrequent(int[] nums, int k) {
 
     // Step 2: Min heap of size k based on frequency
     PriorityQueue<Integer> minHeap = new PriorityQueue<>(
-        (a, b) -> freqMap.get(a) - freqMap.get(b)
+            (a, b) -> freqMap.get(a) - freqMap.get(b)
     );
 
     for (int num : freqMap.keySet()) {
@@ -449,9 +462,10 @@ int[] topKFrequent(int[] nums, int k) {
 ---
 
 ## Problem 9: Sort Array by Frequency
-**Question:** Sort array by frequency (most frequent first). If tie, smaller number first.  
-**Intuition:** Build frequency map, then use **Max Heap** with custom comparator!  
+**Question:** Sort array by frequency (most frequent first). If tie, smaller number first.
+**Intuition:** Build frequency map, then use **Max Heap** with custom comparator!
 **Java:**
+
 ```java
 int[] sortByFrequency(int[] arr) {
     Map<Integer, Integer> freqMap = new HashMap<>();
@@ -459,7 +473,7 @@ int[] sortByFrequency(int[] arr) {
         freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
     }
 
-    // Max heap: higher frequency first, tie â†’ smaller number first
+    // Max heap: higher frequency first, tie -> smaller number first
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> {
         int freqCompare = freqMap.get(b) - freqMap.get(a);
         if (freqCompare != 0) return freqCompare;
@@ -486,9 +500,10 @@ int[] sortByFrequency(int[] arr) {
 ---
 
 ## Problem 10: Frequency Sort (String)
-**Question:** Sort characters in string by frequency.  
-**Intuition:** Same pattern as array frequency sort!  
+**Question:** Sort characters in string by frequency.
+**Intuition:** Same pattern as array frequency sort!
 **Java:**
+
 ```java
 String frequencySort(String s) {
     Map<Character, Integer> freqMap = new HashMap<>();
@@ -497,7 +512,7 @@ String frequencySort(String s) {
     }
 
     PriorityQueue<Character> maxHeap = new PriorityQueue<>(
-        (a, b) -> freqMap.get(b) - freqMap.get(a)
+            (a, b) -> freqMap.get(b) - freqMap.get(a)
     );
 
     maxHeap.addAll(freqMap.keySet());
@@ -518,9 +533,10 @@ String frequencySort(String s) {
 ---
 
 ## Problem 11: K Most Frequent Words
-**Question:** Return K most frequent words. If tie, lexicographically smaller comes first.  
-**Intuition:** Frequency + lexicographic ordering! Careful with comparator!  
+**Question:** Return K most frequent words. If tie, lexicographically smaller comes first.
+**Intuition:** Frequency + lexicographic ordering! Careful with comparator!
 **Java:**
+
 ```java
 List<String> topKFrequent(String[] words, int k) {
     Map<String, Integer> freqMap = new HashMap<>();
@@ -528,7 +544,7 @@ List<String> topKFrequent(String[] words, int k) {
         freqMap.put(word, freqMap.getOrDefault(word, 0) + 1);
     }
 
-    // Min heap: lower frequency first, tie â†’ lexicographically larger first
+    // Min heap: lower frequency first, tie -> lexicographically larger first
     // (opposite of final order for min heap of size k)
     PriorityQueue<String> minHeap = new PriorityQueue<>((a, b) -> {
         int freqCompare = freqMap.get(a) - freqMap.get(b);
@@ -558,13 +574,13 @@ List<String> topKFrequent(String[] words, int k) {
 
 ## Pattern 1: Two Heaps (Median Finding)
 
-### Problem 12: Find Median from Data Stream â­â­â­
-**Question:** Design data structure that supports addNum(num) and findMedian() operations.  
-**Intuition:** **Two heaps trick!** **Max heap** for smaller half, **Min heap** for larger half. Keep heaps balanced (size difference â‰¤ 1). Median = heap tops!  
+### Problem 12: Find Median from Data Stream 
+**Question:** Design data structure that supports addNum(num) and findMedian() operations.
+**Intuition:** **Two heaps trick!** **Max heap** for smaller half, **Min heap** for larger half. Keep heaps balanced (size difference <= 1). Median = heap tops!
 
 **Why Two Heaps?**
-- Max heap stores smaller half â†’ top = largest of small half
-- Min heap stores larger half â†’ top = smallest of large half
+- Max heap stores smaller half -> top = largest of small half
+- Min heap stores larger half -> top = smallest of large half
 - Median is between these two tops!
 
 **Balanced Heaps:**
@@ -572,6 +588,7 @@ List<String> topKFrequent(String[] words, int k) {
 - If total odd: median = top of larger heap
 
 **Java:**
+
 ```java
 class MedianFinder {
     PriorityQueue<Integer> maxHeap; // Smaller half
@@ -608,26 +625,28 @@ class MedianFinder {
 ```
 
 **Example:**
+
 ```
 Add 1: maxHeap=[1], minHeap=[]
-       Median = 1
+ Median = 1
 
 Add 2: maxHeap=[1], minHeap=[2]
-       Median = (1+2)/2 = 1.5
+ Median = (1+2)/2 = 1.5
 
 Add 3: maxHeap=[2,1], minHeap=[3]
-       Median = 2
+ Median = 2
 
 Add 4: maxHeap=[2,1], minHeap=[3,4]
-       Median = (2+3)/2 = 2.5
+ Median = (2+3)/2 = 2.5
 ```
 
 ---
 
-### Problem 13: Sliding Window Median â­â­
-**Question:** Find median in sliding window of size k.  
-**Intuition:** Extend two heaps pattern! But need to handle removal (lazy deletion using HashMap to track removed elements).  
+### Problem 13: Sliding Window Median 
+**Question:** Find median in sliding window of size k.
+**Intuition:** Extend two heaps pattern! But need to handle removal (lazy deletion using HashMap to track removed elements).
 **Java:**
+
 ```java
 double[] medianSlidingWindow(int[] nums, int k) {
     int n = nums.length;
@@ -649,9 +668,9 @@ double[] medianSlidingWindow(int[] nums, int k) {
 
     for (int i = k; i <= n; i++) {
         // Calculate median
-        result[i - k] = (k % 2 == 1) ? 
-            maxHeap.peek() : 
-            ((long)maxHeap.peek() + minHeap.peek()) / 2.0;
+        result[i - k] = (k % 2 == 1) ?
+                maxHeap.peek() :
+                ((long) maxHeap.peek() + minHeap.peek()) / 2.0;
 
         if (i == n) break;
 
@@ -698,20 +717,21 @@ double[] medianSlidingWindow(int[] nums, int k) {
 
 ## Pattern 2: Merge K Sorted
 
-### Problem 14: Merge K Sorted Lists â­â­â­
-**Question:** Merge K sorted linked lists into one sorted list.  
-**Intuition:** Use **Min Heap** to track smallest element among K lists! Always pick minimum of K current heads. Each list contributes O(log K) per element.  
+### Problem 14: Merge K Sorted Lists 
+**Question:** Merge K sorted linked lists into one sorted list.
+**Intuition:** Use **Min Heap** to track smallest element among K lists! Always pick minimum of K current heads. Each list contributes O(log K) per element.
 **Java:**
+
 ```java
 class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int val) { this.val = val; }
+ int val;
+ ListNode next;
+ ListNode(int val) { this.val = val; }
 }
 
 ListNode mergeKLists(ListNode[] lists) {
     PriorityQueue<ListNode> minHeap = new PriorityQueue<>(
-        (a, b) -> a.val - b.val
+            (a, b) -> a.val - b.val
     );
 
     // Add first node of each list
@@ -743,16 +763,17 @@ ListNode mergeKLists(ListNode[] lists) {
 ---
 
 ### Problem 15: Merge K Sorted Arrays
-**Question:** Merge K sorted arrays into one.  
-**Intuition:** Same as K lists but track (value, arrayIndex, elementIndex) in heap!  
+**Question:** Merge K sorted arrays into one.
+**Intuition:** Same as K lists but track (value, arrayIndex, elementIndex) in heap!
 **Java:**
+
 ```java
 List<Integer> mergeKArrays(int[][] arrays) {
     List<Integer> result = new ArrayList<>();
 
     // Min heap: (value, arrayIdx, elementIdx)
     PriorityQueue<int[]> minHeap = new PriorityQueue<>(
-        (a, b) -> a[0] - b[0]
+            (a, b) -> a[0] - b[0]
     );
 
     // Add first element of each array
@@ -773,9 +794,9 @@ List<Integer> mergeKArrays(int[][] arrays) {
         // Add next element from same array
         if (elemIdx + 1 < arrays[arrIdx].length) {
             minHeap.offer(new int[]{
-                arrays[arrIdx][elemIdx + 1],
-                arrIdx,
-                elemIdx + 1
+                    arrays[arrIdx][elemIdx + 1],
+                    arrIdx,
+                    elemIdx + 1
             });
         }
     }
@@ -789,9 +810,10 @@ List<Integer> mergeKArrays(int[][] arrays) {
 ## Pattern 3: Interval Problems
 
 ### Problem 16: Meeting Rooms II (Minimum Rooms Required)
-**Question:** Given meeting intervals, find minimum rooms needed.  
-**Intuition:** Use **Min Heap** to track end times of ongoing meetings! Sort meetings by start time. For each meeting, check if earliest ending meeting finished (heap top). If yes, reuse room. Else, need new room.  
+**Question:** Given meeting intervals, find minimum rooms needed.
+**Intuition:** Use **Min Heap** to track end times of ongoing meetings! Sort meetings by start time. For each meeting, check if earliest ending meeting finished (heap top). If yes, reuse room. Else, need new room.
 **Java:**
+
 ```java
 int minMeetingRooms(int[][] intervals) {
     if (intervals.length == 0) return 0;
@@ -819,14 +841,15 @@ int minMeetingRooms(int[][] intervals) {
 ```
 
 **Example:**
+
 ```
 Meetings: [[0,30], [5,10], [15,20]]
 Sorted: [[0,30], [5,10], [15,20]]
 
 heap = []
 - [0,30]: heap = [30], rooms = 1
-- [5,10]: 5 < 30 â†’ need new room, heap = [10, 30], rooms = 2
-- [15,20]: 15 >= 10 â†’ reuse, heap = [20, 30], rooms = 2
+- [5,10]: 5 < 30 -> need new room, heap = [10, 30], rooms = 2
+- [15,20]: 15 >= 10 -> reuse, heap = [20, 30], rooms = 2
 
 Answer: 2 rooms
 ```
@@ -834,16 +857,17 @@ Answer: 2 rooms
 ---
 
 ### Problem 17: Employee Free Time
-**Question:** Given schedules of employees (list of intervals), find common free time.  
-**Intuition:** Merge all intervals, find gaps! Use heap to process intervals from all employees in sorted order.  
+**Question:** Given schedules of employees (list of intervals), find common free time.
+**Intuition:** Merge all intervals, find gaps! Use heap to process intervals from all employees in sorted order.
 **Java:**
+
 ```java
 class Interval {
-    int start, end;
-    Interval(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
+ int start, end;
+ Interval(int start, int end) {
+ this.start = start;
+ this.end = end;
+ }
 }
 
 List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
@@ -851,7 +875,7 @@ List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
 
     // Min heap: (start, end, employeeIdx, intervalIdx)
     PriorityQueue<int[]> minHeap = new PriorityQueue<>(
-        (a, b) -> a[0] - b[0]
+            (a, b) -> a[0] - b[0]
     );
 
     // Add first interval of each employee
@@ -894,9 +918,10 @@ List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
 ## Pattern 4: Advanced Problems
 
 ### Problem 18: Kth Largest Element in Stream
-**Question:** Design class that supports add() and getKthLargest().  
-**Intuition:** Maintain **Min Heap of size K** with K largest elements. Top = Kth largest!  
+**Question:** Design class that supports add() and getKthLargest().
+**Intuition:** Maintain **Min Heap of size K** with K largest elements. Top = Kth largest!
 **Java:**
+
 ```java
 class KthLargest {
     PriorityQueue<Integer> minHeap;
@@ -926,9 +951,10 @@ class KthLargest {
 ---
 
 ### Problem 19: Reorganize String (No Adjacent Same)
-**Question:** Rearrange string so no two adjacent chars are same. Return "" if impossible.  
-**Intuition:** **Greedy with Max Heap!** Always pick most frequent char (not same as previous). If can't pick different, impossible!  
+**Question:** Rearrange string so no two adjacent chars are same. Return "" if impossible.
+**Intuition:** **Greedy with Max Heap!** Always pick most frequent char (not same as previous). If can't pick different, impossible!
 **Java:**
+
 ```java
 String reorganizeString(String s) {
     Map<Character, Integer> freqMap = new HashMap<>();
@@ -938,7 +964,7 @@ String reorganizeString(String s) {
 
     // Max heap by frequency
     PriorityQueue<Character> maxHeap = new PriorityQueue<>(
-        (a, b) -> freqMap.get(b) - freqMap.get(a)
+            (a, b) -> freqMap.get(b) - freqMap.get(a)
     );
     maxHeap.addAll(freqMap.keySet());
 
@@ -964,9 +990,10 @@ String reorganizeString(String s) {
 ---
 
 ### Problem 20: Task Scheduler
-**Question:** Given tasks and cooldown period n, find minimum time to complete all tasks.  
-**Intuition:** **Greedy scheduling!** Always execute most frequent task. Use heap + cooling tracking!  
+**Question:** Given tasks and cooldown period n, find minimum time to complete all tasks.
+**Intuition:** **Greedy scheduling!** Always execute most frequent task. Use heap + cooling tracking!
 **Java:**
+
 ```java
 int leastInterval(char[] tasks, int n) {
     int[] freq = new int[26];
@@ -1009,9 +1036,9 @@ int leastInterval(char[] tasks, int n) {
 
 ### ðŸŽ¯ **Pattern 1: K-Problems**
 **Use Min/Max Heap of size K**
-- Kth Largest â†’ Min Heap
-- Kth Smallest â†’ Max Heap
-- Top K â†’ Opposite heap
+- Kth Largest -> Min Heap
+- Kth Smallest -> Max Heap
+- Top K -> Opposite heap
 - Keywords: "K largest", "K smallest", "Top K"
 
 ### ðŸŽ¯ **Pattern 2: Frequency Problems**
@@ -1055,20 +1082,21 @@ int leastInterval(char[] tasks, int n) {
 | **Build** | O(n) | O(n log n) | O(n log n) |
 
 **When Heap Wins:**
-- âœ… Repeated min/max extractions
-- âœ… Priority-based processing
-- âœ… K-problems with K << n
-- âœ… Streaming data
+- œ... Repeated min/max extractions
+- œ... Priority-based processing
+- œ... K-problems with K << n
+- œ... Streaming data
 
 ---
 
 ## Common Mistakes
 
-âŒ **Wrong Heap Type:**
-- Kth largest â†’ Use MIN heap!
-- Kth smallest â†’ Use MAX heap!
+Œ **Wrong Heap Type:**
+- Kth largest -> Use MIN heap!
+- Kth smallest -> Use MAX heap!
 
-âŒ **Comparator Errors:**
+Œ **Comparator Errors:**
+
 ```java
 // WRONG for max heap
 new PriorityQueue<>((a, b) -> a - b);
@@ -1079,13 +1107,13 @@ new PriorityQueue<>((a, b) -> b - a);
 new PriorityQueue<>(Collections.reverseOrder());
 ```
 
-âŒ **Size Management:**
+Œ **Size Management:**
 - Forgetting to check `heap.size() > k`
 - Not maintaining heap size
 
-âŒ **Tie Breaking:**
+Œ **Tie Breaking:**
 - Forgetting secondary sort criteria
-- Example: frequency same â†’ lexicographic order
+- Example: frequency same -> lexicographic order
 
 ---
 
@@ -1096,7 +1124,7 @@ new PriorityQueue<>(Collections.reverseOrder());
 | Insert | O(log n) |
 | Delete min/max | O(log n) |
 | Peek | O(1) |
-| Build heap | O(n) â­ |
+| Build heap | O(n)  |
 | Heapify | O(log n) |
 | Search | O(n) |
 

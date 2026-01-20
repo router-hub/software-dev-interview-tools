@@ -1,7 +1,170 @@
+# Dynamic Programming - Time & Space Complexity Interview Guide
+
+## 🎯 How to Analyze DP Complexity
+
+### **The DP Complexity Formula**
+
+```
+Time = (Number of States) × (Time per State)
+Space = (Number of States) + (Recursion Depth for memoization)
+```
+
+### **Step-by-Step Analysis for ANY DP Problem:**
+
+1. **Identify all DP state variables** (usually indices, remaining capacity, last action, etc.)
+2. **Calculate total number of unique states** (multiply ranges of all state variables)
+3. **Determine work done per state** (transitions, loops inside state computation)
+4. **Time Complexity** = States × Work_per_state
+5. **Space Complexity** = DP table size (or recursion stack + cache)
+
+---
+
+## 📊 Common DP Complexity Patterns
+
+| DP Pattern              | States | Work/State | Time       | Space           | Example                        |
+| ----------------------- | ------ | ---------- | ---------- | --------------- | ------------------------------ |
+| **1D DP**               | n      | O(1)       | O(n)       | O(n) → O(1)     | Fibonacci, Climbing Stairs     |
+| **1D with K choices**   | n      | O(k)       | O(n×k)     | O(n)            | Frog Jump with K distance      |
+| **2D DP (Grid)**        | m×n    | O(1)       | O(m×n)     | O(m×n) → O(n)   | Unique Paths, Min Path Sum     |
+| **2D DP (Subsequence)** | n×k    | O(1)       | O(n×k)     | O(n×k) → O(k)   | Subset Sum, 0/1 Knapsack       |
+| **2D String DP**        | m×n    | O(1)       | O(m×n)     | O(m×n) → O(n)   | LCS, Edit Distance             |
+| **3D DP**               | n×m×m  | O(k)       | O(n×m²×k)  | O(n×m²) → O(m²) | Cherry Pickup (2 robots)       |
+| **LIS Binary Search**   | n      | O(log n)   | O(n log n) | O(n)            | Longest Increasing Subsequence |
+| **MCM (Partition DP)**  | n²     | O(n)       | O(n³)      | O(n²)           | Matrix Chain Multiplication    |
+| **DP on Trees**         | n      | O(degree)  | O(n)       | O(n)            | Tree DP                        |
+
+---
+
+## 🧮 Memoization vs Tabulation Complexity
+
+### **Memoization (Top-Down)**
+- **Time:** O(Number of unique states × Work per state)
+- **Space:** O(Number of states) for DP array + **O(Recursion depth)** for call stack
+- **Call stack depth:** Usually O(n) or O(m+n) for strings
+
+**Example: Fibonacci Memoization**
+- States: n+1 (fib(0) to fib(n))
+- Time: O(n) - each computed once
+- Space: O(n) for dp[] + O(n) for stack = **O(n)**
+
+### **Tabulation (Bottom-Up)**
+- **Time:** O(Number of states × Work per state)
+- **Space:** O(Number of states) only - ** NO recursion stack**
+- **Iterative**, so stack space saved
+
+**Example: Fibonacci Tabulation**
+- States: n+1
+- Time: O(n)
+- Space: O(n) for dp[] = **O(n)** (better than memoization!)
+
+### **Space Optimization**
+- When current state depends ONLY on previous few states
+- Replace full DP table with variables
+- **Most common:** 2D(m×n) → 1D(n), or 1D(n) → constant O(1)
+
+**Example: Fibonacci Space Optimized**
+- Only need prev2 and prev1
+- Space: **O(1)** !
+
+---
+
+## 💡 Interview Tips - DP Complexity Discussion
+
+### **When Analyzing Time Complexity:**
+
+✅ **SAY THIS:**
+- *"We have n states for the index, and k states for the sum/capacity"*
+- *"Total states = n × k, so O(n×k) states"*
+- *"At each state, we do O(1) work (just taking max of 2 values)"*
+- *"Total time = O(n×k × 1) = O(n×k)"*
+- *"Memoization ensures each state is computed exactly once"*
+
+❌ **DON'T SAY:**
+- *"It's O(n²) I think"* (without explaining why)
+- *"DP is always O(n²)"* (completely wrong!)
+
+### **When Discussing Space Optimization:**
+
+✅ **SAY THIS:**
+- *"The 2D DP table is O(n × k), but we can optimize to O(k)"*
+- *"Current row only depends on previous row, so we use two 1D arrays"*
+- *"For memoization, total space = O(states) + O(recursion depth)"*
+- *"We can reduce from O(n) to O(1) by keeping only last two values"*
+
+### **When Explaining State Space:**
+
+✅ **SAY THIS:**
+- *"State is defined by (index, remaining_capacity)"*
+- *"Index ranges from 0 to n-1, capacity from 0 to W"*
+- *"Total unique states = n × (W+1) = O(n × W)"*
+- *"Each state represents a unique subproblem"*
+
+---
+
+## 🔥 Common Interview Questions on DP Complexity
+
+### **Q1: Why is 0/1 Knapsack O(n×W) and not exponential?**
+**A:** *"Without DP, we'd have 2^n exponential time (pick/not-pick for each item). DP reduces this by storing results. We have n items and W+1 capacity values, giving n×W unique states. Each state computed once in O(1), so total O(n×W). This is **pseudo-polynomial** because it depends on the value W, not just input size."*
+
+### **Q2: What's the difference between O(n²) and O(n×W)?**
+**A:** *"O(n²) means polynomial in n only - grows as n increases. O(n×W) is pseudo-polynomial because W is a value, not array length. If W = 10^9, the DP would be impractical even for small n. That's why knapsack is NP-complete - complexity depends on value magnitude."*
+
+### **Q3: How do you space-optimize 2D DP to 1D?**
+**A:** *"Check dependencies. If dp[i][j] only needs values from row i-1 (previous row), we can use just two 1D arrays: prev[] and curr[]. After processing each row, copy curr to prev. This reduces O(m×n) to O(n) space. For problems needing only dp[i-1][j] and dp[i][j-1], one array suffices with careful iteration order."*
+
+### **Q4: When can we space-optimize to O(1)?**
+**A:** *"When the current state depends only on a constant number of previous states. Example: Fibonacci needs only 2 previous values (fib(n-1) and fib(n-2)), so we use two variables instead of an array. House Robber also optimizes from O(n) to O(1) this way."*
+
+### **Q5: Why is LCS O(m×n) time?**
+**A:** *"LCS has two string indices as state variables: i for string1 (0 to m) and j for string2 (0 to n). Total states = (m+1) × (n+1) ≈ O(m×n). At each state, we do O(1) work (character comparison and max of 2 values). Total: O(m×n) time."*
+
+### **Q6: What's the space complexity of memoization vs tabulation?**
+**A:** *"Both need O(states) for the DP table. Memoization additionally needs O(depth) for recursion stack. For LCS, memoization = O(m×n) table + O(m+n) stack vs tabulation = O(m×n) table only. Tabulation is more space-efficient by avoiding stack overhead."*
+
+### **Q7: Why is Matrix Chain Multiplication O(n³)?**
+**A:** *"State is (i, j) representing subarray from i to j. Total states = O(n²) (all pairs i ≤ j). At each state, we try all partition points k between i and j, doing O(n) work. Total: O(n² states × n work) = O(n³)."*
+
+### **Q8: How do you handle DP problems with constraints?**
+**A:** *"Add constraint as a state dimension. Example: 'at most k transactions' → add k as state variable. If original was dp[i] with n states, it becomes dp[i][k] with n×k states. Time complexity increases proportionally."*
+
+---
+
+## 🎓 Step-by-Step Template for DP Complexity Analysis
+
+**When interviewer asks: "What's the time and space complexity?"**
+
+1. **Identify state variables:** *"The state is defined by (i, j) where..."*
+2. **Count total states:** *"i ranges from 0 to n, j from 0 to m, so n×m states"*
+3. **Work per state:** *"At each state, we iterate through k options, so O(k) work"*
+4. **Calculate time:** *"Total time = states × work = O(n × m × k)"*
+5. **Calculate basic space:** *"We need a 2D array of size n×m = O(n×m)"*
+6. **Add recursion tax (if memoization):** *"Plus O(n+m) for recursion stack"*
+7. **Mention optimization:** *"We can optimize to O(m) using space optimization since each row only depends on the previous"*
+
+---
+
+## 🔍 Special Cases in DP Complexity
+
+### **Unbounded vs 0/1 Knapsack**
+- **0/1 Knapsack:** Each item used once → O(n×W)
+- **Unbounded:** Items reusable → **Still O(n×W)** !
+  - Why? States remain n×W, just transition formula changes
+
+### **Substring vs Subsequence**
+- **Subsequence (LCS):** Can skip chars → O(m×n)
+- **Substring:** Must be contiguous → **Still O(m×n)**
+  - Why? Same state space, just different transition logic
+
+### **Count vs Optimize**
+- **Counting (Count ways):** dp[i] = sum of previous
+- **Optimization (Min/Max):** dp[i] = min/max of previous
+- **Complexity:** **Same!** Only the recurrence relation changes
+
+---
 
 ## Table of Contents
 - **Part 1: 1D DP (DP 1-7)** - Foundations
-- **Part 2: 2D/3D DP on Grids (DP 8-13)** - Grid Problems  
+- **Part 2: 2D/3D DP on Grids (DP 8-13)** - Grid Problems
 - **Part 3: DP on Subsequences (DP 14-24)** - Pick/Not-Pick Pattern
 - **Part 4: DP on Strings (DP 25-34)** - LCS Family
 - **Part 5: DP on Stocks (DP 35-40)** - Buy-Sell Problems
@@ -13,10 +176,11 @@
 # Part 1: 1D DP (Foundations)
 
 ## DP-1: Introduction to Dynamic Programming
-**Question:** What is Dynamic Programming? When should we use DP?  
-**Intuition:** Dynamic Programming is an optimization technique that stores solutions to subproblems to avoid recomputation. Two key conditions: (1) **Optimal Substructure** - optimal solution contains optimal solutions of subproblems, (2) **Overlapping Subproblems** - same subproblems solved multiple times. Think "recursion with memory". DP trades space for time!  
-**Logic:** Two main approaches: **Memoization** (Top-Down - recursion with cache) and **Tabulation** (Bottom-Up - iterative with table). Memoization is easier to code, Tabulation is more efficient.  
+**Question:** What is Dynamic Programming? When should we use DP?
+**Intuition:** Dynamic Programming is an optimization technique that stores solutions to subproblems to avoid recomputation. Two key conditions: (1) **Optimal Substructure** - optimal solution contains optimal solutions of subproblems, (2) **Overlapping Subproblems** - same subproblems solved multiple times. Think "recursion with memory". DP trades space for time!
+**Logic:** Two main approaches: **Memoization** (Top-Down - recursion with cache) and **Tabulation** (Bottom-Up - iterative with table). Memoization is easier to code, Tabulation is more efficient.
 **Java:**
+
 ```java
 // Memoization Template
 int solveMemo(int n, int[] dp) {
@@ -29,11 +193,11 @@ int solveMemo(int n, int[] dp) {
 
 // Tabulation Template
 int solveTab(int n) {
-    int[] dp = new int[n+1];
+    int[] dp = new int[n + 1];
     dp[0] = baseValue;
 
     for (int i = 1; i <= n; i++) {
-        dp[i] = compute(dp[i-1], ...);
+        dp[i] = compute(dp[i - 1], ...);
     }
     return dp[n];
 }
@@ -42,30 +206,32 @@ int solveTab(int n) {
 ---
 
 ## DP-2: Climbing Stairs / Fibonacci Number
-**Question:** Calculate nth Fibonacci number. f(n) = f(n-1) + f(n-2), with f(0) = 0, f(1) = 1.  
-**Intuition:** Naive recursion has exponential time O(2^n) because same values computed repeatedly (massive overlapping subproblems). By storing computed values, we reduce to O(n). This is THE fundamental DP example showing how DP works!  
-**Logic:** Use memoization to cache results, or tabulation to build from base. Can optimize space to O(1) since only last two values needed.  
+**Question:** Calculate nth Fibonacci number. f(n) = f(n-1) + f(n-2), with f(0) = 0, f(1) = 1.
+**Intuition:** Naive recursion has exponential time O(2^n) because same values computed repeatedly (massive overlapping subproblems). By storing computed values, we reduce to O(n). This is THE fundamental DP example showing how DP works!
+**Logic:** Use memoization to cache results, or tabulation to build from base. Can optimize space to O(1) since only last two values needed.
 **Java:**
+
 ```java
 // Memoization - O(n) time, O(n) space
 int fibMemo(int n, int[] dp) {
     if (n <= 1) return n;
     if (dp[n] != -1) return dp[n];
-    return dp[n] = fibMemo(n-1, dp) + fibMemo(n-2, dp);
+    return dp[n] = fibMemo(n - 1, dp) + fibMemo(n - 2, dp);
 }
 
 // Tabulation - O(n) time, O(n) space
 int fibTab(int n) {
     if (n <= 1) return n;
-    int[] dp = new int[n+1];
-    dp[0] = 0; dp[1] = 1;
+    int[] dp = new int[n + 1];
+    dp[0] = 0;
+    dp[1] = 1;
     for (int i = 2; i <= n; i++) {
-        dp[i] = dp[i-1] + dp[i-2];
+        dp[i] = dp[i - 1] + dp[i - 2];
     }
     return dp[n];
 }
 
-// Space Optimized - O(n) time, O(1) space â­
+// Space Optimized - O(n) time, O(1) space 
 int fibOptimized(int n) {
     if (n <= 1) return n;
     int prev2 = 0, prev1 = 1;
@@ -77,39 +243,41 @@ int fibOptimized(int n) {
     return prev1;
 }
 ```
+**⏱️ Complexity:** Time O(n), Space O(n) memoization/tabulation, O(1) optimized | **Why:** n states, O(1) per state. Only need last 2 values → O(1) space.
 
 ---
 
 ## DP-3: Frog Jump (Min Cost)
-**Question:** Frog at stone i can jump to i+1 or i+2. Energy cost = |height[i] - height[j]|. Find minimum cost to reach last stone.  
-**Intuition:** At each stone, frog has 2 choices - jump 1 step or 2 steps. We want minimum cost path. Classic 1D DP where state depends on previous states. Without DP, recursive solution recomputes same stones many times through different paths (overlapping subproblems).  
-**Logic:** dp[i] = minimum cost to reach stone i = min(dp[i-1] + cost1, dp[i-2] + cost2). Base case: dp[0] = 0 (already at first stone).  
+**Question:** Frog at stone i can jump to i+1 or i+2. Energy cost = |height[i] - height[j]|. Find minimum cost to reach last stone.
+**Intuition:** At each stone, frog has 2 choices - jump 1 step or 2 steps. We want minimum cost path. Classic 1D DP where state depends on previous states. Without DP, recursive solution recomputes same stones many times through different paths (overlapping subproblems).
+**Logic:** dp[i] = minimum cost to reach stone i = min(dp[i-1] + cost1, dp[i-2] + cost2). Base case: dp[0] = 0 (already at first stone).
 **Java:**
+
 ```java
 // Memoization
 int frogJumpMemo(int[] height, int n, int[] dp) {
     if (n == 0) return 0;
     if (dp[n] != -1) return dp[n];
 
-    int jumpOne = frogJumpMemo(height, n-1, dp) + Math.abs(height[n] - height[n-1]);
+    int jumpOne = frogJumpMemo(height, n - 1, dp) + Math.abs(height[n] - height[n - 1]);
     int jumpTwo = Integer.MAX_VALUE;
     if (n > 1) {
-        jumpTwo = frogJumpMemo(height, n-2, dp) + Math.abs(height[n] - height[n-2]);
+        jumpTwo = frogJumpMemo(height, n - 2, dp) + Math.abs(height[n] - height[n - 2]);
     }
 
     return dp[n] = Math.min(jumpOne, jumpTwo);
 }
 
-// Space Optimized â­
+// Space Optimized
 int frogJump(int[] height) {
     int n = height.length;
     int prev2 = 0, prev1 = 0;
 
     for (int i = 1; i < n; i++) {
-        int jumpOne = prev1 + Math.abs(height[i] - height[i-1]);
+        int jumpOne = prev1 + Math.abs(height[i] - height[i - 1]);
         int jumpTwo = Integer.MAX_VALUE;
         if (i > 1) {
-            jumpTwo = prev2 + Math.abs(height[i] - height[i-2]);
+            jumpTwo = prev2 + Math.abs(height[i] - height[i - 2]);
         }
         int curr = Math.min(jumpOne, jumpTwo);
         prev2 = prev1;
@@ -117,16 +285,17 @@ int frogJump(int[] height) {
     }
     return prev1;
 }
-// Time: O(n), Space: O(1)
 ```
+**⏱️ Complexity:** Time O(n), Space O(1) | **Why:** n stones,  O(1) work per stone (min of 2). Only need prev2, prev1.
 
 ---
 
 ## DP-4: Frog Jump with K Distance
-**Question:** Frog can jump from stone i to any stone from i+1 to i+k. Find minimum cost.  
-**Intuition:** Generalization of previous problem. Now try all possible jumps (1 to k) instead of just 2. For each stone, check all reachable previous stones within k distance and pick minimum cost option.  
-**Logic:** dp[i] = min(dp[i-j] + |height[i] - height[i-j]|) for all j from 1 to min(k, i).  
+**Question:** Frog can jump from stone i to any stone from i+1 to i+k. Find minimum cost.
+**Intuition:** Generalization of previous problem. Now try all possible jumps (1 to k) instead of just 2. For each stone, check all reachable previous stones within k distance and pick minimum cost option.
+**Logic:** dp[i] = min(dp[i-j] + |height[i] - height[i-j]|) for all j from 1 to min(k, i).
 **Java:**
+
 ```java
 int frogJumpK(int[] height, int k) {
     int n = height.length;
@@ -137,25 +306,44 @@ int frogJumpK(int[] height, int k) {
         int minCost = Integer.MAX_VALUE;
 
         for (int j = 1; j <= k && i - j >= 0; j++) {
-            int cost = dp[i-j] + Math.abs(height[i] - height[i-j]);
+            int cost = dp[i - j] + Math.abs(height[i] - height[i - j]);
             minCost = Math.min(minCost, cost);
         }
 
         dp[i] = minCost;
     }
 
-    return dp[n-1];
+    return dp[n - 1];
 }
 // Time: O(n*k), Space: O(n)
 ```
 
+### ⏱️ Time & Space Complexity Analysis
+
+**State Variables:**
+- **State:** dp[i] = min cost to reach stone i
+- **Choices per state:** Try all k jumps
+
+**Time Complexity: O(n×k)**
+- **States:** n
+- **Work per state:** O(k) - try jumps 1 to k
+- **Total:** n × k = **O(n×k)**
+
+**Space Complexity: O(n)**
+- Single DP array of size n
+
+**Interview Discussion:**
+- *"This demonstrates how additional choices per state increase complexity. Unlike DP-3 with 2 choices (O(n)), here we have k choices giving O(n×k)."*
+- *"The inner loop tries all valid jumps within range k, making it O(k) per stone."*
+
 ---
 
 ## DP-5: Maximum Sum of Non-Adjacent Elements (House Robber)
-**Question:** Find maximum sum of subsequence where no two elements are adjacent.  
-**Intuition:** At each house, robber has 2 choices: (1) **Rob it** - can't rob previous, so add to dp[i-2], (2) **Skip it** - carry forward dp[i-1]. Pick maximum of both. This is the fundamental **pick/not-pick pattern** that appears in countless DP problems! Imagine robbing houses on a street - can't rob adjacent houses or alarm goes off.  
-**Logic:** dp[i] = max(arr[i] + dp[i-2], dp[i-1]). Base cases: dp[0] = arr[0], dp[1] = max(arr[0], arr[1]).  
+**Question:** Find maximum sum of subsequence where no two elements are adjacent.
+**Intuition:** At each house, robber has 2 choices: (1) **Rob it** - can't rob previous, so add to dp[i-2], (2) **Skip it** - carry forward dp[i-1]. Pick maximum of both. This is the fundamental **pick/not-pick pattern** that appears in countless DP problems! Imagine robbing houses on a street - can't rob adjacent houses or alarm goes off.
+**Logic:** dp[i] = max(arr[i] + dp[i-2], dp[i-1]). Base cases: dp[0] = arr[0], dp[1] = max(arr[0], arr[1]).
 **Java:**
+
 ```java
 // Tabulation
 int maxSumNonAdjacent(int[] arr) {
@@ -167,15 +355,15 @@ int maxSumNonAdjacent(int[] arr) {
     dp[1] = Math.max(arr[0], arr[1]);
 
     for (int i = 2; i < n; i++) {
-        int pick = arr[i] + dp[i-2];
-        int notPick = dp[i-1];
+        int pick = arr[i] + dp[i - 2];
+        int notPick = dp[i - 1];
         dp[i] = Math.max(pick, notPick);
     }
 
-    return dp[n-1];
+    return dp[n - 1];
 }
 
-// Space Optimized â­
+// Space Optimized 
 int maxSumOptimized(int[] arr) {
     int n = arr.length;
     if (n == 1) return arr[0];
@@ -199,18 +387,19 @@ int maxSumOptimized(int[] arr) {
 ---
 
 ## DP-6: House Robber II (Circular Array)
-**Question:** Same as House Robber but houses arranged in circle, so first and last houses are adjacent.  
-**Intuition:** Brilliant constraint! Since circular, we can't rob both first and last house. Key observation: solve **two separate cases** - (1) consider houses 0 to n-2 (exclude last), (2) consider houses 1 to n-1 (exclude first). Take maximum. This converts circular problem into two linear subproblems!  
-**Logic:** Apply House Robber I on two subarrays: [0...n-2] and [1...n-1], return max.  
+**Question:** Same as House Robber but houses arranged in circle, so first and last houses are adjacent.
+**Intuition:** Brilliant constraint! Since circular, we can't rob both first and last house. Key observation: solve **two separate cases** - (1) consider houses 0 to n-2 (exclude last), (2) consider houses 1 to n-1 (exclude first). Take maximum. This converts circular problem into two linear subproblems!
+**Logic:** Apply House Robber I on two subarrays: [0...n-2] and [1...n-1], return max.
 **Java:**
+
 ```java
 int rob(int[] nums) {
     int n = nums.length;
     if (n == 1) return nums[0];
     if (n == 2) return Math.max(nums[0], nums[1]);
 
-    int case1 = robLinear(nums, 0, n-2);
-    int case2 = robLinear(nums, 1, n-1);
+    int case1 = robLinear(nums, 0, n - 2);
+    int case2 = robLinear(nums, 1, n - 1);
 
     return Math.max(case1, case2);
 }
@@ -232,10 +421,11 @@ int robLinear(int[] nums, int start, int end) {
 ---
 
 ## DP-7: Ninja's Training (2D DP Introduction)
-**Question:** N days, 3 tasks per day with points. Can't do same task on consecutive days. Maximize total points.  
-**Intuition:** This introduces **2D DP**! State now has TWO dimensions: (day, lastTask). For each day and each possible last task performed, we try all OTHER tasks and pick maximum. The constraint (no consecutive same tasks) is elegantly handled by tracking what was done last.  
-**Logic:** dp[day][last] = max points achievable on 'day' when last task was 'last'. For each task != last: dp[day][last] = points[day][task] + dp[day-1][task].  
+**Question:** N days, 3 tasks per day with points. Can't do same task on consecutive days. Maximize total points.
+**Intuition:** This introduces **2D DP**! State now has TWO dimensions: (day, lastTask). For each day and each possible last task performed, we try all OTHER tasks and pick maximum. The constraint (no consecutive same tasks) is elegantly handled by tracking what was done last.
+**Logic:** dp[day][last] = max points achievable on 'day' when last task was 'last'. For each task != last: dp[day][last] = points[day][task] + dp[day-1][task].
 **Java:**
+
 ```java
 // Memoization
 int ninjaTraining(int[][] points, int day, int last, int[][] dp) {
@@ -254,7 +444,7 @@ int ninjaTraining(int[][] points, int day, int last, int[][] dp) {
     int max = 0;
     for (int task = 0; task < 3; task++) {
         if (task != last) {
-            int point = points[day][task] + ninjaTraining(points, day-1, task, dp);
+            int point = points[day][task] + ninjaTraining(points, day - 1, task, dp);
             max = Math.max(max, point);
         }
     }
@@ -262,7 +452,7 @@ int ninjaTraining(int[][] points, int day, int last, int[][] dp) {
     return dp[day][last] = max;
 }
 
-// Space Optimized â­
+// Space Optimized 
 int ninjaTrainingOptimized(int[][] points) {
     int n = points.length;
     int[] prev = new int[4]; // 4 states: task 0, 1, 2, or 3 (no restriction)
@@ -289,18 +479,20 @@ int ninjaTrainingOptimized(int[][] points) {
 
     return prev[3]; // No restriction on last day
 }
-// Time: O(n*4*3) = O(n), Space: O(1)
+
 ```
+**⏱️ Complexity:** Time O(n), Space O(1) | **Why:** n days × 4 states × 3 task choices = O(12n) = O(n). Space optimized to two size-4 arrays.
 
 ---
 
 # Part 2: 2D/3D DP on Grids
 
 ## DP-8: Unique Paths (Grid Navigation)
-**Question:** Robot at (0,0) wants to reach (m-1,n-1) in mÃ—n grid. Can only move right or down. Count number of unique paths.  
-**Intuition:** Classic grid DP! To reach any cell (i,j), robot MUST come from either (i-1,j) [from top] or (i,j-1) [from left]. Total paths to (i,j) = sum of paths from both directions. This builds solution from top-left to bottom-right systematically.  
-**Logic:** dp[i][j] = dp[i-1][j] + dp[i][j-1]. Base cases: dp[0][j] = 1 (only one way along top row), dp[i][0] = 1 (only one way along left column).  
+**Question:** Robot at (0,0) wants to reach (m-1,n-1) in mxn grid. Can only move right or down. Count number of unique paths.
+**Intuition:** Classic grid DP! To reach any cell (i,j), robot MUST come from either (i-1,j) [from top] or (i,j-1) [from left]. Total paths to (i,j) = sum of paths from both directions. This builds solution from top-left to bottom-right systematically.
+**Logic:** dp[i][j] = dp[i-1][j] + dp[i][j-1]. Base cases: dp[0][j] = 1 (only one way along top row), dp[i][0] = 1 (only one way along left column).
 **Java:**
+
 ```java
 // Tabulation
 int uniquePaths(int m, int n) {
@@ -311,17 +503,17 @@ int uniquePaths(int m, int n) {
             if (i == 0 && j == 0) {
                 dp[i][j] = 1;
             } else {
-                int up = (i > 0) ? dp[i-1][j] : 0;
-                int left = (j > 0) ? dp[i][j-1] : 0;
+                int up = (i > 0) ? dp[i - 1][j] : 0;
+                int left = (j > 0) ? dp[i][j - 1] : 0;
                 dp[i][j] = up + left;
             }
         }
     }
 
-    return dp[m-1][n-1];
+    return dp[m - 1][n - 1];
 }
 
-// Space Optimized â­
+// Space Optimized 
 int uniquePathsOptimized(int m, int n) {
     int[] prev = new int[n];
 
@@ -332,30 +524,32 @@ int uniquePathsOptimized(int m, int n) {
                 curr[j] = 1;
             } else {
                 int up = (i > 0) ? prev[j] : 0;
-                int left = (j > 0) ? curr[j-1] : 0;
+                int left = (j > 0) ? curr[j - 1] : 0;
                 curr[j] = up + left;
             }
         }
         prev = curr;
     }
 
-    return prev[n-1];
+    return prev[n - 1];
 }
 // Time: O(m*n), Space: O(n)
 ```
+**⏱️ Complexity:** Time O(m×n), Space O(n) | **Why:** m×n cells, O(1) per cell. Row only needs previous row → O(n).
 
 ---
 
 ## DP-9: Unique Paths II (With Obstacles)
-**Question:** Same as Unique Paths but some cells have obstacles (marked as 1). Robot can't pass through obstacles.  
-**Intuition:** Natural extension! If cell has obstacle, paths through it = 0 (blocked). Otherwise apply same formula. This shows how **constraints modify DP transitions** without changing overall structure. Obstacle handling is key!  
-**Logic:** If grid[i][j] == 1, dp[i][j] = 0. Else dp[i][j] = dp[i-1][j] + dp[i][j-1].  
+**Question:** Same as Unique Paths but some cells have obstacles (marked as 1). Robot can't pass through obstacles.
+**Intuition:** Natural extension! If cell has obstacle, paths through it = 0 (blocked). Otherwise apply same formula. This shows how **constraints modify DP transitions** without changing overall structure. Obstacle handling is key!
+**Logic:** If grid[i][j] == 1, dp[i][j] = 0. Else dp[i][j] = dp[i-1][j] + dp[i][j-1].
 **Java:**
+
 ```java
 int uniquePathsWithObstacles(int[][] grid) {
     int m = grid.length, n = grid[0].length;
 
-    if (grid[0][0] == 1 || grid[m-1][n-1] == 1) return 0;
+    if (grid[0][0] == 1 || grid[m - 1][n - 1] == 1) return 0;
 
     int[] prev = new int[n];
 
@@ -368,14 +562,14 @@ int uniquePathsWithObstacles(int[][] grid) {
                 curr[j] = 1;
             } else {
                 int up = (i > 0) ? prev[j] : 0;
-                int left = (j > 0) ? curr[j-1] : 0;
+                int left = (j > 0) ? curr[j - 1] : 0;
                 curr[j] = up + left;
             }
         }
         prev = curr;
     }
 
-    return prev[n-1];
+    return prev[n - 1];
 }
 // Time: O(m*n), Space: O(n)
 ```
@@ -383,10 +577,11 @@ int uniquePathsWithObstacles(int[][] grid) {
 ---
 
 ## DP-10: Minimum Path Sum
-**Question:** Grid with non-negative numbers. Find path from top-left to bottom-right with minimum sum. Can only move right or down.  
-**Intuition:** Instead of counting paths, we **optimize path value**! At each cell, minimum sum to reach it = current cell value + minimum of (sum from top, sum from left). This demonstrates how grid DP handles optimization problems.  
-**Logic:** dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]). Base case: dp[0][0] = grid[0][0].  
+**Question:** Grid with non-negative numbers. Find path from top-left to bottom-right with minimum sum. Can only move right or down.
+**Intuition:** Instead of counting paths, we **optimize path value**! At each cell, minimum sum to reach it = current cell value + minimum of (sum from top, sum from left). This demonstrates how grid DP handles optimization problems.
+**Logic:** dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]). Base case: dp[0][0] = grid[0][0].
 **Java:**
+
 ```java
 int minPathSum(int[][] grid) {
     int m = grid.length, n = grid[0].length;
@@ -399,14 +594,14 @@ int minPathSum(int[][] grid) {
                 curr[j] = grid[i][j];
             } else {
                 int up = (i > 0) ? prev[j] : Integer.MAX_VALUE;
-                int left = (j > 0) ? curr[j-1] : Integer.MAX_VALUE;
+                int left = (j > 0) ? curr[j - 1] : Integer.MAX_VALUE;
                 curr[j] = grid[i][j] + Math.min(up, left);
             }
         }
         prev = curr;
     }
 
-    return prev[n-1];
+    return prev[n - 1];
 }
 // Time: O(m*n), Space: O(n)
 ```
@@ -414,10 +609,11 @@ int minPathSum(int[][] grid) {
 ---
 
 ## DP-11: Triangle (Minimum Path Sum)
-**Question:** Given triangle array, find minimum path sum from top to bottom. Can move to adjacent numbers on next row: from (i,j) can go to (i+1,j) or (i+1,j+1).  
-**Intuition:** Different grid structure but same DP principle! Key insight: **start from bottom and work upward**! This avoids index boundary complexity. From position (i,j), two choices for next row. Working bottom-up makes code cleaner.  
-**Logic:** dp[i][j] = triangle[i][j] + min(dp[i+1][j], dp[i+1][j+1]). Base case: last row values are themselves.  
+**Question:** Given triangle array, find minimum path sum from top to bottom. Can move to adjacent numbers on next row: from (i,j) can go to (i+1,j) or (i+1,j+1).
+**Intuition:** Different grid structure but same DP principle! Key insight: **start from bottom and work upward**! This avoids index boundary complexity. From position (i,j), two choices for next row. Working bottom-up makes code cleaner.
+**Logic:** dp[i][j] = triangle[i][j] + min(dp[i+1][j], dp[i+1][j+1]). Base case: last row values are themselves.
 **Java:**
+
 ```java
 int minimumTotal(List<List<Integer>> triangle) {
     int n = triangle.size();
@@ -425,15 +621,15 @@ int minimumTotal(List<List<Integer>> triangle) {
 
     // Base case - last row
     for (int j = 0; j < n; j++) {
-        next[j] = triangle.get(n-1).get(j);
+        next[j] = triangle.get(n - 1).get(j);
     }
 
     // Move upward from second-last row
-    for (int i = n-2; i >= 0; i--) {
+    for (int i = n - 2; i >= 0; i--) {
         int[] curr = new int[n];
         for (int j = 0; j <= i; j++) {
             int down = next[j];
-            int diagonal = next[j+1];
+            int diagonal = next[j + 1];
             curr[j] = triangle.get(i).get(j) + Math.min(down, diagonal);
         }
         next = curr;
@@ -441,27 +637,28 @@ int minimumTotal(List<List<Integer>> triangle) {
 
     return next[0];
 }
-// Time: O(nÂ²), Space: O(n)
+// Time: O(n²), Space: O(n)
 ```
 
 ---
 
 ## DP-12: Maximum/Minimum Falling Path Sum
-**Question:** Find minimum sum path from first row to last row of matrix. Can move to 3 adjacent cells in next row (down, down-left, down-right).  
-**Intuition:** Extension of grid DP with **3 transitions** instead of 2! At each cell, can come from 3 cells above. Check all 3, take minimum. This shows how increasing transitions affects DP formulation. Must handle boundary conditions carefully!  
-**Logic:** dp[i][j] = matrix[i][j] + min(dp[i+1][j-1], dp[i+1][j], dp[i+1][j+1]). Handle edges where j-1 or j+1 out of bounds.  
+**Question:** Find minimum sum path from first row to last row of matrix. Can move to 3 adjacent cells in next row (down, down-left, down-right).
+**Intuition:** Extension of grid DP with **3 transitions** instead of 2! At each cell, can come from 3 cells above. Check all 3, take minimum. This shows how increasing transitions affects DP formulation. Must handle boundary conditions carefully!
+**Logic:** dp[i][j] = matrix[i][j] + min(dp[i+1][j-1], dp[i+1][j], dp[i+1][j+1]). Handle edges where j-1 or j+1 out of bounds.
 **Java:**
+
 ```java
 int minFallingPathSum(int[][] matrix) {
     int n = matrix.length;
-    int[] prev = matrix[n-1].clone();
+    int[] prev = matrix[n - 1].clone();
 
-    for (int i = n-2; i >= 0; i--) {
+    for (int i = n - 2; i >= 0; i--) {
         int[] curr = new int[n];
         for (int j = 0; j < n; j++) {
             int down = prev[j];
-            int leftDiag = (j > 0) ? prev[j-1] : Integer.MAX_VALUE;
-            int rightDiag = (j < n-1) ? prev[j+1] : Integer.MAX_VALUE;
+            int leftDiag = (j > 0) ? prev[j - 1] : Integer.MAX_VALUE;
+            int rightDiag = (j < n - 1) ? prev[j + 1] : Integer.MAX_VALUE;
 
             curr[j] = matrix[i][j] + Math.min(down, Math.min(leftDiag, rightDiag));
         }
@@ -476,16 +673,17 @@ int minFallingPathSum(int[][] matrix) {
 
     return min;
 }
-// Time: O(nÂ²), Space: O(n)
+// Time: O(n²), Space: O(n)
 ```
 
 ---
 
 ## DP-13: Chocolate Pickup / Cherry Pickup (3D DP)
-**Question:** Two robots start from top corners of grid (0,0) and (0,m-1), both move down collecting chocolates. If at same cell, count chocolate once. Both must reach bottom. Maximize total chocolates collected.  
-**Intuition:** This is **3D DP**! State has 3 dimensions: (row, col1, col2) where col1 = first robot's column, col2 = second robot's column. Both robots move simultaneously row by row. Each robot has 3 movement choices (stay, left-diagonal, right-diagonal), giving 3Ã—3 = 9 total combinations per state. Key trick: when j1 == j2, add chocolate value only once!  
-**Logic:** dp[i][j1][j2] = chocolates[i][j1] + chocolates[i][j2] (if j1 != j2, else add once) + max of all 9 movement combinations from next row.  
+**Question:** Two robots start from top corners of grid (0,0) and (0,m-1), both move down collecting chocolates. If at same cell, count chocolate once. Both must reach bottom. Maximize total chocolates collected.
+**Intuition:** This is **3D DP**! State has 3 dimensions: (row, col1, col2) where col1 = first robot's column, col2 = second robot's column. Both robots move simultaneously row by row. Each robot has 3 movement choices (stay, left-diagonal, right-diagonal), giving 3x3 = 9 total combinations per state. Key trick: when j1 == j2, add chocolate value only once!
+**Logic:** dp[i][j1][j2] = chocolates[i][j1] + chocolates[i][j2] (if j1 != j2, else add once) + max of all 9 movement combinations from next row.
 **Java:**
+
 ```java
 int cherryPickup(int[][] grid) {
     int n = grid.length, m = grid[0].length;
@@ -495,21 +693,21 @@ int cherryPickup(int[][] grid) {
     for (int j1 = 0; j1 < m; j1++) {
         for (int j2 = 0; j2 < m; j2++) {
             if (j1 == j2) {
-                prev[j1][j2] = grid[n-1][j1];
+                prev[j1][j2] = grid[n - 1][j1];
             } else {
-                prev[j1][j2] = grid[n-1][j1] + grid[n-1][j2];
+                prev[j1][j2] = grid[n - 1][j1] + grid[n - 1][j2];
             }
         }
     }
 
-    for (int i = n-2; i >= 0; i--) {
+    for (int i = n - 2; i >= 0; i--) {
         int[][] curr = new int[m][m];
 
         for (int j1 = 0; j1 < m; j1++) {
             for (int j2 = 0; j2 < m; j2++) {
                 int max = Integer.MIN_VALUE;
 
-                // Try all 9 combinations (3 moves Ã— 3 moves)
+                // Try all 9 combinations (3 moves x 3 moves)
                 for (int dj1 = -1; dj1 <= 1; dj1++) {
                     for (int dj2 = -1; dj2 <= 1; dj2++) {
                         int value = 0;
@@ -520,8 +718,8 @@ int cherryPickup(int[][] grid) {
                             value = grid[i][j1] + grid[i][j2];
                         }
 
-                        if (j1+dj1 >= 0 && j1+dj1 < m && j2+dj2 >= 0 && j2+dj2 < m) {
-                            value += prev[j1+dj1][j2+dj2];
+                        if (j1 + dj1 >= 0 && j1 + dj1 < m && j2 + dj2 >= 0 && j2 + dj2 < m) {
+                            value += prev[j1 + dj1][j2 + dj2];
                         } else {
                             value = Integer.MIN_VALUE;
                         }
@@ -537,30 +735,32 @@ int cherryPickup(int[][] grid) {
         prev = curr;
     }
 
-    return prev[0][m-1]; // Both robots start from top corners
+    return prev[0][m - 1]; // Both robots start from top corners
 }
-// Time: O(n*mÂ²*9), Space: O(mÂ²)
+// Time: O(n*m²*9), Space: O(m²)
 ```
+**⏱️ Complexity:** Time O(n×m²×9), Space O(m²) | **Why:** 3D DP! n rows × m×m positions × 9 moves (3×3).
 
 ---
 
 # Part 3: DP on Subsequences (Pick/Not-Pick Pattern)
 
 ## DP-14: Subset Sum Equals K
-**Question:** Given array and target K, check if subset exists with sum = K.  
-**Intuition:** Classic **pick/not-pick pattern** - foundation for many subset problems! For each element, two choices: (1) Include it - check if remaining sum achievable, (2) Exclude it - check if sum achievable without it. This explores all possible subsets systematically.  
-**Logic:** dp[i][sum] = true if sum achievable using first i elements. dp[i][sum] = dp[i-1][sum] (not take) || dp[i-1][sum-arr[i]] (take).  
+**Question:** Given array and target K, check if subset exists with sum = K.
+**Intuition:** Classic **pick/not-pick pattern** - foundation for many subset problems! For each element, two choices: (1) Include it - check if remaining sum achievable, (2) Exclude it - check if sum achievable without it. This explores all possible subsets systematically.
+**Logic:** dp[i][sum] = true if sum achievable using first i elements. dp[i][sum] = dp[i-1][sum] (not take) || dp[i-1][sum-arr[i]] (take).
 **Java:**
+
 ```java
 boolean subsetSum(int[] arr, int k) {
     int n = arr.length;
-    boolean[] prev = new boolean[k+1];
+    boolean[] prev = new boolean[k + 1];
 
     prev[0] = true; // sum 0 always achievable (empty subset)
     if (arr[0] <= k) prev[arr[0]] = true;
 
     for (int i = 1; i < n; i++) {
-        boolean[] curr = new boolean[k+1];
+        boolean[] curr = new boolean[k + 1];
         curr[0] = true;
 
         for (int target = 1; target <= k; target++) {
@@ -576,16 +776,18 @@ boolean subsetSum(int[] arr, int k) {
 
     return prev[k];
 }
-// Time: O(n*k), Space: O(k)
+// Time: O(n*k), Space: O(k) | Why: n items, for each item iterate through k possible sums. Space optimized from O(n*k) to O(k) by using only previous row.
 ```
+**⏱️ Complexity:** Time O(n×k), Space O(k) | **Why:** n items × (k+1) sums. Space optimized - only need previous row.
 
 ---
 
 ## DP-15: Partition Equal Subset Sum
-**Question:** Check if array can be partitioned into two subsets with equal sum.  
-**Intuition:** Brilliant reduction! If total sum is odd, impossible (can't divide odd into two equal integers). If even, problem reduces to: "Does subset with sum = total/2 exist?" Uses DP-14!  
-**Logic:** Calculate total. If odd, return false. Else check subset sum with target = total/2.  
+**Question:** Check if array can be partitioned into two subsets with equal sum.
+**Intuition:** Brilliant reduction! If total sum is odd, impossible (can't divide odd into two equal integers). If even, problem reduces to: "Does subset with sum = total/2 exist?" Uses DP-14!
+**Logic:** Calculate total. If odd, return false. Else check subset sum with target = total/2.
 **Java:**
+
 ```java
 boolean canPartition(int[] arr) {
     int total = 0;
@@ -600,16 +802,17 @@ boolean canPartition(int[] arr) {
 ---
 
 ## DP-16: Partition with Minimum Difference
-**Question:** Partition array into two subsets such that absolute difference of their sums is minimized.  
-**Intuition:** Mathematical insight! If S1 is one subset sum, S2 = total - S1. We want min|S1 - S2| = |2*S1 - total|. Find all possible S1 values using subset sum DP, then find S1 closest to total/2.  
-**Logic:** Use subset sum to find all achievable sums. For each valid S1, calculate |S1 - S2|, return minimum.  
+**Question:** Partition array into two subsets such that absolute difference of their sums is minimized.
+**Intuition:** Mathematical insight! If S1 is one subset sum, S2 = total - S1. We want min|S1 - S2| = |2*S1 - total|. Find all possible S1 values using subset sum DP, then find S1 closest to total/2.
+**Logic:** Use subset sum to find all achievable sums. For each valid S1, calculate |S1 - S2|, return minimum.
 **Java:**
+
 ```java
 int minimumDifference(int[] arr) {
     int total = 0;
     for (int num : arr) total += num;
 
-    boolean[] dp = new boolean[total+1];
+    boolean[] dp = new boolean[total + 1];
     dp[0] = true;
 
     for (int num : arr) {
@@ -619,7 +822,7 @@ int minimumDifference(int[] arr) {
     }
 
     int minDiff = Integer.MAX_VALUE;
-    for (int s1 = 0; s1 <= total/2; s1++) {
+    for (int s1 = 0; s1 <= total / 2; s1++) {
         if (dp[s1]) {
             int s2 = total - s1;
             minDiff = Math.min(minDiff, Math.abs(s1 - s2));
@@ -633,20 +836,21 @@ int minimumDifference(int[] arr) {
 ---
 
 ## DP-17: Count Subsets with Sum K
-**Question:** Count number of subsets with sum equal to K.  
-**Intuition:** Variation where we COUNT instead of checking existence. Use integer DP instead of boolean to accumulate counts. For each element, total count = count(including it) + count(excluding it).  
-**Logic:** dp[i][sum] = count of subsets. dp[i][sum] = dp[i-1][sum] + dp[i-1][sum-arr[i]].  
+**Question:** Count number of subsets with sum equal to K.
+**Intuition:** Variation where we COUNT instead of checking existence. Use integer DP instead of boolean to accumulate counts. For each element, total count = count(including it) + count(excluding it).
+**Logic:** dp[i][sum] = count of subsets. dp[i][sum] = dp[i-1][sum] + dp[i-1][sum-arr[i]].
 **Java:**
+
 ```java
 int countSubsets(int[] arr, int k) {
     int n = arr.length;
-    int[] prev = new int[k+1];
+    int[] prev = new int[k + 1];
 
     prev[0] = 1; // one way: empty subset
     if (arr[0] <= k) prev[arr[0]] += 1;
 
     for (int i = 1; i < n; i++) {
-        int[] curr = new int[k+1];
+        int[] curr = new int[k + 1];
         curr[0] = 1;
 
         for (int sum = 0; sum <= k; sum++) {
@@ -667,10 +871,11 @@ int countSubsets(int[] arr, int k) {
 ---
 
 ## DP-18: Count Partitions with Given Difference
-**Question:** Count ways to partition into two subsets S1, S2 such that S1 - S2 = D.  
-**Intuition:** Algebra magic! Given S1 + S2 = total and S1 - S2 = D. Solving: S1 = (total + D)/2. Problem reduces to counting subsets with sum = (total + D)/2!  
-**Logic:** Calculate target = (total + D)/2. Use DP-17.  
+**Question:** Count ways to partition into two subsets S1, S2 such that S1 - S2 = D.
+**Intuition:** Algebra magic! Given S1 + S2 = total and S1 - S2 = D. Solving: S1 = (total + D)/2. Problem reduces to counting subsets with sum = (total + D)/2!
+**Logic:** Calculate target = (total + D)/2. Use DP-17.
 **Java:**
+
 ```java
 int countPartitions(int[] arr, int d) {
     int total = 0;
@@ -685,16 +890,17 @@ int countPartitions(int[] arr, int d) {
 
 ---
 
-## DP-19: 0/1 Knapsack â­â­â­
-**Question:** Given weights and values of items, knapsack capacity W. Maximize value without exceeding capacity. Each item used at most once.  
-**Intuition:** THE most important DP problem! Foundation of countless variations. For each item: (1) Take it - add value, reduce capacity by weight, (2) Skip it - keep capacity. Can't take if weight exceeds capacity. This pick/not-pick with constraint is everywhere!  
-**Logic:** dp[i][w] = max value using first i items with capacity w. dp[i][w] = max(dp[i-1][w], val[i] + dp[i-1][w-wt[i]]).  
+## DP-19: 0/1 Knapsack 
+**Question:** Given weights and values of items, knapsack capacity W. Maximize value without exceeding capacity. Each item used at most once.
+**Intuition:** THE most important DP problem! Foundation of countless variations. For each item: (1) Take it - add value, reduce capacity by weight, (2) Skip it - keep capacity. Can't take if weight exceeds capacity. This pick/not-pick with constraint is everywhere!
+**Logic:** dp[i][w] = max value using first i items with capacity w. dp[i][w] = max(dp[i-1][w], val[i] + dp[i-1][w-wt[i]]).
 **Java:**
+
 ```java
 // Space Optimized 1D - MUST iterate capacity REVERSE!
 int knapsack(int[] wt, int[] val, int W) {
     int n = wt.length;
-    int[] dp = new int[W+1];
+    int[] dp = new int[W + 1];
 
     for (int i = 0; i < n; i++) {
         for (int w = W; w >= wt[i]; w--) { // REVERSE!
@@ -704,7 +910,7 @@ int knapsack(int[] wt, int[] val, int W) {
 
     return dp[W];
 }
-// Time: O(n*W), Space: O(W) â­
+// Time: O(n*W), Space: O(W) 
 // WHY REVERSE? To ensure we use values from PREVIOUS iteration only!
 // Forward would use updated values from SAME iteration (wrong for 0/1)
 ```
@@ -712,13 +918,14 @@ int knapsack(int[] wt, int[] val, int W) {
 ---
 
 ## DP-20: Minimum Coins (Coin Change I)
-**Question:** Given coin denominations and amount, find minimum coins to make amount. Coins can be reused unlimited times.  
-**Intuition:** Unbounded knapsack variant! For each coin, can use it multiple times. For each amount, try using each coin, take minimum.  
-**Logic:** dp[amount] = 1 + min(dp[amount - coin]) for all coins.  
+**Question:** Given coin denominations and amount, find minimum coins to make amount. Coins can be reused unlimited times.
+**Intuition:** Unbounded knapsack variant! For each coin, can use it multiple times. For each amount, try using each coin, take minimum.
+**Logic:** dp[amount] = 1 + min(dp[amount - coin]) for all coins.
 **Java:**
+
 ```java
 int coinChange(int[] coins, int amount) {
-    int[] dp = new int[amount+1];
+    int[] dp = new int[amount + 1];
     Arrays.fill(dp, Integer.MAX_VALUE);
     dp[0] = 0;
 
@@ -737,10 +944,11 @@ int coinChange(int[] coins, int amount) {
 ---
 
 ## DP-21: Target Sum
-**Question:** Assign + or - to each element to make sum = target. Count ways.  
-**Intuition:** Mind-blowing transformation! Elements with + form set P, with - form N. P - N = target and P + N = total. Solving: P = (total + target)/2. Converts to counting subsets with sum = (total + target)/2! Pattern recognition is key!  
-**Logic:** Use DP-17 with K = (total + target)/2.  
+**Question:** Assign + or - to each element to make sum = target. Count ways.
+**Intuition:** Mind-blowing transformation! Elements with + form set P, with - form N. P - N = target and P + N = total. Solving: P = (total + target)/2. Converts to counting subsets with sum = (total + target)/2! Pattern recognition is key!
+**Logic:** Use DP-17 with K = (total + target)/2.
 **Java:**
+
 ```java
 int findTargetSumWays(int[] arr, int target) {
     int total = 0;
@@ -756,13 +964,14 @@ int findTargetSumWays(int[] arr, int target) {
 ---
 
 ## DP-22: Coin Change II (Count Ways)
-**Question:** Count ways to make amount using coins. Coins reusable.  
-**Intuition:** Unlike min coins, here we count combinations. Important: process coins in order to avoid duplicate counting (like {1,2} and {2,1} as different).  
-**Logic:** For each coin, update all amounts: dp[amount] += dp[amount - coin].  
+**Question:** Count ways to make amount using coins. Coins reusable.
+**Intuition:** Unlike min coins, here we count combinations. Important: process coins in order to avoid duplicate counting (like {1,2} and {2,1} as different).
+**Logic:** For each coin, update all amounts: dp[amount] += dp[amount - coin].
 **Java:**
+
 ```java
 int change(int amount, int[] coins) {
-    int[] dp = new int[amount+1];
+    int[] dp = new int[amount + 1];
     dp[0] = 1;
 
     for (int coin : coins) {
@@ -778,13 +987,14 @@ int change(int amount, int[] coins) {
 ---
 
 ## DP-23: Unbounded Knapsack
-**Question:** Same as 0/1 Knapsack but items reusable unlimited times.  
-**Intuition:** Key difference: after taking item, can take again! When taking item i, recurse on dp[i][w-wt[i]] NOT dp[i-1][w-wt[i]]. In 1D, iterate capacity FORWARD not backward!  
-**Logic:** dp[w] = max(dp[w], val[i] + dp[w-wt[i]]).  
+**Question:** Same as 0/1 Knapsack but items reusable unlimited times.
+**Intuition:** Key difference: after taking item, can take again! When taking item i, recurse on dp[i][w-wt[i]] NOT dp[i-1][w-wt[i]]. In 1D, iterate capacity FORWARD not backward!
+**Logic:** dp[w] = max(dp[w], val[i] + dp[w-wt[i]]).
 **Java:**
+
 ```java
 int unboundedKnapsack(int[] wt, int[] val, int W) {
-    int[] dp = new int[W+1];
+    int[] dp = new int[W + 1];
 
     for (int i = 0; i < wt.length; i++) {
         for (int w = wt[i]; w <= W; w++) { // FORWARD!
@@ -800,17 +1010,18 @@ int unboundedKnapsack(int[] wt, int[] val, int W) {
 ---
 
 ## DP-24: Rod Cutting
-**Question:** Rod of length n, prices for each length 1 to n. Cut rod to maximize profit.  
-**Intuition:** This IS unbounded knapsack! Each length is an item with weight=length, value=price. Can cut same length multiple times.  
-**Logic:** dp[len] = max(price[i] + dp[len-i]) for all cuts i.  
+**Question:** Rod of length n, prices for each length 1 to n. Cut rod to maximize profit.
+**Intuition:** This IS unbounded knapsack! Each length is an item with weight=length, value=price. Can cut same length multiple times.
+**Logic:** dp[len] = max(price[i] + dp[len-i]) for all cuts i.
 **Java:**
+
 ```java
 int rodCutting(int[] price, int n) {
-    int[] dp = new int[n+1];
+    int[] dp = new int[n + 1];
 
     for (int len = 1; len <= n; len++) {
         for (int cut = 1; cut <= len && cut <= price.length; cut++) {
-            dp[len] = Math.max(dp[len], price[cut-1] + dp[len - cut]);
+            dp[len] = Math.max(dp[len], price[cut - 1] + dp[len - cut]);
         }
     }
 
@@ -822,23 +1033,24 @@ int rodCutting(int[] price, int n) {
 
 # Part 4: DP on Strings (LCS Family)
 
-## DP-25: Longest Common Subsequence (LCS) â­â­â­
-**Question:** Find length of longest subsequence common to both strings.  
-**Intuition:** Foundation of ALL string DP! For each char pair: if match, include both and extend LCS of remaining. If don't match, try excluding from either string, take max. Builds solution character by character.  
-**Logic:** If s1[i]==s2[j]: dp[i][j] = 1 + dp[i-1][j-1]. Else: dp[i][j] = max(dp[i-1][j], dp[i][j-1]).  
+## DP-25: Longest Common Subsequence (LCS) 
+**Question:** Find length of longest subsequence common to both strings.
+**Intuition:** Foundation of ALL string DP! For each char pair: if match, include both and extend LCS of remaining. If don't match, try excluding from either string, take max. Builds solution character by character.
+**Logic:** If s1[i]==s2[j]: dp[i][j] = 1 + dp[i-1][j-1]. Else: dp[i][j] = max(dp[i-1][j], dp[i][j-1]).
 **Java:**
+
 ```java
 int longestCommonSubsequence(String s1, String s2) {
     int m = s1.length(), n = s2.length();
-    int[] prev = new int[n+1];
+    int[] prev = new int[n + 1];
 
     for (int i = 1; i <= m; i++) {
-        int[] curr = new int[n+1];
+        int[] curr = new int[n + 1];
         for (int j = 1; j <= n; j++) {
-            if (s1.charAt(i-1) == s2.charAt(j-1)) {
-                curr[j] = 1 + prev[j-1];
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                curr[j] = 1 + prev[j - 1];
             } else {
-                curr[j] = Math.max(prev[j], curr[j-1]);
+                curr[j] = Math.max(prev[j], curr[j - 1]);
             }
         }
         prev = curr;
@@ -851,21 +1063,22 @@ int longestCommonSubsequence(String s1, String s2) {
 ---
 
 ## DP-26: Print LCS
-**Question:** Print actual LCS string, not just length.  
-**Intuition:** Build DP table, then backtrack from [m][n] to [0][0]. When chars match, include and move diagonal. Else move toward larger value.  
-**Logic:** Backtrack through DP table based on decisions.  
+**Question:** Print actual LCS string, not just length.
+**Intuition:** Build DP table, then backtrack from [m][n] to [0][0]. When chars match, include and move diagonal. Else move toward larger value.
+**Logic:** Backtrack through DP table based on decisions.
 **Java:**
+
 ```java
 String printLCS(String s1, String s2) {
     int m = s1.length(), n = s2.length();
-    int[][] dp = new int[m+1][n+1];
+    int[][] dp = new int[m + 1][n + 1];
 
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
-            if (s1.charAt(i-1) == s2.charAt(j-1)) {
-                dp[i][j] = 1 + dp[i-1][j-1];
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
             } else {
-                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
             }
         }
     }
@@ -873,10 +1086,11 @@ String printLCS(String s1, String s2) {
     StringBuilder lcs = new StringBuilder();
     int i = m, j = n;
     while (i > 0 && j > 0) {
-        if (s1.charAt(i-1) == s2.charAt(j-1)) {
-            lcs.append(s1.charAt(i-1));
-            i--; j--;
-        } else if (dp[i-1][j] > dp[i][j-1]) {
+        if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+            lcs.append(s1.charAt(i - 1));
+            i--;
+            j--;
+        } else if (dp[i - 1][j] > dp[i][j - 1]) {
             i--;
         } else {
             j--;
@@ -890,21 +1104,22 @@ String printLCS(String s1, String s2) {
 ---
 
 ## DP-27: Longest Common Substring
-**Question:** Find length of longest common substring (contiguous!).  
-**Intuition:** Unlike subsequence, substring MUST be contiguous! If chars match, extend length. If don't match, reset to 0 (can't skip). Track maximum seen.  
-**Logic:** If match: dp[i][j] = 1 + dp[i-1][j-1]. Else: dp[i][j] = 0.  
+**Question:** Find length of longest common substring (contiguous!).
+**Intuition:** Unlike subsequence, substring MUST be contiguous! If chars match, extend length. If don't match, reset to 0 (can't skip). Track maximum seen.
+**Logic:** If match: dp[i][j] = 1 + dp[i-1][j-1]. Else: dp[i][j] = 0.
 **Java:**
+
 ```java
 int longestCommonSubstring(String s1, String s2) {
     int m = s1.length(), n = s2.length();
-    int[] prev = new int[n+1];
+    int[] prev = new int[n + 1];
     int maxLen = 0;
 
     for (int i = 1; i <= m; i++) {
-        int[] curr = new int[n+1];
+        int[] curr = new int[n + 1];
         for (int j = 1; j <= n; j++) {
-            if (s1.charAt(i-1) == s2.charAt(j-1)) {
-                curr[j] = 1 + prev[j-1];
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                curr[j] = 1 + prev[j - 1];
                 maxLen = Math.max(maxLen, curr[j]);
             }
         }
@@ -918,10 +1133,11 @@ int longestCommonSubstring(String s1, String s2) {
 ---
 
 ## DP-28: Longest Palindromic Subsequence
-**Question:** Find length of longest palindromic subsequence.  
-**Intuition:** Genius observation! LPS(s) = LCS(s, reverse(s))! Palindrome reads same forward/backward, so chars must appear in same order in both.  
-**Logic:** Reverse string, find LCS.  
+**Question:** Find length of longest palindromic subsequence.
+**Intuition:** Genius observation! LPS(s) = LCS(s, reverse(s))! Palindrome reads same forward/backward, so chars must appear in same order in both.
+**Logic:** Reverse string, find LCS.
 **Java:**
+
 ```java
 int longestPalindromeSubseq(String s) {
     String rev = new StringBuilder(s).reverse().toString();
@@ -932,9 +1148,10 @@ int longestPalindromeSubseq(String s) {
 ---
 
 ## DP-29: Min Insertions for Palindrome
-**Question:** Minimum insertions to make string palindrome.  
-**Intuition:** Chars not in LPS need duplicates inserted. Insert = n - LPS_length.  
+**Question:** Minimum insertions to make string palindrome.
+**Intuition:** Chars not in LPS need duplicates inserted. Insert = n - LPS_length.
 **Java:**
+
 ```java
 int minInsertions(String s) {
     return s.length() - longestPalindromeSubseq(s);
@@ -943,9 +1160,10 @@ int minInsertions(String s) {
 
 ---
 
-## DP-30: Min Deletions for Palindrome  
-**Intuition:** Same as insertions! Delete = n - LPS_length.  
+## DP-30: Min Deletions for Palindrome
+**Intuition:** Same as insertions! Delete = n - LPS_length.
 **Java:**
+
 ```java
 int minDeletions(String s) {
     return s.length() - longestPalindromeSubseq(s);
@@ -955,20 +1173,21 @@ int minDeletions(String s) {
 ---
 
 ## DP-31: Shortest Common Supersequence
-**Question:** Shortest string containing both s1 and s2 as subsequences.  
-**Intuition:** Length = len1 + len2 - LCS (count LCS once). Build by merging along LCS path.  
+**Question:** Shortest string containing both s1 and s2 as subsequences.
+**Intuition:** Length = len1 + len2 - LCS (count LCS once). Build by merging along LCS path.
 **Java:**
+
 ```java
 String shortestCommonSupersequence(String s1, String s2) {
     int m = s1.length(), n = s2.length();
-    int[][] dp = new int[m+1][n+1];
+    int[][] dp = new int[m + 1][n + 1];
 
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
-            if (s1.charAt(i-1) == s2.charAt(j-1)) {
-                dp[i][j] = 1 + dp[i-1][j-1];
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
             } else {
-                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
             }
         }
     }
@@ -976,19 +1195,26 @@ String shortestCommonSupersequence(String s1, String s2) {
     StringBuilder result = new StringBuilder();
     int i = m, j = n;
     while (i > 0 && j > 0) {
-        if (s1.charAt(i-1) == s2.charAt(j-1)) {
-            result.append(s1.charAt(i-1));
-            i--; j--;
-        } else if (dp[i-1][j] > dp[i][j-1]) {
-            result.append(s1.charAt(i-1));
+        if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+            result.append(s1.charAt(i - 1));
+            i--;
+            j--;
+        } else if (dp[i - 1][j] > dp[i][j - 1]) {
+            result.append(s1.charAt(i - 1));
             i--;
         } else {
-            result.append(s2.charAt(j-1));
+            result.append(s2.charAt(j - 1));
             j--;
         }
     }
-    while (i > 0) { result.append(s1.charAt(i-1)); i--; }
-    while (j > 0) { result.append(s2.charAt(j-1)); j--; }
+    while (i > 0) {
+        result.append(s1.charAt(i - 1));
+        i--;
+    }
+    while (j > 0) {
+        result.append(s2.charAt(j - 1));
+        j--;
+    }
 
     return result.reverse().toString();
 }
@@ -997,23 +1223,24 @@ String shortestCommonSupersequence(String s1, String s2) {
 ---
 
 ## DP-32: Distinct Subsequences
-**Question:** Count distinct subsequences of s that equal t.  
-**Intuition:** If chars match, count = ways using + not using. If don't match, only not using.  
-**Logic:** If match: dp[i][j] = dp[i-1][j-1] + dp[i-1][j]. Else: dp[i][j] = dp[i-1][j].  
+**Question:** Count distinct subsequences of s that equal t.
+**Intuition:** If chars match, count = ways using + not using. If don't match, only not using.
+**Logic:** If match: dp[i][j] = dp[i-1][j-1] + dp[i-1][j]. Else: dp[i][j] = dp[i-1][j].
 **Java:**
+
 ```java
 int numDistinct(String s, String t) {
     int m = s.length(), n = t.length();
-    int[] prev = new int[n+1];
+    int[] prev = new int[n + 1];
     prev[0] = 1;
 
     for (int i = 1; i <= m; i++) {
-        int[] curr = new int[n+1];
+        int[] curr = new int[n + 1];
         curr[0] = 1;
         for (int j = 1; j <= n; j++) {
             curr[j] = prev[j];
-            if (s.charAt(i-1) == t.charAt(j-1)) {
-                curr[j] += prev[j-1];
+            if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                curr[j] += prev[j - 1];
             }
         }
         prev = curr;
@@ -1025,26 +1252,27 @@ int numDistinct(String s, String t) {
 
 ---
 
-## DP-33: Edit Distance â­â­â­
-**Question:** Convert s1 to s2 using insert/delete/replace. Find minimum operations.  
-**Intuition:** Asked in EVERY company! If chars match, no operation. If not, try all 3, take min. Replace often most efficient.  
-**Logic:** If match: dp[i][j] = dp[i-1][j-1]. Else: 1 + min(insert, delete, replace).  
+## DP-33: Edit Distance 
+**Question:** Convert s1 to s2 using insert/delete/replace. Find minimum operations.
+**Intuition:** Asked in EVERY company! If chars match, no operation. If not, try all 3, take min. Replace often most efficient.
+**Logic:** If match: dp[i][j] = dp[i-1][j-1]. Else: 1 + min(insert, delete, replace).
 **Java:**
+
 ```java
 int minDistance(String s1, String s2) {
     int m = s1.length(), n = s2.length();
-    int[] prev = new int[n+1];
+    int[] prev = new int[n + 1];
 
     for (int j = 0; j <= n; j++) prev[j] = j;
 
     for (int i = 1; i <= m; i++) {
-        int[] curr = new int[n+1];
+        int[] curr = new int[n + 1];
         curr[0] = i;
         for (int j = 1; j <= n; j++) {
-            if (s1.charAt(i-1) == s2.charAt(j-1)) {
-                curr[j] = prev[j-1];
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                curr[j] = prev[j - 1];
             } else {
-                curr[j] = 1 + Math.min(curr[j-1], Math.min(prev[j], prev[j-1]));
+                curr[j] = 1 + Math.min(curr[j - 1], Math.min(prev[j], prev[j - 1]));
             }
         }
         prev = curr;
@@ -1057,27 +1285,28 @@ int minDistance(String s1, String s2) {
 ---
 
 ## DP-34: Wildcard Matching
-**Question:** Match string with pattern: '*' matches any sequence, '?' matches single char.  
-**Intuition:** '?' simple - matches one. '*' tricky - matches 0 or more. Try both: skip * or use *.  
-**Logic:** If match or '?': dp[i][j] = dp[i-1][j-1]. If '*': dp[i][j] = dp[i][j-1] || dp[i-1][j].  
+**Question:** Match string with pattern: '*' matches any sequence, '?' matches single char.
+**Intuition:** '?' simple - matches one. '*' tricky - matches 0 or more. Try both: skip * or use *.
+**Logic:** If match or '?': dp[i][j] = dp[i-1][j-1]. If '*': dp[i][j] = dp[i][j-1] || dp[i-1][j].
 **Java:**
+
 ```java
 boolean isMatch(String s, String p) {
     int m = s.length(), n = p.length();
-    boolean[] prev = new boolean[n+1];
+    boolean[] prev = new boolean[n + 1];
     prev[0] = true;
 
     for (int j = 1; j <= n; j++) {
-        if (p.charAt(j-1) == '*') prev[j] = prev[j-1];
+        if (p.charAt(j - 1) == '*') prev[j] = prev[j - 1];
     }
 
     for (int i = 1; i <= m; i++) {
-        boolean[] curr = new boolean[n+1];
+        boolean[] curr = new boolean[n + 1];
         for (int j = 1; j <= n; j++) {
-            if (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '?') {
-                curr[j] = prev[j-1];
-            } else if (p.charAt(j-1) == '*') {
-                curr[j] = curr[j-1] || prev[j];
+            if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?') {
+                curr[j] = prev[j - 1];
+            } else if (p.charAt(j - 1) == '*') {
+                curr[j] = curr[j - 1] || prev[j];
             }
         }
         prev = curr;
@@ -1092,9 +1321,10 @@ boolean isMatch(String s, String p) {
 # Part 5: DP on Stocks
 
 ## DP-35: Best Time to Buy and Sell Stock
-**Question:** Buy once, sell once. Maximize profit.  
-**Intuition:** Greedy works! Track min price, calculate profit if sold today.  
+**Question:** Buy once, sell once. Maximize profit.
+**Intuition:** Greedy works! Track min price, calculate profit if sold today.
 **Java:**
+
 ```java
 int maxProfit(int[] prices) {
     int minPrice = Integer.MAX_VALUE, maxProfit = 0;
@@ -1109,15 +1339,16 @@ int maxProfit(int[] prices) {
 ---
 
 ## DP-36: Buy and Sell Stock II (Unlimited Transactions)
-**Question:** Can buy and sell unlimited times.  
-**Intuition:** Add all positive differences! Capture all uptrends.  
+**Question:** Can buy and sell unlimited times.
+**Intuition:** Add all positive differences! Capture all uptrends.
 **Java:**
+
 ```java
 int maxProfit(int[] prices) {
     int profit = 0;
     for (int i = 1; i < prices.length; i++) {
-        if (prices[i] > prices[i-1]) {
-            profit += prices[i] - prices[i-1];
+        if (prices[i] > prices[i - 1]) {
+            profit += prices[i] - prices[i - 1];
         }
     }
     return profit;
@@ -1127,9 +1358,10 @@ int maxProfit(int[] prices) {
 ---
 
 ## DP-37: Buy and Sell Stock III (At Most 2 Transactions)
-**Question:** At most 2 transactions.  
-**Intuition:** State machine! Track 4 states: buy1, sell1, buy2, sell2.  
+**Question:** At most 2 transactions.
+**Intuition:** State machine! Track 4 states: buy1, sell1, buy2, sell2.
 **Java:**
+
 ```java
 int maxProfit(int[] prices) {
     int buy1 = -prices[0], sell1 = 0;
@@ -1149,29 +1381,30 @@ int maxProfit(int[] prices) {
 ---
 
 ## DP-38: Buy and Sell Stock IV (At Most K Transactions)
-**Question:** At most K transactions.  
-**Intuition:** Generalize to K transactions. If K >= n/2, becomes unlimited.  
+**Question:** At most K transactions.
+**Intuition:** Generalize to K transactions. If K >= n/2, becomes unlimited.
 **Java:**
+
 ```java
 int maxProfit(int k, int[] prices) {
     if (k >= prices.length / 2) {
         int profit = 0;
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] > prices[i-1]) {
-                profit += prices[i] - prices[i-1];
+            if (prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
             }
         }
         return profit;
     }
 
-    int[] buy = new int[k+1];
-    int[] sell = new int[k+1];
+    int[] buy = new int[k + 1];
+    int[] sell = new int[k + 1];
     Arrays.fill(buy, -prices[0]);
 
     for (int i = 1; i < prices.length; i++) {
         for (int j = k; j >= 1; j--) {
             sell[j] = Math.max(sell[j], buy[j] + prices[i]);
-            buy[j] = Math.max(buy[j], sell[j-1] - prices[i]);
+            buy[j] = Math.max(buy[j], sell[j - 1] - prices[i]);
         }
     }
 
@@ -1182,9 +1415,10 @@ int maxProfit(int k, int[] prices) {
 ---
 
 ## DP-39: Stock with Cooldown
-**Question:** After sell, must wait 1 day before buying.  
-**Intuition:** 3 states: holding, sold (cooldown), rest.  
+**Question:** After sell, must wait 1 day before buying.
+**Intuition:** 3 states: holding, sold (cooldown), rest.
 **Java:**
+
 ```java
 int maxProfit(int[] prices) {
     int sold = 0, hold = -prices[0], rest = 0;
@@ -1203,9 +1437,10 @@ int maxProfit(int[] prices) {
 ---
 
 ## DP-40: Stock with Transaction Fee
-**Question:** Pay fee for each transaction.  
-**Intuition:** Subtract fee when selling.  
+**Question:** Pay fee for each transaction.
+**Intuition:** Subtract fee when selling.
 **Java:**
+
 ```java
 int maxProfit(int[] prices, int fee) {
     int cash = 0, hold = -prices[0];
@@ -1223,13 +1458,14 @@ int maxProfit(int[] prices, int fee) {
 
 # Part 6: DP on LIS (Longest Increasing Subsequence)
 
-## DP-41: Longest Increasing Subsequence â­â­â­
-**Question:** Find length of longest strictly increasing subsequence.  
-**Intuition:** Two approaches! O(nÂ²) DP or O(n log n) binary search. Second is interview gold!  
-**Logic:** O(nÂ²): For each i, check all j < i where arr[j] < arr[i]. O(n log n): Maintain tails array with binary search.  
+## DP-41: Longest Increasing Subsequence 
+**Question:** Find length of longest strictly increasing subsequence.
+**Intuition:** Two approaches! O(n²) DP or O(n log n) binary search. Second is interview gold!
+**Logic:** O(n²): For each i, check all j < i where arr[j] < arr[i]. O(n log n): Maintain tails array with binary search.
 **Java:**
+
 ```java
-// O(nÂ²) DP
+// O(n²) DP
 int lengthOfLIS(int[] nums) {
     int n = nums.length;
     int[] dp = new int[n];
@@ -1247,7 +1483,7 @@ int lengthOfLIS(int[] nums) {
     return maxLen;
 }
 
-// O(n log n) Binary Search â­â­â­
+// O(n log n) Binary Search 
 int lengthOfLISOptimal(int[] nums) {
     List<Integer> tails = new ArrayList<>();
 
@@ -1268,9 +1504,10 @@ int lengthOfLISOptimal(int[] nums) {
 ---
 
 ## DP-42: Printing LIS
-**Question:** Print actual LIS.  
-**Intuition:** Track parent during DP, backtrack to build LIS.  
+**Question:** Print actual LIS.
+**Intuition:** Track parent during DP, backtrack to build LIS.
 **Java:**
+
 ```java
 List<Integer> printLIS(int[] nums) {
     int n = nums.length;
@@ -1306,9 +1543,10 @@ List<Integer> printLIS(int[] nums) {
 ---
 
 ## DP-43: Largest Divisible Subset
-**Question:** Find largest subset where every pair (a,b) satisfies a%b==0 or b%a==0.  
-**Intuition:** Sort first! Then LIS with divisibility condition.  
+**Question:** Find largest subset where every pair (a,b) satisfies a%b==0 or b%a==0.
+**Intuition:** Sort first! Then LIS with divisibility condition.
 **Java:**
+
 ```java
 List<Integer> largestDivisibleSubset(int[] nums) {
     Arrays.sort(nums);
@@ -1345,9 +1583,10 @@ List<Integer> largestDivisibleSubset(int[] nums) {
 ---
 
 ## DP-44: Longest String Chain
-**Question:** Chain where each word formed by adding one letter to previous.  
-**Intuition:** Sort by length! For each word, try removing each char, check if predecessor exists.  
+**Question:** Chain where each word formed by adding one letter to previous.
+**Intuition:** Sort by length! For each word, try removing each char, check if predecessor exists.
 **Java:**
+
 ```java
 int longestStrChain(String[] words) {
     Arrays.sort(words, (a, b) -> a.length() - b.length());
@@ -1371,9 +1610,10 @@ int longestStrChain(String[] words) {
 ---
 
 ## DP-45: Longest Bitonic Subsequence
-**Question:** Bitonic = strictly increasing then strictly decreasing.  
-**Intuition:** LIS from left + LIS from right (LDS). Combine at each peak.  
+**Question:** Bitonic = strictly increasing then strictly decreasing.
+**Intuition:** LIS from left + LIS from right (LDS). Combine at each peak.
 **Java:**
+
 ```java
 int longestBitonicSubsequence(int[] nums) {
     int n = nums.length;
@@ -1389,8 +1629,8 @@ int longestBitonicSubsequence(int[] nums) {
         }
     }
 
-    for (int i = n-2; i >= 0; i--) {
-        for (int j = n-1; j > i; j--) {
+    for (int i = n - 2; i >= 0; i--) {
+        for (int j = n - 1; j > i; j--) {
             if (nums[i] > nums[j]) {
                 lds[i] = Math.max(lds[i], lds[j] + 1);
             }
@@ -1410,9 +1650,10 @@ int longestBitonicSubsequence(int[] nums) {
 ---
 
 ## DP-46: Number of LIS
-**Question:** Count number of LIS.  
-**Intuition:** Track count along with length!  
+**Question:** Count number of LIS.
+**Intuition:** Track count along with length!
 **Java:**
+
 ```java
 int findNumberOfLIS(int[] nums) {
     int n = nums.length;
@@ -1445,11 +1686,12 @@ int findNumberOfLIS(int[] nums) {
 
 ---
 
-## DP-47: Matrix Chain Multiplication â­â­â­
-**Question:** Find minimum operations to multiply matrix chain.  
-**Intuition:** Classic interval DP! For range [i,j], try every split k. This partition pattern appears everywhere (MCM pattern)!  
-**Logic:** dp[i][j] = min(dp[i][k] + dp[k+1][j] + arr[i]*arr[k+1]*arr[j+1]).  
+## DP-47: Matrix Chain Multiplication 
+**Question:** Find minimum operations to multiply matrix chain.
+**Intuition:** Classic interval DP! For range [i,j], try every split k. This partition pattern appears everywhere (MCM pattern)!
+**Logic:** dp[i][j] = min(dp[i][k] + dp[k+1][j] + arr[i]*arr[k+1]*arr[j+1]).
 **Java:**
+
 ```java
 int matrixChainMultiplication(int[] arr) {
     int n = arr.length - 1;
@@ -1461,12 +1703,12 @@ int matrixChainMultiplication(int[] arr) {
             dp[i][j] = Integer.MAX_VALUE;
 
             for (int k = i; k < j; k++) {
-                int cost = dp[i][k] + dp[k+1][j] + arr[i] * arr[k+1] * arr[j+1];
+                int cost = dp[i][k] + dp[k + 1][j] + arr[i] * arr[k + 1] * arr[j + 1];
                 dp[i][j] = Math.min(dp[i][j], cost);
             }
         }
     }
-    return dp[0][n-1];
+    return dp[0][n - 1];
 }
 ```
 
@@ -1475,14 +1717,16 @@ int matrixChainMultiplication(int[] arr) {
 # Part 7: MCM DP / Partition DP
 
 ## DP-48: Minimum Cost to Cut Stick
-**Question:** Cut stick at positions. Cost = stick length. Minimize total.  
-**Intuition:** MCM variant! Sort cuts, add boundaries 0 and n.  
+**Question:** Cut stick at positions. Cost = stick length. Minimize total.
+**Intuition:** MCM variant! Sort cuts, add boundaries 0 and n.
 **Java:**
+
 ```java
 int minCost(int n, int[] cuts) {
     int c = cuts.length;
     int[] arr = new int[c + 2];
-    arr[0] = 0; arr[c + 1] = n;
+    arr[0] = 0;
+    arr[c + 1] = n;
     for (int i = 0; i < c; i++) arr[i + 1] = cuts[i];
     Arrays.sort(arr);
 
@@ -1505,15 +1749,17 @@ int minCost(int n, int[] cuts) {
 
 ---
 
-## DP-49: Burst Balloons â­â­â­
-**Question:** Burst balloons. Coins = nums[left] * nums[i] * nums[right].  
-**Intuition:** Mind-bending! Think which balloon bursts LAST! Add 1 to boundaries.  
+## DP-49: Burst Balloons 
+**Question:** Burst balloons. Coins = nums[left] * nums[i] * nums[right].
+**Intuition:** Mind-bending! Think which balloon bursts LAST! Add 1 to boundaries.
 **Java:**
+
 ```java
 int maxCoins(int[] nums) {
     int n = nums.length;
     int[] arr = new int[n + 2];
-    arr[0] = 1; arr[n + 1] = 1;
+    arr[0] = 1;
+    arr[n + 1] = 1;
     for (int i = 0; i < n; i++) arr[i + 1] = nums[i];
 
     int[][] dp = new int[n + 2][n + 2];
@@ -1523,8 +1769,8 @@ int maxCoins(int[] nums) {
             int j = i + len - 1;
 
             for (int k = i; k <= j; k++) {
-                int coins = arr[i-1] * arr[k] * arr[j+1];
-                coins += dp[i][k-1] + dp[k+1][j];
+                int coins = arr[i - 1] * arr[k] * arr[j + 1];
+                coins += dp[i][k - 1] + dp[k + 1][j];
                 dp[i][j] = Math.max(dp[i][j], coins);
             }
         }
@@ -1537,9 +1783,10 @@ int maxCoins(int[] nums) {
 ---
 
 ## DP-50: Palindrome Partitioning II
-**Question:** Partition into palindromes. Minimize cuts.  
-**Intuition:** Precompute palindromes. For each i, find min cuts.  
+**Question:** Partition into palindromes. Minimize cuts.
+**Intuition:** Precompute palindromes. For each i, find min cuts.
 **Java:**
+
 ```java
 int minCut(String s) {
     int n = s.length();
@@ -1549,7 +1796,7 @@ int minCut(String s) {
         for (int i = 0; i <= n - len; i++) {
             int j = i + len - 1;
             if (s.charAt(i) == s.charAt(j)) {
-                isPalin[i][j] = (len <= 2) || isPalin[i+1][j-1];
+                isPalin[i][j] = (len <= 2) || isPalin[i + 1][j - 1];
             }
         }
     }
@@ -1561,23 +1808,24 @@ int minCut(String s) {
         } else {
             dp[i] = Integer.MAX_VALUE;
             for (int j = 0; j < i; j++) {
-                if (isPalin[j+1][i]) {
+                if (isPalin[j + 1][i]) {
                     dp[i] = Math.min(dp[i], dp[j] + 1);
                 }
             }
         }
     }
 
-    return dp[n-1];
+    return dp[n - 1];
 }
 ```
 
 ---
 
 ## DP-51: Partition Array for Maximum Sum
-**Question:** Partition into subarrays â‰¤k. Replace all with max. Maximize sum.  
-**Intuition:** Try all partitions ending at each position.  
+**Question:** Partition into subarrays <=k. Replace all with max. Maximize sum.
+**Intuition:** Try all partitions ending at each position.
 **Java:**
+
 ```java
 int maxSumAfterPartitioning(int[] arr, int k) {
     int n = arr.length;
@@ -1598,9 +1846,10 @@ int maxSumAfterPartitioning(int[] arr, int k) {
 ---
 
 ## DP-52: Largest Rectangle in Histogram
-**Question:** Find area of largest rectangle in histogram.  
-**Intuition:** For each bar, find left and right boundaries using stack.  
+**Question:** Find area of largest rectangle in histogram.
+**Intuition:** For each bar, find left and right boundaries using stack.
 **Java:**
+
 ```java
 int largestRectangleArea(int[] heights) {
     int n = heights.length;
@@ -1635,9 +1884,10 @@ int largestRectangleArea(int[] heights) {
 ---
 
 ## DP-53: Maximal Rectangle
-**Question:** Binary matrix. Find largest rectangle of 1s.  
-**Intuition:** For each row, calculate histogram heights, apply DP-52!  
+**Question:** Binary matrix. Find largest rectangle of 1s.
+**Intuition:** For each row, calculate histogram heights, apply DP-52!
 **Java:**
+
 ```java
 int maximalRectangle(char[][] matrix) {
     if (matrix.length == 0) return 0;
@@ -1660,9 +1910,10 @@ int maximalRectangle(char[][] matrix) {
 ---
 
 ## DP-54: Count Square Submatrices with All Ones
-**Question:** Count number of square submatrices with all 1s.  
-**Intuition:** dp[i][j] = size of largest square ending at (i,j). Sum all dp values!  
+**Question:** Count number of square submatrices with all 1s.
+**Intuition:** dp[i][j] = size of largest square ending at (i,j). Sum all dp values!
 **Java:**
+
 ```java
 int countSquares(int[][] matrix) {
     int m = matrix.length, n = matrix[0].length;
@@ -1675,7 +1926,7 @@ int countSquares(int[][] matrix) {
                 if (i == 0 || j == 0) {
                     dp[i][j] = 1;
                 } else {
-                    dp[i][j] = 1 + Math.min(dp[i-1][j], Math.min(dp[i][j-1], dp[i-1][j-1]));
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
                 }
                 count += dp[i][j];
             }
@@ -1696,7 +1947,7 @@ int countSquares(int[][] matrix) {
 - Examples: Fibonacci, House Robber, Frog Jump
 - Use prev1, prev2 for O(1) space
 
-### 2. 2D Grid DP  
+### 2. 2D Grid DP
 - Examples: Unique Paths, Min Path Sum
 - Use 1D array for O(n) space
 
@@ -1713,7 +1964,7 @@ int countSquares(int[][] matrix) {
 - 2D table, match/mismatch decisions
 
 ### 6. LIS Family
-- O(nÂ²) DP or O(n log n) Binary Search
+- O(n²) DP or O(n log n) Binary Search
 - Many variations possible
 
 ### 7. MCM / Partition DP
@@ -1724,15 +1975,15 @@ int countSquares(int[][] matrix) {
 
 ## Time Complexity Reference
 
-| Pattern | Time | Space |
-|---------|------|-------|
-| 1D DP | O(n) | O(1) |
-| Grid DP | O(m*n) | O(n) |
-| Subset Sum | O(n*sum) | O(sum) |
-| Knapsack | O(n*W) | O(W) |
-| LCS | O(m*n) | O(n) |
-| LIS (BS) | O(n log n) | O(n) |
-| MCM | O(nÂ³) | O(nÂ²) |
+| Pattern    | Time       | Space  |
+| ---------- | ---------- | ------ |
+| 1D DP      | O(n)       | O(1)   |
+| Grid DP    | O(m*n)     | O(n)   |
+| Subset Sum | O(n*sum)   | O(sum) |
+| Knapsack   | O(n*W)     | O(W)   |
+| LCS        | O(m*n)     | O(n)   |
+| LIS (BS)   | O(n log n) | O(n)   |
+| MCM        | O(n³)      | O(n²)  |
 
 ---
 

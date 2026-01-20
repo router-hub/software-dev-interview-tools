@@ -8,13 +8,13 @@
 
 ```java
 int findLargest(int[] arr) {
-    int max = arr[0];
-    for (int i = 1; i < arr.length; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
-        }
-    }
-    return max;
+ int max = arr[0];
+ for (int i = 1; i < arr.length; i++) {
+ if (arr[i] > max) {
+ max = arr[i];
+ }
+ }
+ return max;
 }
 ```
 
@@ -33,17 +33,17 @@ int findLargest(int[] arr) {
 
 ```java
 int findSecondLargest(int[] arr) {
-    int largest = arr[0], secondLargest = -1;
+ int largest = arr[0], secondLargest = -1;
 
-    for (int i = 1; i < arr.length; i++) {
-        if (arr[i] > largest) {
-            secondLargest = largest;
-            largest = arr[i];
-        } else if (arr[i] > secondLargest && arr[i] != largest) {
-            secondLargest = arr[i];
-        }
-    }
-    return secondLargest;
+ for (int i = 1; i < arr.length; i++) {
+ if (arr[i] > largest) {
+ secondLargest = largest;
+ largest = arr[i];
+ } else if (arr[i] > secondLargest && arr[i] != largest) {
+ secondLargest = arr[i];
+ }
+ }
+ return secondLargest;
 }
 ```
 
@@ -62,12 +62,12 @@ int findSecondLargest(int[] arr) {
 
 ```java
 boolean isSorted(int[] arr) {
-    for (int i = 0; i < arr.length - 1; i++) {
-        if (arr[i] > arr[i + 1]) {
-            return false;
-        }
-    }
-    return true;
+ for (int i = 0; i < arr.length - 1; i++) {
+ if (arr[i] > arr[i + 1]) {
+ return false;
+ }
+ }
+ return true;
 }
 ```
 
@@ -86,14 +86,14 @@ boolean isSorted(int[] arr) {
 
 ```java
 int removeDuplicates(int[] arr) {
-    int i = 0;
-    for (int j = 1; j < arr.length; j++) {
-        if (arr[j] != arr[i]) {
-            i++;
-            arr[i] = arr[j];
-        }
-    }
-    return i + 1;
+ int i = 0;
+ for (int j = 1; j < arr.length; j++) {
+ if (arr[j] != arr[i]) {
+ i++;
+ arr[i] = arr[j];
+ }
+ }
+ return i + 1;
 }
 ```
 
@@ -112,11 +112,11 @@ int removeDuplicates(int[] arr) {
 
 ```java
 void leftRotateByOne(int[] arr) {
-    int temp = arr[0];
-    for (int i = 1; i < arr.length; i++) {
-        arr[i - 1] = arr[i];
-    }
-    arr[arr.length - 1] = temp;
+ int temp = arr[0];
+ for (int i = 1; i < arr.length; i++) {
+ arr[i - 1] = arr[i];
+ }
+ arr[arr.length - 1] = temp;
 }
 ```
 
@@ -136,21 +136,21 @@ void leftRotateByOne(int[] arr) {
 ```java
 // Optimal: Reversal algorithm
 void leftRotate(int[] arr, int d) {
-    int n = arr.length;
-    d = d % n;
-    reverse(arr, 0, d - 1);
-    reverse(arr, d, n - 1);
-    reverse(arr, 0, n - 1);
+ int n = arr.length;
+ d = d % n;
+ reverse(arr, 0, d - 1);
+ reverse(arr, d, n - 1);
+ reverse(arr, 0, n - 1);
 }
 
 void reverse(int[] arr, int start, int end) {
-    while (start < end) {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-        start++;
-        end--;
-    }
+ while (start < end) {
+ int temp = arr[start];
+ arr[start] = arr[end];
+ arr[end] = temp;
+ start++;
+ end--;
+ }
 }
 ```
 
@@ -169,17 +169,17 @@ void reverse(int[] arr, int start, int end) {
 
 ```java
 void moveZeros(int[] arr) {
-    int j = 0; // position for next non-zero
+ int j = 0; // position for next non-zero
 
-    // Move all non-zeros to front
-    for (int i = 0; i < arr.length; i++) {
-        if (arr[i] != 0) {
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-            j++;
-        }
-    }
+ // Move all non-zeros to front
+ for (int i = 0; i < arr.length; i++) {
+ if (arr[i] != 0) {
+ int temp = arr[i];
+ arr[i] = arr[j];
+ arr[j] = temp;
+ j++;
+ }
+ }
 }
 ```
 
@@ -198,12 +198,12 @@ void moveZeros(int[] arr) {
 
 ```java
 int linearSearch(int[] arr, int target) {
-    for (int i = 0; i < arr.length; i++) {
-        if (arr[i] == target) {
-            return i;
-        }
-    }
-    return -1;
+ for (int i = 0; i < arr.length; i++) {
+ if (arr[i] == target) {
+ return i;
+ }
+ }
+ return -1;
 }
 ```
 
@@ -222,38 +222,38 @@ int linearSearch(int[] arr, int target) {
 
 ```java
 ArrayList<Integer> findUnion(int[] arr1, int[] arr2) {
-    ArrayList<Integer> union = new ArrayList<>();
-    int i = 0, j = 0;
+ ArrayList<Integer> union = new ArrayList<>();
+ int i = 0, j = 0;
 
-    while (i < arr1.length && j < arr2.length) {
-        if (arr1[i] <= arr2[j]) {
-            if (union.isEmpty() || union.get(union.size() - 1) != arr1[i]) {
-                union.add(arr1[i]);
-            }
-            i++;
-        } else {
-            if (union.isEmpty() || union.get(union.size() - 1) != arr2[j]) {
-                union.add(arr2[j]);
-            }
-            j++;
-        }
-    }
+ while (i < arr1.length && j < arr2.length) {
+ if (arr1[i] <= arr2[j]) {
+ if (union.isEmpty() || union.get(union.size() - 1) != arr1[i]) {
+ union.add(arr1[i]);
+ }
+ i++;
+ } else {
+ if (union.isEmpty() || union.get(union.size() - 1) != arr2[j]) {
+ union.add(arr2[j]);
+ }
+ j++;
+ }
+ }
 
-    while (i < arr1.length) {
-        if (union.get(union.size() - 1) != arr1[i]) {
-            union.add(arr1[i]);
-        }
-        i++;
-    }
+ while (i < arr1.length) {
+ if (union.get(union.size() - 1) != arr1[i]) {
+ union.add(arr1[i]);
+ }
+ i++;
+ }
 
-    while (j < arr2.length) {
-        if (union.get(union.size() - 1) != arr2[j]) {
-            union.add(arr2[j]);
-        }
-        j++;
-    }
+ while (j < arr2.length) {
+ if (union.get(union.size() - 1) != arr2[j]) {
+ union.add(arr2[j]);
+ }
+ j++;
+ }
 
-    return union;
+ return union;
 }
 ```
 
@@ -272,21 +272,21 @@ ArrayList<Integer> findUnion(int[] arr1, int[] arr2) {
 
 ```java
 ArrayList<Integer> findIntersection(int[] arr1, int[] arr2) {
-    ArrayList<Integer> intersection = new ArrayList<>();
-    int i = 0, j = 0;
+ ArrayList<Integer> intersection = new ArrayList<>();
+ int i = 0, j = 0;
 
-    while (i < arr1.length && j < arr2.length) {
-        if (arr1[i] < arr2[j]) {
-            i++;
-        } else if (arr1[i] > arr2[j]) {
-            j++;
-        } else {
-            intersection.add(arr1[i]);
-            i++;
-            j++;
-        }
-    }
-    return intersection;
+ while (i < arr1.length && j < arr2.length) {
+ if (arr1[i] < arr2[j]) {
+ i++;
+ } else if (arr1[i] > arr2[j]) {
+ j++;
+ } else {
+ intersection.add(arr1[i]);
+ i++;
+ j++;
+ }
+ }
+ return intersection;
 }
 ```
 
@@ -305,23 +305,23 @@ ArrayList<Integer> findIntersection(int[] arr1, int[] arr2) {
 
 ```java
 int missingNumber(int[] arr, int n) {
-    int expectedSum = n * (n + 1) / 2;
-    int actualSum = 0;
-    for (int num : arr) {
-        actualSum += num;
-    }
-    return expectedSum - actualSum;
+ int expectedSum = n * (n + 1) / 2;
+ int actualSum = 0;
+ for (int num : arr) {
+ actualSum += num;
+ }
+ return expectedSum - actualSum;
 }
 
 // XOR approach (avoids overflow)
 int missingNumberXOR(int[] arr, int n) {
-    int xor1 = 0, xor2 = 0;
-    for (int i = 0; i < n - 1; i++) {
-        xor1 ^= arr[i];
-        xor2 ^= (i + 1);
-    }
-    xor2 ^= n;
-    return xor1 ^ xor2;
+ int xor1 = 0, xor2 = 0;
+ for (int i = 0; i < n - 1; i++) {
+ xor1 ^= arr[i];
+ xor2 ^= (i + 1);
+ }
+ xor2 ^= n;
+ return xor1 ^ xor2;
 }
 ```
 
@@ -340,17 +340,17 @@ int missingNumberXOR(int[] arr, int n) {
 
 ```java
 int findMaxConsecutiveOnes(int[] arr) {
-    int maxCount = 0, currentCount = 0;
+ int maxCount = 0, currentCount = 0;
 
-    for (int num : arr) {
-        if (num == 1) {
-            currentCount++;
-            maxCount = Math.max(maxCount, currentCount);
-        } else {
-            currentCount = 0;
-        }
-    }
-    return maxCount;
+ for (int num : arr) {
+ if (num == 1) {
+ currentCount++;
+ maxCount = Math.max(maxCount, currentCount);
+ } else {
+ currentCount = 0;
+ }
+ }
+ return maxCount;
 }
 ```
 
@@ -369,11 +369,11 @@ int findMaxConsecutiveOnes(int[] arr) {
 
 ```java
 int findSingle(int[] arr) {
-    int xor = 0;
-    for (int num : arr) {
-        xor ^= num;
-    }
-    return xor;
+ int xor = 0;
+ for (int num : arr) {
+ xor ^= num;
+ }
+ return xor;
 }
 ```
 
@@ -392,23 +392,23 @@ int findSingle(int[] arr) {
 
 ```java
 int longestSubarrayWithSumK(int[] arr, int k) {
-    int left = 0, right = 0;
-    int sum = 0, maxLen = 0;
+ int left = 0, right = 0;
+ int sum = 0, maxLen = 0;
 
-    while (right < arr.length) {
-        sum += arr[right];
+ while (right < arr.length) {
+ sum += arr[right];
 
-        while (sum > k && left <= right) {
-            sum -= arr[left];
-            left++;
-        }
+ while (sum > k && left <= right) {
+ sum -= arr[left];
+ left++;
+ }
 
-        if (sum == k) {
-            maxLen = Math.max(maxLen, right - left + 1);
-        }
-        right++;
-    }
-    return maxLen;
+ if (sum == k) {
+ maxLen = Math.max(maxLen, right - left + 1);
+ }
+ right++;
+ }
+ return maxLen;
 }
 ```
 
@@ -427,29 +427,29 @@ int longestSubarrayWithSumK(int[] arr, int k) {
 
 ```java
 boolean twoSum(int[] arr, int target) {
-    HashSet<Integer> set = new HashSet<>();
+ HashSet<Integer> set = new HashSet<>();
 
-    for (int num : arr) {
-        if (set.contains(target - num)) {
-            return true;
-        }
-        set.add(num);
-    }
-    return false;
+ for (int num : arr) {
+ if (set.contains(target - num)) {
+ return true;
+ }
+ set.add(num);
+ }
+ return false;
 }
 
 // Return indices
 int[] twoSumIndices(int[] arr, int target) {
-    HashMap<Integer, Integer> map = new HashMap<>();
+ HashMap<Integer, Integer> map = new HashMap<>();
 
-    for (int i = 0; i < arr.length; i++) {
-        int complement = target - arr[i];
-        if (map.containsKey(complement)) {
-            return new int[]{map.get(complement), i};
-        }
-        map.put(arr[i], i);
-    }
-    return new int[]{-1, -1};
+ for (int i = 0; i < arr.length; i++) {
+ int complement = target - arr[i];
+ if (map.containsKey(complement)) {
+ return new int[]{map.get(complement), i};
+ }
+ map.put(arr[i], i);
+ }
+ return new int[]{-1, -1};
 }
 ```
 
@@ -468,26 +468,26 @@ int[] twoSumIndices(int[] arr, int target) {
 
 ```java
 void sort012(int[] arr) {
-    int low = 0, mid = 0, high = arr.length - 1;
+ int low = 0, mid = 0, high = arr.length - 1;
 
-    while (mid <= high) {
-        if (arr[mid] == 0) {
-            swap(arr, low, mid);
-            low++;
-            mid++;
-        } else if (arr[mid] == 1) {
-            mid++;
-        } else { // arr[mid] == 2
-            swap(arr, mid, high);
-            high--;
-        }
-    }
+ while (mid <= high) {
+ if (arr[mid] == 0) {
+ swap(arr, low, mid);
+ low++;
+ mid++;
+ } else if (arr[mid] == 1) {
+ mid++;
+ } else { // arr[mid] == 2
+ swap(arr, mid, high);
+ high--;
+ }
+ }
 }
 
 void swap(int[] arr, int i, int j) {
-    int temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
+ int temp = arr[i];
+ arr[i] = arr[j];
+ arr[j] = temp;
 }
 ```
 
@@ -506,22 +506,22 @@ void swap(int[] arr, int i, int j) {
 
 ```java
 int majorityElement(int[] arr) {
-    int candidate = arr[0], count = 0;
+ int candidate = arr[0], count = 0;
 
-    // Find candidate
-    for (int num : arr) {
-        if (count == 0) {
-            candidate = num;
-        }
-        count += (num == candidate) ? 1 : -1;
-    }
+ // Find candidate
+ for (int num : arr) {
+ if (count == 0) {
+ candidate = num;
+ }
+ count += (num == candidate) ? 1 : -1;
+ }
 
-    // Verify (if not guaranteed to exist)
-    count = 0;
-    for (int num : arr) {
-        if (num == candidate) count++;
-    }
-    return count > arr.length / 2 ? candidate : -1;
+ // Verify (if not guaranteed to exist)
+ count = 0;
+ for (int num : arr) {
+ if (num == candidate) count++;
+ }
+ return count > arr.length / 2 ? candidate : -1;
 }
 ```
 
@@ -540,18 +540,18 @@ int majorityElement(int[] arr) {
 
 ```java
 int maxSubarraySum(int[] arr) {
-    int maxSum = arr[0];
-    int currentSum = 0;
+ int maxSum = arr[0];
+ int currentSum = 0;
 
-    for (int num : arr) {
-        currentSum += num;
-        maxSum = Math.max(maxSum, currentSum);
+ for (int num : arr) {
+ currentSum += num;
+ maxSum = Math.max(maxSum, currentSum);
 
-        if (currentSum < 0) {
-            currentSum = 0;
-        }
-    }
-    return maxSum;
+ if (currentSum < 0) {
+ currentSum = 0;
+ }
+ }
+ return maxSum;
 }
 ```
 
@@ -570,14 +570,14 @@ int maxSubarraySum(int[] arr) {
 
 ```java
 int maxProfit(int[] prices) {
-    int minPrice = prices[0];
-    int maxProfit = 0;
+ int minPrice = prices[0];
+ int maxProfit = 0;
 
-    for (int i = 1; i < prices.length; i++) {
-        maxProfit = Math.max(maxProfit, prices[i] - minPrice);
-        minPrice = Math.min(minPrice, prices[i]);
-    }
-    return maxProfit;
+ for (int i = 1; i < prices.length; i++) {
+ maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+ minPrice = Math.min(minPrice, prices[i]);
+ }
+ return maxProfit;
 }
 ```
 
@@ -590,12 +590,12 @@ Suppose `prices = [7, 1, 5, 3, 6, 4]`
 
 | Day | Price | minPrice | maxProfit | Profit (if sold now) |
 | --- | ----- | -------- | --------- | -------------------- |
-| 0   | 7     | 7        | 0         | 0                    |
-| 1   | 1     | 1        | 0         | (1-7) = -6           |
-| 2   | 5     | 1        | 4         | (5-1) = 4            |
-| 3   | 3     | 1        | 4         | (3-1) = 2            |
-| 4   | 6     | 1        | 5         | (6-1) = 5            |
-| 5   | 4     | 1        | 5         | (4-1) = 3            |
+| 0 | 7 | 7 | 0 | 0 |
+| 1 | 1 | 1 | 0 | (1-7) = -6 |
+| 2 | 5 | 1 | 4 | (5-1) = 4 |
+| 3 | 3 | 1 | 4 | (3-1) = 2 |
+| 4 | 6 | 1 | 5 | (6-1) = 5 |
+| 5 | 4 | 1 | 5 | (4-1) = 3 |
 
 *Best profit: 5 (buy at 1, sell at 6).*
 
@@ -611,19 +611,19 @@ Suppose `prices = [7, 1, 5, 3, 6, 4]`
 
 ```java
 int[] rearrangeBySign(int[] arr) {
-    int[] result = new int[arr.length];
-    int posIdx = 0, negIdx = 1;
+ int[] result = new int[arr.length];
+ int posIdx = 0, negIdx = 1;
 
-    for (int num : arr) {
-        if (num > 0) {
-            result[posIdx] = num;
-            posIdx += 2;
-        } else {
-            result[negIdx] = num;
-            negIdx += 2;
-        }
-    }
-    return result;
+ for (int num : arr) {
+ if (num > 0) {
+ result[posIdx] = num;
+ posIdx += 2;
+ } else {
+ result[negIdx] = num;
+ negIdx += 2;
+ }
+ }
+ return result;
 }
 ```
 
@@ -642,33 +642,33 @@ int[] rearrangeBySign(int[] arr) {
 
 ```java
 void nextPermutation(int[] arr) {
-    int n = arr.length;
-    int breakPoint = -1;
+ int n = arr.length;
+ int breakPoint = -1;
 
-    // Find break-point
-    for (int i = n - 2; i >= 0; i--) {
-        if (arr[i] < arr[i + 1]) {
-            breakPoint = i;
-            break;
-        }
-    }
+ // Find break-point
+ for (int i = n - 2; i >= 0; i--) {
+ if (arr[i] < arr[i + 1]) {
+ breakPoint = i;
+ break;
+ }
+ }
 
-    // If no break-point, reverse entire array
-    if (breakPoint == -1) {
-        reverse(arr, 0, n - 1);
-        return;
-    }
+ // If no break-point, reverse entire array
+ if (breakPoint == -1) {
+ reverse(arr, 0, n - 1);
+ return;
+ }
 
-    // Find next greater element to swap
-    for (int i = n - 1; i > breakPoint; i--) {
-        if (arr[i] > arr[breakPoint]) {
-            swap(arr, i, breakPoint);
-            break;
-        }
-    }
+ // Find next greater element to swap
+ for (int i = n - 1; i > breakPoint; i--) {
+ if (arr[i] > arr[breakPoint]) {
+ swap(arr, i, breakPoint);
+ break;
+ }
+ }
 
-    // Reverse after break-point
-    reverse(arr, breakPoint + 1, n - 1);
+ // Reverse after break-point
+ reverse(arr, breakPoint + 1, n - 1);
 }
 ```
 
@@ -681,44 +681,44 @@ Suppose `arr = [1, 3, 5, 4, 2]`
 Steps:
 
 1. **Find break-point:**
-   Traverse from right: 5 > 4 > 2 (decreasing), but 3 < 5 at index 1. So, breakPoint = 1.
+ Traverse from right: 5 > 4 > 2 (decreasing), but 3 < 5 at index 1. So, breakPoint = 1.
 
-   ```
-   [1, 3, 5, 4, 2]
-      ^ breakPoint
-   ```
+ ```
+ [1, 3, 5, 4, 2]
+ ^ breakPoint
+ ```
 2. **Find next greater element to swap with arr[1]:**
-   Search right-to-left: first element > 3 is 4 at index 3.
+ Search right-to-left: first element > 3 is 4 at index 3.
 
-   ```
-   [1, 3, 5, 4, 2]
-         ^    ^  
-       break  swap with 4
-   ```
+ ```
+ [1, 3, 5, 4, 2]
+ ^ ^
+ break swap with 4
+ ```
 3. **Swap arr[1] and arr[3]:**
 
-   ```
-   Before swap: [1, 3, 5, 4, 2]
-   After swap:  [1, 4, 5, 3, 2]
-   ```
+ ```
+ Before swap: [1, 3, 5, 4, 2]
+ After swap: [1, 4, 5, 3, 2]
+ ```
 4. **Reverse after break-point (indices 2 to 4):**
-   Subarray to reverse: [5, 3, 2] → [2, 3, 5]
-   Final result: [1, 4, 2, 3, 5]
+ Subarray to reverse: [5, 3, 2] → [2, 3, 5]
+ Final result: [1, 4, 2, 3, 5]
 
-   ```
-   [1, 4, | 5, 3, 2] -> [1, 4, | 2, 3, 5]
-          ^  reverse after break-point ^
-   ```
+ ```
+ [1, 4, | 5, 3, 2] -> [1, 4, | 2, 3, 5]
+ ^ reverse after break-point ^
+ ```
 
 **Illustrative Diagrams:**
 
 ```
-Initial     : [1, 3, 5, 4, 2]
+Initial : [1, 3, 5, 4, 2]
 Break-point : [1, 3*, 5, 4, 2]
-                 ^
-Find swap   :      [1, 4*, 5, 3, 2]
-                      ^ (swap with 3)
-After swap  : [1, 4, 5, 3, 2]
+ ^
+Find swap : [1, 4*, 5, 3, 2]
+ ^ (swap with 3)
+After swap : [1, 4, 5, 3, 2]
 Reverse tail: [1, 4, 2, 3, 5]
 ```
 
@@ -727,7 +727,7 @@ Another quick example:Input: [1, 2, 3]After steps:
 - Break-point = 1 (arr[1]=2).
 - Swap with arr[2]=3.
 - Reverse arr[2:] (only one element).
-  Output: [1, 3, 2]
+ Output: [1, 3, 2]
 
 ---
 
@@ -741,20 +741,20 @@ Another quick example:Input: [1, 2, 3]After steps:
 
 ```java
 ArrayList<Integer> findLeaders(int[] arr) {
-    ArrayList<Integer> leaders = new ArrayList<>();
-    int n = arr.length;
-    int maxFromRight = arr[n - 1];
-    leaders.add(maxFromRight);
+ ArrayList<Integer> leaders = new ArrayList<>();
+ int n = arr.length;
+ int maxFromRight = arr[n - 1];
+ leaders.add(maxFromRight);
 
-    for (int i = n - 2; i >= 0; i--) {
-        if (arr[i] >= maxFromRight) {
-            leaders.add(arr[i]);
-            maxFromRight = arr[i];
-        }
-    }
+ for (int i = n - 2; i >= 0; i--) {
+ if (arr[i] >= maxFromRight) {
+ leaders.add(arr[i]);
+ maxFromRight = arr[i];
+ }
+ }
 
-    Collections.reverse(leaders);
-    return leaders;
+ Collections.reverse(leaders);
+ return leaders;
 }
 ```
 
@@ -773,28 +773,28 @@ ArrayList<Integer> findLeaders(int[] arr) {
 
 ```java
 int longestConsecutive(int[] arr) {
-    HashSet<Integer> set = new HashSet<>();
-    for (int num : arr) {
-        set.add(num);
-    }
+ HashSet<Integer> set = new HashSet<>();
+ for (int num : arr) {
+ set.add(num);
+ }
 
-    int maxLength = 0;
+ int maxLength = 0;
 
-    for (int num : set) {
-        // Check if start of sequence
-        if (!set.contains(num - 1)) {
-            int currentNum = num;
-            int currentLength = 1;
+ for (int num : set) {
+ // Check if start of sequence
+ if (!set.contains(num - 1)) {
+ int currentNum = num;
+ int currentLength = 1;
 
-            while (set.contains(currentNum + 1)) {
-                currentNum++;
-                currentLength++;
-            }
+ while (set.contains(currentNum + 1)) {
+ currentNum++;
+ currentLength++;
+ }
 
-            maxLength = Math.max(maxLength, currentLength);
-        }
-    }
-    return maxLength;
+ maxLength = Math.max(maxLength, currentLength);
+ }
+ }
+ return maxLength;
 }
 ```
 
@@ -813,43 +813,43 @@ int longestConsecutive(int[] arr) {
 
 ```java
 void setZeroes(int[][] matrix) {
-    int m = matrix.length, n = matrix[0].length;
-    boolean firstRowZero = false, firstColZero = false;
+ int m = matrix.length, n = matrix[0].length;
+ boolean firstRowZero = false, firstColZero = false;
 
-    // Check if first row/col has zero
-    for (int j = 0; j < n; j++) {
-        if (matrix[0][j] == 0) firstRowZero = true;
-    }
-    for (int i = 0; i < m; i++) {
-        if (matrix[i][0] == 0) firstColZero = true;
-    }
+ // Check if first row/col has zero
+ for (int j = 0; j < n; j++) {
+ if (matrix[0][j] == 0) firstRowZero = true;
+ }
+ for (int i = 0; i < m; i++) {
+ if (matrix[i][0] == 0) firstColZero = true;
+ }
 
-    // Use first row/col as markers
-    for (int i = 1; i < m; i++) {
-        for (int j = 1; j < n; j++) {
-            if (matrix[i][j] == 0) {
-                matrix[i][0] = 0;
-                matrix[0][j] = 0;
-            }
-        }
-    }
+ // Use first row/col as markers
+ for (int i = 1; i < m; i++) {
+ for (int j = 1; j < n; j++) {
+ if (matrix[i][j] == 0) {
+ matrix[i][0] = 0;
+ matrix[0][j] = 0;
+ }
+ }
+ }
 
-    // Set zeros based on markers
-    for (int i = 1; i < m; i++) {
-        for (int j = 1; j < n; j++) {
-            if (matrix[i][0] == 0 || matrix[0][j] == 0) {
-                matrix[i][j] = 0;
-            }
-        }
-    }
+ // Set zeros based on markers
+ for (int i = 1; i < m; i++) {
+ for (int j = 1; j < n; j++) {
+ if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+ matrix[i][j] = 0;
+ }
+ }
+ }
 
-    // Handle first row/col
-    if (firstRowZero) {
-        for (int j = 0; j < n; j++) matrix[0][j] = 0;
-    }
-    if (firstColZero) {
-        for (int i = 0; i < m; i++) matrix[i][0] = 0;
-    }
+ // Handle first row/col
+ if (firstRowZero) {
+ for (int j = 0; j < n; j++) matrix[0][j] = 0;
+ }
+ if (firstColZero) {
+ for (int i = 0; i < m; i++) matrix[i][0] = 0;
+ }
 }
 ```
 
@@ -922,10 +922,10 @@ Matrix now:
 **Visualization:**
 
 ```
-Markers Stage:         After Zeroing:         Final:
-[1, 0, 3]              [1, 0, 3]             [1, 0, 3]
-[0, 0, 6]     --->     [0, 0, 0]      --->   [0, 0, 0]
-[7, 8, 9]              [7, 0, 9]             [7, 0, 9]
+Markers Stage: After Zeroing: Final:
+[1, 0, 3] [1, 0, 3] [1, 0, 3]
+[0, 0, 6] ---> [0, 0, 0] ---> [0, 0, 0]
+[7, 8, 9] [7, 0, 9] [7, 0, 9]
 (Markers in bold)
 ```
 
@@ -943,32 +943,32 @@ Wherever the first row or column has a 0 after marking, the entire corresponding
 
 ```java
 void rotate(int[][] matrix) {
-    int n = matrix.length;
+ int n = matrix.length;
 
-    // Transpose
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            int temp = matrix[i][j];
-            matrix[i][j] = matrix[j][i];
-            matrix[j][i] = temp;
-        }
-    }
+ // Transpose
+ for (int i = 0; i < n; i++) {
+ for (int j = i + 1; j < n; j++) {
+ int temp = matrix[i][j];
+ matrix[i][j] = matrix[j][i];
+ matrix[j][i] = temp;
+ }
+ }
 
-    // Reverse each row
-    for (int i = 0; i < n; i++) {
-        reverse(matrix[i]);
-    }
+ // Reverse each row
+ for (int i = 0; i < n; i++) {
+ reverse(matrix[i]);
+ }
 }
 
 void reverse(int[] row) {
-    int left = 0, right = row.length - 1;
-    while (left < right) {
-        int temp = row[left];
-        row[left] = row[right];
-        row[right] = temp;
-        left++;
-        right--;
-    }
+ int left = 0, right = row.length - 1;
+ while (left < right) {
+ int temp = row[left];
+ row[left] = row[right];
+ row[right] = temp;
+ left++;
+ right--;
+ }
 }
 ```
 
@@ -987,42 +987,42 @@ void reverse(int[] row) {
 
 ```java
 List<Integer> spiralOrder(int[][] matrix) {
-    List<Integer> result = new ArrayList<>();
-    if (matrix.length == 0) return result;
+ List<Integer> result = new ArrayList<>();
+ if (matrix.length == 0) return result;
 
-    int top = 0, bottom = matrix.length - 1;
-    int left = 0, right = matrix[0].length - 1;
+ int top = 0, bottom = matrix.length - 1;
+ int left = 0, right = matrix[0].length - 1;
 
-    while (top <= bottom && left <= right) {
-        // Right
-        for (int j = left; j <= right; j++) {
-            result.add(matrix[top][j]);
-        }
-        top++;
+ while (top <= bottom && left <= right) {
+ // Right
+ for (int j = left; j <= right; j++) {
+ result.add(matrix[top][j]);
+ }
+ top++;
 
-        // Down
-        for (int i = top; i <= bottom; i++) {
-            result.add(matrix[i][right]);
-        }
-        right--;
+ // Down
+ for (int i = top; i <= bottom; i++) {
+ result.add(matrix[i][right]);
+ }
+ right--;
 
-        // Left (check if row exists)
-        if (top <= bottom) {
-            for (int j = right; j >= left; j--) {
-                result.add(matrix[bottom][j]);
-            }
-            bottom--;
-        }
+ // Left (check if row exists)
+ if (top <= bottom) {
+ for (int j = right; j >= left; j--) {
+ result.add(matrix[bottom][j]);
+ }
+ bottom--;
+ }
 
-        // Up (check if column exists)
-        if (left <= right) {
-            for (int i = bottom; i >= top; i--) {
-                result.add(matrix[i][left]);
-            }
-            left++;
-        }
-    }
-    return result;
+ // Up (check if column exists)
+ if (left <= right) {
+ for (int i = bottom; i >= top; i--) {
+ result.add(matrix[i][left]);
+ }
+ left++;
+ }
+ }
+ return result;
 }
 ```
 
@@ -1041,21 +1041,21 @@ List<Integer> spiralOrder(int[][] matrix) {
 
 ```java
 int subarraySum(int[] arr, int k) {
-    HashMap<Integer, Integer> map = new HashMap<>();
-    map.put(0, 1); // base case
+ HashMap<Integer, Integer> map = new HashMap<>();
+ map.put(0, 1); // base case
 
-    int count = 0, prefixSum = 0;
+ int count = 0, prefixSum = 0;
 
-    for (int num : arr) {
-        prefixSum += num;
+ for (int num : arr) {
+ prefixSum += num;
 
-        if (map.containsKey(prefixSum - k)) {
-            count += map.get(prefixSum - k);
-        }
+ if (map.containsKey(prefixSum - k)) {
+ count += map.get(prefixSum - k);
+ }
 
-        map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
-    }
-    return count;
+ map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
+ }
+ return count;
 }
 ```
 
@@ -1072,17 +1072,17 @@ int subarraySum(int[] arr, int k) {
 **Combinatorics Refresher:**
 
 - **Combinations vs. Permutations:**
-  - *Permutation* (ordered): Number of ways to arrange r items from n is nPr = n!/(n−r)!
-  - *Combination* (unordered): Number of ways to **choose** r from n is nCr = n!/(r!(n−r)!)
+ - *Permutation* (ordered): Number of ways to arrange r items from n is nPr = n!/(n−r)!
+ - *Combination* (unordered): Number of ways to **choose** r from n is nCr = n!/(r!(n−r)!)
 - **What is n! (n factorial)?**
-  - n! = n × (n−1) × (n−2) × ... × 1. The count of all possible ways to arrange n distinct items in a row.
+ - n! = n × (n−1) × (n−2) × ... × 1. The count of all possible ways to arrange n distinct items in a row.
 - **Why does nCr = n!/(r!(n−r)!)?**
-  - n! gives permutations (order matters). But for choosing without order, every selection of r can be arranged among themselves in r! ways (so, overcounted). And the (n−r)! corrects for the remaining unused items.
+ - n! gives permutations (order matters). But for choosing without order, every selection of r can be arranged among themselves in r! ways (so, overcounted). And the (n−r)! corrects for the remaining unused items.
 - **Pascal's Triangle and nCr:**
-  - Each entry at (row n, col r) is exactly nCr (count of subsets of size r from n).
-  - Each entry is also the sum of the two above it: nCr = (n−1)C(r−1) + (n−1)Cr.
+ - Each entry at (row n, col r) is exactly nCr (count of subsets of size r from n).
+ - Each entry is also the sum of the two above it: nCr = (n−1)C(r−1) + (n−1)Cr.
 - **Binomial Expansion:**
-  - (a + b)^n = Σ (from r=0 to n) [nCr × a^{n−r} × b^{r}]. The coefficients are nCr—exactly the entries of the triangle!
+ - (a + b)^n = Σ (from r=0 to n) [nCr × a^{n−r} × b^{r}]. The coefficients are nCr—exactly the entries of the triangle!
 
 **Logic:** Build iteratively or use formula.
 
@@ -1091,20 +1091,20 @@ int subarraySum(int[] arr, int k) {
 ```java
 // Generate n rows
 List<List<Integer>> generate(int numRows) {
-    List<List<Integer>> triangle = new ArrayList<>();
+ List<List<Integer>> triangle = new ArrayList<>();
 
-    for (int i = 0; i < numRows; i++) {
-        List<Integer> row = new ArrayList<>();
-        for (int j = 0; j <= i; j++) {
-            if (j == 0 || j == i) {
-                row.add(1);
-            } else {
-                row.add(triangle.get(i-1).get(j-1) + triangle.get(i-1).get(j));
-            }
-        }
-        triangle.add(row);
-    }
-    return triangle;
+ for (int i = 0; i < numRows; i++) {
+ List<Integer> row = new ArrayList<>();
+ for (int j = 0; j <= i; j++) {
+ if (j == 0 || j == i) {
+ row.add(1);
+ } else {
+ row.add(triangle.get(i-1).get(j-1) + triangle.get(i-1).get(j));
+ }
+ }
+ triangle.add(row);
+ }
+ return triangle;
 }
 
 /*
@@ -1113,11 +1113,11 @@ we need to find to (r-1) C (c - 1)
 */
 // Get specific element (row r, col c)
 int getElement(int r, int c) {
-    long result = 1;
-    for (int i = 0; i < c; i++) {
-        result = result * (r - i) / (i + 1);
-    }
-    return (int) result;
+ long result = 1;
+ for (int i = 0; i < c; i++) {
+ result = result * (r - i) / (i + 1);
+ }
+ return (int) result;
 }
 ```
 
@@ -1136,35 +1136,35 @@ int getElement(int r, int c) {
 
 ```java
 List<List<Integer>> threeSum(int[] arr) {
-    List<List<Integer>> result = new ArrayList<>();
-    Arrays.sort(arr);
+ List<List<Integer>> result = new ArrayList<>();
+ Arrays.sort(arr);
 
-    for (int i = 0; i < arr.length - 2; i++) {
-        // Skip duplicates for first element
-        if (i > 0 && arr[i] == arr[i - 1]) continue;
+ for (int i = 0; i < arr.length - 2; i++) {
+ // Skip duplicates for first element
+ if (i > 0 && arr[i] == arr[i - 1]) continue;
 
-        int left = i + 1, right = arr.length - 1;
+ int left = i + 1, right = arr.length - 1;
 
-        while (left < right) {
-            int sum = arr[i] + arr[left] + arr[right];
+ while (left < right) {
+ int sum = arr[i] + arr[left] + arr[right];
 
-            if (sum == 0) {
-                result.add(Arrays.asList(arr[i], arr[left], arr[right]));
+ if (sum == 0) {
+ result.add(Arrays.asList(arr[i], arr[left], arr[right]));
 
-                // Skip duplicates
-                while (left < right && arr[left] == arr[left + 1]) left++;
-                while (left < right && arr[right] == arr[right - 1]) right--;
+ // Skip duplicates
+ while (left < right && arr[left] == arr[left + 1]) left++;
+ while (left < right && arr[right] == arr[right - 1]) right--;
 
-                left++;
-                right--;
-            } else if (sum < 0) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-    }
-    return result;
+ left++;
+ right--;
+ } else if (sum < 0) {
+ left++;
+ } else {
+ right--;
+ }
+ }
+ }
+ return result;
 }
 ```
 
@@ -1183,38 +1183,38 @@ List<List<Integer>> threeSum(int[] arr) {
 
 ```java
 List<List<Integer>> fourSum(int[] arr, int target) {
-    List<List<Integer>> result = new ArrayList<>();
-    Arrays.sort(arr);
-    int n = arr.length;
+ List<List<Integer>> result = new ArrayList<>();
+ Arrays.sort(arr);
+ int n = arr.length;
 
-    for (int i = 0; i < n - 3; i++) {
-        if (i > 0 && arr[i] == arr[i - 1]) continue;
+ for (int i = 0; i < n - 3; i++) {
+ if (i > 0 && arr[i] == arr[i - 1]) continue;
 
-        for (int j = i + 1; j < n - 2; j++) {
-            if (j > i + 1 && arr[j] == arr[j - 1]) continue;
+ for (int j = i + 1; j < n - 2; j++) {
+ if (j > i + 1 && arr[j] == arr[j - 1]) continue;
 
-            int left = j + 1, right = n - 1;
+ int left = j + 1, right = n - 1;
 
-            while (left < right) {
-                long sum = (long)arr[i] + arr[j] + arr[left] + arr[right];
+ while (left < right) {
+ long sum = (long)arr[i] + arr[j] + arr[left] + arr[right];
 
-                if (sum == target) {
-                    result.add(Arrays.asList(arr[i], arr[j], arr[left], arr[right]));
+ if (sum == target) {
+ result.add(Arrays.asList(arr[i], arr[j], arr[left], arr[right]));
 
-                    while (left < right && arr[left] == arr[left + 1]) left++;
-                    while (left < right && arr[right] == arr[right - 1]) right--;
+ while (left < right && arr[left] == arr[left + 1]) left++;
+ while (left < right && arr[right] == arr[right - 1]) right--;
 
-                    left++;
-                    right--;
-                } else if (sum < target) {
-                    left++;
-                } else {
-                    right--;
-                }
-            }
-        }
-    }
-    return result;
+ left++;
+ right--;
+ } else if (sum < target) {
+ left++;
+ } else {
+ right--;
+ }
+ }
+ }
+ }
+ return result;
 }
 ```
 
@@ -1233,22 +1233,22 @@ List<List<Integer>> fourSum(int[] arr, int target) {
 
 ```java
 int subarraysWithXorK(int[] arr, int k) {
-    HashMap<Integer, Integer> map = new HashMap<>();
-    map.put(0, 1);
+ HashMap<Integer, Integer> map = new HashMap<>();
+ map.put(0, 1);
 
-    int count = 0, xor = 0;
+ int count = 0, xor = 0;
 
-    for (int num : arr) {
-        xor ^= num;
+ for (int num : arr) {
+ xor ^= num;
 
-        int target = xor ^ k;
-        if (map.containsKey(target)) {
-            count += map.get(target);
-        }
+ int target = xor ^ k;
+ if (map.containsKey(target)) {
+ count += map.get(target);
+ }
 
-        map.put(xor, map.getOrDefault(xor, 0) + 1);
-    }
-    return count;
+ map.put(xor, map.getOrDefault(xor, 0) + 1);
+ }
+ return count;
 }
 ```
 
@@ -1267,30 +1267,30 @@ int subarraysWithXorK(int[] arr, int k) {
 
 ```java
 int[][] merge(int[][] intervals) {
-    if (intervals.length <= 1) return intervals;
+ if (intervals.length <= 1) return intervals;
 
-    Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+ Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
-    List<int[]> merged = new ArrayList<>();
-    int[] currentInterval = intervals[0];
-    merged.add(currentInterval);
+ List<int[]> merged = new ArrayList<>();
+ int[] currentInterval = intervals[0];
+ merged.add(currentInterval);
 
-    for (int[] interval : intervals) {
-        int currentEnd = currentInterval[1];
-        int nextStart = interval[0];
-        int nextEnd = interval[1];
+ for (int[] interval : intervals) {
+ int currentEnd = currentInterval[1];
+ int nextStart = interval[0];
+ int nextEnd = interval[1];
 
-        if (currentEnd >= nextStart) {
-            // Overlapping - merge
-            currentInterval[1] = Math.max(currentEnd, nextEnd);
-        } else {
-            // Non-overlapping - add new interval
-            currentInterval = interval;
-            merged.add(currentInterval);
-        }
-    }
+ if (currentEnd >= nextStart) {
+ // Overlapping - merge
+ currentInterval[1] = Math.max(currentEnd, nextEnd);
+ } else {
+ // Non-overlapping - add new interval
+ currentInterval = interval;
+ merged.add(currentInterval);
+ }
+ }
 
-    return merged.toArray(new int[merged.size()][]);
+ return merged.toArray(new int[merged.size()][]);
 }
 ```
 
@@ -1317,21 +1317,21 @@ Another logic:Use two pointers, one starting from the end of arr1 (right) and on
 
 ```java
 void mergePlaceToCorrectArrayAndSort(int[] arr1, int[] arr2) {
-    int m = arr1.length, n = arr2.length;
-    int i = m - 1;
-    int j = 0;
-    // Move elements to correct array
-    while (i >= 0 && j < n && arr1[i] > arr2[j]) {
-        // Swap the largest on left with smallest on right
-        int temp = arr1[i];
-        arr1[i] = arr2[j];
-        arr2[j] = temp;
-        i--;
-        j++;
-    }
-    // Now sort both arrays
-    Arrays.sort(arr1);
-    Arrays.sort(arr2);
+ int m = arr1.length, n = arr2.length;
+ int i = m - 1;
+ int j = 0;
+ // Move elements to correct array
+ while (i >= 0 && j < n && arr1[i] > arr2[j]) {
+ // Swap the largest on left with smallest on right
+ int temp = arr1[i];
+ arr1[i] = arr2[j];
+ arr2[j] = temp;
+ i--;
+ j++;
+ }
+ // Now sort both arrays
+ Arrays.sort(arr1);
+ Arrays.sort(arr2);
 }
 ```
 
@@ -1344,42 +1344,42 @@ void mergePlaceToCorrectArrayAndSort(int[] arr1, int[] arr2) {
 
 ```java
 void merge(int[] arr1, int[] arr2) {
-    int m = arr1.length, n = arr2.length;
-    int gap = (m + n + 1) / 2;
+ int m = arr1.length, n = arr2.length;
+ int gap = (m + n + 1) / 2;
 
-    while (gap > 0) {
-        int i = 0, j = gap;
+ while (gap > 0) {
+ int i = 0, j = gap;
 
-        while (j < m + n) {
-            // Both in arr1
-            if (j < m) {
-                if (arr1[i] > arr1[j]) {
-                    swap(arr1, i, j);
-                }
-            }
-            // i in arr1, j in arr2
-            else if (i < m) {
-                if (arr1[i] > arr2[j - m]) {
-                    int temp = arr1[i];
-                    arr1[i] = arr2[j - m];
-                    arr2[j - m] = temp;
-                }
-            }
-            // Both in arr2
-            else {
-                if (arr2[i - m] > arr2[j - m]) {
-                    int temp = arr2[i - m];
-                    arr2[i - m] = arr2[j - m];
-                    arr2[j - m] = temp;
-                }
-            }
-            i++;
-            j++;
-        }
+ while (j < m + n) {
+ // Both in arr1
+ if (j < m) {
+ if (arr1[i] > arr1[j]) {
+ swap(arr1, i, j);
+ }
+ }
+ // i in arr1, j in arr2
+ else if (i < m) {
+ if (arr1[i] > arr2[j - m]) {
+ int temp = arr1[i];
+ arr1[i] = arr2[j - m];
+ arr2[j - m] = temp;
+ }
+ }
+ // Both in arr2
+ else {
+ if (arr2[i - m] > arr2[j - m]) {
+ int temp = arr2[i - m];
+ arr2[i - m] = arr2[j - m];
+ arr2[j - m] = temp;
+ }
+ }
+ i++;
+ j++;
+ }
 
-        if (gap == 1) break;
-        gap = (gap + 1) / 2;
-    }
+ if (gap == 1) break;
+ gap = (gap + 1) / 2;
+ }
 }
 ```
 
@@ -1391,15 +1391,15 @@ void merge(int[] arr1, int[] arr2) {
 **Comparison: Gap Method vs. Place-Sort Method**
 
 
-| Aspect          | Gap Method (Shell-sort style)                                                                                                                | Two-pointer Place-&-Sort                                                                                                                 |
+| Aspect | Gap Method (Shell-sort style) | Two-pointer Place-&-Sort |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Steps           | Repeatedly compare elements`gap` apart in the two arrays and swap if needed. Reduce `gap` and repeat until gap = 1. Final arrays are sorted. | Swap largest from end of arr1 with smallest from start of arr2 until arr1[i] <= arr2[j]. Then**sort both arrays** individually.          |
-| Time Complexity | O((m+n) * log(m+n))                                                                                                                          | O(min(m, n)) for swaps + O(m log m + n log n) for sorting                                                                                |
-| Best for        | Space-optimized in-place merging, minimizes sorts; efficient for large datasets if sorting is costly                                         | Simpler to code and easy to think about; quick for small/mid arrays but sorting both arrays at the end can be expensive for large arrays |
-| Space           | O(1)                                                                                                                                         | O(1)                                                                                                                                     |
-| Swaps/Shifts    | Fewer, more spread out (due to gap)                                                                                                          | Can have many swaps and the sorting step dominates                                                                                       |
-| Interview value | Elegant, more optimal                                                                                                                        | Very intuitive—great for whiteboard, clear logic                                                                                        |
-| Stable          | No                                                                                                                                           | No                                                                                                                                       |
+| Steps | Repeatedly compare elements`gap` apart in the two arrays and swap if needed. Reduce `gap` and repeat until gap = 1. Final arrays are sorted. | Swap largest from end of arr1 with smallest from start of arr2 until arr1[i] <= arr2[j]. Then**sort both arrays** individually. |
+| Time Complexity | O((m+n) * log(m+n)) | O(min(m, n)) for swaps + O(m log m + n log n) for sorting |
+| Best for | Space-optimized in-place merging, minimizes sorts; efficient for large datasets if sorting is costly | Simpler to code and easy to think about; quick for small/mid arrays but sorting both arrays at the end can be expensive for large arrays |
+| Space | O(1) | O(1) |
+| Swaps/Shifts | Fewer, more spread out (due to gap) | Can have many swaps and the sorting step dominates |
+| Interview value | Elegant, more optimal | Very intuitive—great for whiteboard, clear logic |
+| Stable | No | No |
 
 *Summary: Gap method is usually better for large inputs if you want to avoid sorting at the end, but is a little more complex to code. The place-&-sort approach is easy for interviews and small cases, but the final sort dominates for large arrays.*
 
@@ -1415,24 +1415,24 @@ void merge(int[] arr1, int[] arr2) {
 
 ```java
 int[] findMissingRepeating(int[] arr) {
-    int n = arr.length;
-    long SN = (long)n * (n + 1) / 2;
-    long SN2 = (long)n * (n + 1) * (2 * n + 1) / 6;
+ int n = arr.length;
+ long SN = (long)n * (n + 1) / 2;
+ long SN2 = (long)n * (n + 1) * (2 * n + 1) / 6;
 
-    long S = 0, S2 = 0;
-    for (int num : arr) {
-        S += num;
-        S2 += (long)num * num;
-    }
+ long S = 0, S2 = 0;
+ for (int num : arr) {
+ S += num;
+ S2 += (long)num * num;
+ }
 
-    long val1 = S - SN; // x - y
-    long val2 = S2 - SN2; // x^2 - y^2
-    val2 = val2 / val1; // x + y
+ long val1 = S - SN; // x - y
+ long val2 = S2 - SN2; // x^2 - y^2
+ val2 = val2 / val1; // x + y
 
-    long x = (val1 + val2) / 2; // repeating
-    long y = val2 - x; // missing
+ long x = (val1 + val2) / 2; // repeating
+ long y = val2 - x; // missing
 
-    return new int[]{(int)x, (int)y};
+ return new int[]{(int)x, (int)y};
 }
 ```
 
@@ -1451,42 +1451,42 @@ int[] findMissingRepeating(int[] arr) {
 
 ```java
 int countInversions(int[] arr) {
-    return mergeSort(arr, 0, arr.length - 1);
+ return mergeSort(arr, 0, arr.length - 1);
 }
 
 int mergeSort(int[] arr, int left, int right) {
-    int count = 0;
-    if (left < right) {
-        int mid = left + (right - left) / 2;
-        count += mergeSort(arr, left, mid);
-        count += mergeSort(arr, mid + 1, right);
-        count += merge(arr, left, mid, right);
-    }
-    return count;
+ int count = 0;
+ if (left < right) {
+ int mid = left + (right - left) / 2;
+ count += mergeSort(arr, left, mid);
+ count += mergeSort(arr, mid + 1, right);
+ count += merge(arr, left, mid, right);
+ }
+ return count;
 }
 
 int merge(int[] arr, int left, int mid, int right) {
-    int[] temp = new int[right - left + 1];
-    int i = left, j = mid + 1, k = 0;
-    int count = 0;
+ int[] temp = new int[right - left + 1];
+ int i = left, j = mid + 1, k = 0;
+ int count = 0;
 
-    while (i <= mid && j <= right) {
-        if (arr[i] <= arr[j]) {
-            temp[k++] = arr[i++];
-        } else {
-            temp[k++] = arr[j++];
-            count += (mid - i + 1); // inversion count
-        }
-    }
+ while (i <= mid && j <= right) {
+ if (arr[i] <= arr[j]) {
+ temp[k++] = arr[i++];
+ } else {
+ temp[k++] = arr[j++];
+ count += (mid - i + 1); // inversion count
+ }
+ }
 
-    while (i <= mid) temp[k++] = arr[i++];
-    while (j <= right) temp[k++] = arr[j++];
+ while (i <= mid) temp[k++] = arr[i++];
+ while (j <= right) temp[k++] = arr[j++];
 
-    for (i = left, k = 0; i <= right; i++, k++) {
-        arr[i] = temp[k];
-    }
+ for (i = left, k = 0; i <= right; i++, k++) {
+ arr[i] = temp[k];
+ }
 
-    return count;
+ return count;
 }
 ```
 
@@ -1505,32 +1505,32 @@ int merge(int[] arr, int left, int mid, int right) {
 
 ```java
 int reversePairs(int[] arr) {
-    return mergeSort(arr, 0, arr.length - 1);
+ return mergeSort(arr, 0, arr.length - 1);
 }
 
 int mergeSort(int[] arr, int left, int right) {
-    if (left >= right) return 0;
+ if (left >= right) return 0;
 
-    int mid = left + (right - left) / 2;
-    int count = mergeSort(arr, left, mid);
-    count += mergeSort(arr, mid + 1, right);
-    count += countPairs(arr, left, mid, right);
-    merge(arr, left, mid, right);
+ int mid = left + (right - left) / 2;
+ int count = mergeSort(arr, left, mid);
+ count += mergeSort(arr, mid + 1, right);
+ count += countPairs(arr, left, mid, right);
+ merge(arr, left, mid, right);
 
-    return count;
+ return count;
 }
 
 int countPairs(int[] arr, int left, int mid, int right) {
-    int count = 0;
-    int j = mid + 1;
+ int count = 0;
+ int j = mid + 1;
 
-    for (int i = left; i <= mid; i++) {
-        while (j <= right && arr[i] > 2L * arr[j]) {
-            j++;
-        }
-        count += (j - (mid + 1));
-    }
-    return count;
+ for (int i = left; i <= mid; i++) {
+ while (j <= right && arr[i] > 2L * arr[j]) {
+ j++;
+ }
+ count += (j - (mid + 1));
+ }
+ return count;
 }
 ```
 
@@ -1549,25 +1549,25 @@ int countPairs(int[] arr, int left, int mid, int right) {
 
 ```java
 int maxProduct(int[] arr) {
-    if (arr.length == 0) return 0;
+ if (arr.length == 0) return 0;
 
-    int maxProd = arr[0];
-    int currentMax = arr[0];
-    int currentMin = arr[0];
+ int maxProd = arr[0];
+ int currentMax = arr[0];
+ int currentMin = arr[0];
 
-    for (int i = 1; i < arr.length; i++) {
-        if (arr[i] < 0) {
-            int temp = currentMax;
-            currentMax = currentMin;
-            currentMin = temp;
-        }
+ for (int i = 1; i < arr.length; i++) {
+ if (arr[i] < 0) {
+ int temp = currentMax;
+ currentMax = currentMin;
+ currentMin = temp;
+ }
 
-        currentMax = Math.max(arr[i], currentMax * arr[i]);
-        currentMin = Math.min(currentMin, currentMax * arr[i]);
+ currentMax = Math.max(arr[i], currentMax * arr[i]);
+ currentMin = Math.min(currentMin, currentMax * arr[i]);
 
-        maxProd = Math.max(maxProd, currentMax);
-    }
-    return maxProd;
+ maxProd = Math.max(maxProd, currentMax);
+ }
+ return maxProd;
 }
 ```
 
@@ -1588,37 +1588,37 @@ int maxProduct(int[] arr) {
 
 - **Step 1: The Final State Must Be a Contiguous Block**
 
-  - If you have k ones in the array, the *final arrangement* must look like:
-    ```
-    ....[1][1][1][1]....
-    ```
-  - Those k ones will occupy exactly k consecutive positions.
+ - If you have k ones in the array, the *final arrangement* must look like:
+ ```
+ ....[1][1][1][1]....
+ ```
+ - Those k ones will occupy exactly k consecutive positions.
 - **Step 2: We Don't Know WHERE That Block Will Be**
 
-  - Any k consecutive positions could be the window—at the start, middle, or end.
-  - For example, with `[0][1][0][1][0][1][0][1]` (4 ones), valid blocks could occupy positions 0–3, 2–5, or 4–7, etc.
+ - Any k consecutive positions could be the window—at the start, middle, or end.
+ - For example, with `[0][1][0][1][0][1][0][1]` (4 ones), valid blocks could occupy positions 0–3, 2–5, or 4–7, etc.
 - **Step 3: The Sliding Window Reveals the Answer**
 
-  - Slide a window of size k through the array, at each step count the number of zeros in the window.
-  - The *minimum* zeros in any window is the answer—these are the swaps needed to "bubble in" the 1s.
+ - Slide a window of size k through the array, at each step count the number of zeros in the window.
+ - The *minimum* zeros in any window is the answer—these are the swaps needed to "bubble in" the 1s.
 
 **Java:**
 
 ```java
 int minSwapsToGroupOnes(int[] arr) {
-    int n = arr.length, ones = 0;
-    for (int num : arr) if (num == 1) ones++;
-    if (ones == 0) return 0;
-    int minSwaps = n, zerosInWindow = 0;
-    // Find zeros in first window
-    for (int i = 0; i < ones; i++) if (arr[i] == 0) zerosInWindow++;
-    minSwaps = zerosInWindow;
-    for (int i = ones; i < n; i++) {
-        if (arr[i - ones] == 0) zerosInWindow--;
-        if (arr[i] == 0) zerosInWindow++;
-        minSwaps = Math.min(minSwaps, zerosInWindow);
-    }
-    return minSwaps;
+ int n = arr.length, ones = 0;
+ for (int num : arr) if (num == 1) ones++;
+ if (ones == 0) return 0;
+ int minSwaps = n, zerosInWindow = 0;
+ // Find zeros in first window
+ for (int i = 0; i < ones; i++) if (arr[i] == 0) zerosInWindow++;
+ minSwaps = zerosInWindow;
+ for (int i = ones; i < n; i++) {
+ if (arr[i - ones] == 0) zerosInWindow--;
+ if (arr[i] == 0) zerosInWindow++;
+ minSwaps = Math.min(minSwaps, zerosInWindow);
+ }
+ return minSwaps;
 }
 ```
 
@@ -1642,31 +1642,31 @@ You can only swap neighboring elements.
 
 ```java
 public int minAdjacentSwaps(int[] arr) {
-    // Calculate swaps to move all 1s to left
-    int swapsLeft = 0;
-    int zeroCount = 0;
-  
-    for (int i = 0; i < arr.length; i++) {
-        if (arr[i] == 0) {
-            zeroCount++;
-        } else {
-            swapsLeft += zeroCount;
-        }
-    }
-  
-    // Calculate swaps to move all 1s to right
-    int swapsRight = 0;
-    zeroCount = 0;
-  
-    for (int i = arr.length - 1; i >= 0; i--) {
-        if (arr[i] == 0) {
-            zeroCount++;
-        } else {
-            swapsRight += zeroCount;
-        }
-    }
-  
-    return Math.min(swapsLeft, swapsRight);
+ // Calculate swaps to move all 1s to left
+ int swapsLeft = 0;
+ int zeroCount = 0;
+
+ for (int i = 0; i < arr.length; i++) {
+ if (arr[i] == 0) {
+ zeroCount++;
+ } else {
+ swapsLeft += zeroCount;
+ }
+ }
+
+ // Calculate swaps to move all 1s to right
+ int swapsRight = 0;
+ zeroCount = 0;
+
+ for (int i = arr.length - 1; i >= 0; i--) {
+ if (arr[i] == 0) {
+ zeroCount++;
+ } else {
+ swapsRight += zeroCount;
+ }
+ }
+
+ return Math.min(swapsLeft, swapsRight);
 }
 ```
 
@@ -1683,12 +1683,12 @@ public int minAdjacentSwaps(int[] arr) {
 
 ```java
 String largestNumber(int[] nums) {
-    String[] arr = Arrays.stream(nums).mapToObj(String::valueOf).toArray(String[]::new);
-    Arrays.sort(arr, (a, b) -> (b + a).compareTo(a + b));
-    if (arr[0].equals("0")) return "0";
-    StringBuilder sb = new StringBuilder();
-    for (String num : arr) sb.append(num);
-    return sb.toString();
+ String[] arr = Arrays.stream(nums).mapToObj(String::valueOf).toArray(String[]::new);
+ Arrays.sort(arr, (a, b) -> (b + a).compareTo(a + b));
+ if (arr[0].equals("0")) return "0";
+ StringBuilder sb = new StringBuilder();
+ for (String num : arr) sb.append(num);
+ return sb.toString();
 }
 ```
 
@@ -1705,24 +1705,24 @@ String largestNumber(int[] nums) {
 
 ```java
 int minFlipsForZeroOrNear(int[] arr) {
-    int total = 0;
-    for (int a : arr) total += a;
-    int n = arr.length;
-    int S = total / 2;
-    int[][] dp = new int[n + 1][S + 1];
-    Arrays.fill(dp[0], Integer.MAX_VALUE / 2);
-    dp[0][0] = 0;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 0; j <= S; j++) {
-            dp[i][j] = dp[i - 1][j];
-            if (j >= arr[i-1] && dp[i - 1][j - arr[i-1]] + 1 < dp[i][j])
-                dp[i][j] = dp[i - 1][j - arr[i-1]] + 1;
-        }
-    }
-    for (int j = S; j >= 0; j--)
-        if (dp[n][j] != Integer.MAX_VALUE / 2)
-            return dp[n][j];
-    return -1;
+ int total = 0;
+ for (int a : arr) total += a;
+ int n = arr.length;
+ int S = total / 2;
+ int[][] dp = new int[n + 1][S + 1];
+ Arrays.fill(dp[0], Integer.MAX_VALUE / 2);
+ dp[0][0] = 0;
+ for (int i = 1; i <= n; i++) {
+ for (int j = 0; j <= S; j++) {
+ dp[i][j] = dp[i - 1][j];
+ if (j >= arr[i-1] && dp[i - 1][j - arr[i-1]] + 1 < dp[i][j])
+ dp[i][j] = dp[i - 1][j - arr[i-1]] + 1;
+ }
+ }
+ for (int j = S; j >= 0; j--)
+ if (dp[n][j] != Integer.MAX_VALUE / 2)
+ return dp[n][j];
+ return -1;
 }
 ```
 
@@ -1739,24 +1739,24 @@ int minFlipsForZeroOrNear(int[] arr) {
 
 ```java
 List<Integer> spiralOrder(int[][] matrix) {
-    List<Integer> res = new ArrayList<>();
-    int m = matrix.length, n = matrix[0].length;
-    int top = 0, bottom = m - 1, left = 0, right = n - 1;
-    while (top <= bottom && left <= right) {
-        for (int i = left; i <= right; i++) res.add(matrix[top][i]);
-        top++;
-        for (int i = top; i <= bottom; i++) res.add(matrix[i][right]);
-        right--;
-        if (top <= bottom) {
-            for (int i = right; i >= left; i--) res.add(matrix[bottom][i]);
-            bottom--;
-        }
-        if (left <= right) {
-            for (int i = bottom; i >= top; i--) res.add(matrix[i][left]);
-            left++;
-        }
-    }
-    return res;
+ List<Integer> res = new ArrayList<>();
+ int m = matrix.length, n = matrix[0].length;
+ int top = 0, bottom = m - 1, left = 0, right = n - 1;
+ while (top <= bottom && left <= right) {
+ for (int i = left; i <= right; i++) res.add(matrix[top][i]);
+ top++;
+ for (int i = top; i <= bottom; i++) res.add(matrix[i][right]);
+ right--;
+ if (top <= bottom) {
+ for (int i = right; i >= left; i--) res.add(matrix[bottom][i]);
+ bottom--;
+ }
+ if (left <= right) {
+ for (int i = bottom; i >= top; i--) res.add(matrix[i][left]);
+ left++;
+ }
+ }
+ return res;
 }
 ```
 
@@ -1773,13 +1773,13 @@ List<Integer> spiralOrder(int[][] matrix) {
 
 ```java
 int nobleInteger(int[] arr) {
-    Arrays.sort(arr);
-    int n = arr.length;
-    for (int i = 0; i < n; i++) {
-        if (i < n-1 && arr[i] == arr[i+1]) continue;
-        if (arr[i] == n - i - 1) return 1;
-    }
-    return -1;
+ Arrays.sort(arr);
+ int n = arr.length;
+ for (int i = 0; i < n; i++) {
+ if (i < n-1 && arr[i] == arr[i+1]) continue;
+ if (arr[i] == n - i - 1) return 1;
+ }
+ return -1;
 }
 ```
 
@@ -1806,32 +1806,32 @@ arr2 = [1, 5, 7, 8, 10, 15, 16, 19]
 ```
 
 1. **Visualizing choices:**
-   - Both arrays are sorted, and common elements are 7, 10, and 15.
+ - Both arrays are sorted, and common elements are 7, 10, and 15.
 2. **Walkthrough:**
-   - Start at beginning. Keep running two sums: sum1 (arr1) and sum2 (arr2).
-   - Move forward in both arrays with two pointers.
-   - Before first common (7):
-     - arr1: 2+3 = 5
-     - arr2: 1+5 = 6
-   - At first common (7):
-     - add 7 to both: arr1: 5+7=12, arr2: 6+7=13
-     - Choose max of sum1 and sum2 so far (`max(12, 13) = 13`). This is the best path till here. Reset both sums to this value.
-   - Continue:
-     - arr1: from 7, next is 10
-     - arr2: from 7, next is 8 (add to sum2): 13+8=21
-     - arr1's sum: still 13 (nothing new until 10)
-   - At next common (10):
-     - arr1: 13+10=23
-     - arr2: 21+10=31
-     - best path so far: max(23, 31)=31. Update both sums to 31.
-   - Continue:
-     - arr1: 12 (31+12=43), 15 (43+15=58)
-     - arr2: 15 (31+15=46), 16 (46+16=62), 19 (62+19=81)
-   - At next common (15):
-     - arr1: (previous sum at 12) 43, at 15: 43+15=58
-     - arr2: at 15: 31+15=46
-     - best path so far: max(58, 46)=58 (but notice array pointers, after this, continue down both)
-   - From here, finish with the remaining elements; add whichever sum is highest at the end.
+ - Start at beginning. Keep running two sums: sum1 (arr1) and sum2 (arr2).
+ - Move forward in both arrays with two pointers.
+ - Before first common (7):
+ - arr1: 2+3 = 5
+ - arr2: 1+5 = 6
+ - At first common (7):
+ - add 7 to both: arr1: 5+7=12, arr2: 6+7=13
+ - Choose max of sum1 and sum2 so far (`max(12, 13) = 13`). This is the best path till here. Reset both sums to this value.
+ - Continue:
+ - arr1: from 7, next is 10
+ - arr2: from 7, next is 8 (add to sum2): 13+8=21
+ - arr1's sum: still 13 (nothing new until 10)
+ - At next common (10):
+ - arr1: 13+10=23
+ - arr2: 21+10=31
+ - best path so far: max(23, 31)=31. Update both sums to 31.
+ - Continue:
+ - arr1: 12 (31+12=43), 15 (43+15=58)
+ - arr2: 15 (31+15=46), 16 (46+16=62), 19 (62+19=81)
+ - At next common (15):
+ - arr1: (previous sum at 12) 43, at 15: 43+15=58
+ - arr2: at 15: 31+15=46
+ - best path so far: max(58, 46)=58 (but notice array pointers, after this, continue down both)
+ - From here, finish with the remaining elements; add whichever sum is highest at the end.
 
 **Why does this work?**
 
@@ -1847,26 +1847,26 @@ arr2 = [1, 5, 7, 8, 10, 15, 16, 19]
 
 ```java
 int maxPathSum(int[] arr1, int[] arr2) {
-    int i = 0, j = 0, sum1 = 0, sum2 = 0, result = 0;
-    while (i < arr1.length && j < arr2.length) {
-        if (arr1[i] < arr2[j])
-            sum1 += arr1[i++];
-        else if (arr1[i] > arr2[j])
-            sum2 += arr2[j++];
-        else {
-            result += Math.max(sum1, sum2) + arr1[i];
-            sum1 = 0;
-            sum2 = 0;
-            i++;
-            j++;
-        }
-    }
-    while (i < arr1.length)
-        sum1 += arr1[i++];
-    while (j < arr2.length)
-        sum2 += arr2[j++];
-    result += Math.max(sum1, sum2);
-    return result;
+ int i = 0, j = 0, sum1 = 0, sum2 = 0, result = 0;
+ while (i < arr1.length && j < arr2.length) {
+ if (arr1[i] < arr2[j])
+ sum1 += arr1[i++];
+ else if (arr1[i] > arr2[j])
+ sum2 += arr2[j++];
+ else {
+ result += Math.max(sum1, sum2) + arr1[i];
+ sum1 = 0;
+ sum2 = 0;
+ i++;
+ j++;
+ }
+ }
+ while (i < arr1.length)
+ sum1 += arr1[i++];
+ while (j < arr2.length)
+ sum2 += arr2[j++];
+ result += Math.max(sum1, sum2);
+ return result;
 }
 ```
 
@@ -1883,15 +1883,15 @@ int maxPathSum(int[] arr1, int[] arr2) {
 
 ```java
 int maxArr(int[] A) {
-    int max1 = Integer.MIN_VALUE, min1 = Integer.MAX_VALUE;
-    int max2 = Integer.MIN_VALUE, min2 = Integer.MAX_VALUE;
-    for (int i = 0; i < A.length; i++) {
-        max1 = Math.max(max1, A[i] + i);
-        min1 = Math.min(min1, A[i] + i);
-        max2 = Math.max(max2, A[i] - i);
-        min2 = Math.min(min2, A[i] - i);
-    }
-    return Math.max(max1 - min1, max2 - min2);
+ int max1 = Integer.MIN_VALUE, min1 = Integer.MAX_VALUE;
+ int max2 = Integer.MIN_VALUE, min2 = Integer.MAX_VALUE;
+ for (int i = 0; i < A.length; i++) {
+ max1 = Math.max(max1, A[i] + i);
+ min1 = Math.min(min1, A[i] + i);
+ max2 = Math.max(max2, A[i] - i);
+ min2 = Math.min(min2, A[i] - i);
+ }
+ return Math.max(max1 - min1, max2 - min2);
 }
 ```
 
@@ -1932,17 +1932,17 @@ Placing the light as far right as possible from the current coverage point means
 
 ```java
 int minLights(int[] A, int B) {
-    int count = 0, i = 0, n = A.length;
-    while (i < n) {
-        int pos = Math.min(i + B - 1, n - 1);
-        while (pos >= i - B + 1 && (pos < 0 || A[pos] == 0))
-            pos--;
-        if (pos < i - B + 1 || pos < 0)
-            return -1;
-        count++;
-        i = pos + B;
-    }
-    return count;
+ int count = 0, i = 0, n = A.length;
+ while (i < n) {
+ int pos = Math.min(i + B - 1, n - 1);
+ while (pos >= i - B + 1 && (pos < 0 || A[pos] == 0))
+ pos--;
+ if (pos < i - B + 1 || pos < 0)
+ return -1;
+ count++;
+ i = pos + B;
+ }
+ return count;
 }
 ```
 
@@ -1959,16 +1959,16 @@ int minLights(int[] A, int B) {
 
 ```java
 int longestRepeatingSubarray(int[] arr) {
-    Map<Integer, Integer> map = new HashMap<>();
-    int maxLen = 0;
-    for (int i = 0; i < arr.length; i++) {
-        if (map.containsKey(arr[i])) {
-            maxLen = Math.max(maxLen, i - map.get(arr[i]));
-        } else {
-            map.put(arr[i], i);
-        }
-    }
-    return maxLen;
+ Map<Integer, Integer> map = new HashMap<>();
+ int maxLen = 0;
+ for (int i = 0; i < arr.length; i++) {
+ if (map.containsKey(arr[i])) {
+ maxLen = Math.max(maxLen, i - map.get(arr[i]));
+ } else {
+ map.put(arr[i], i);
+ }
+ }
+ return maxLen;
 }
 ```
 
@@ -1985,18 +1985,18 @@ int longestRepeatingSubarray(int[] arr) {
 
 ```java
 int kthSmallest(int[][] matrix, int k) {
-    int n = matrix.length;
-    PriorityQueue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> matrix[a[0]][a[1]]));
-    for (int i = 0; i < Math.min(n, k); i++) minHeap.add(new int[]{i, 0});
-    int res = 0;
-    for (int i = 0; i < k; i++) {
-        int[] curr = minHeap.poll();
-        res = matrix[curr[0]][curr[1]];
-        if (curr[1] + 1 < n) {
-            minHeap.add(new int[]{curr[0], curr[1] + 1});
-        }
-    }
-    return res;
+ int n = matrix.length;
+ PriorityQueue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> matrix[a[0]][a[1]]));
+ for (int i = 0; i < Math.min(n, k); i++) minHeap.add(new int[]{i, 0});
+ int res = 0;
+ for (int i = 0; i < k; i++) {
+ int[] curr = minHeap.poll();
+ res = matrix[curr[0]][curr[1]];
+ if (curr[1] + 1 < n) {
+ minHeap.add(new int[]{curr[0], curr[1] + 1});
+ }
+ }
+ return res;
 }
 ```
 
@@ -2006,39 +2006,39 @@ int kthSmallest(int[][] matrix, int k) {
 
 ```java
 int kthSmallest(int[][] matrix, int k) {
-    int n = matrix.length;
-    int low = matrix[0][0];
-    int high = matrix[n-1][n-1];
-    
-    while (low < high) {
-        int mid = low + (high - low) / 2;
-        int count = countLessOrEqual(matrix, mid);
-        
-        if (count < k) {
-            low = mid + 1;
-        } else {
-            high = mid;
-        }
-    }
-    return low;
+ int n = matrix.length;
+ int low = matrix[0][0];
+ int high = matrix[n-1][n-1];
+
+ while (low < high) {
+ int mid = low + (high - low) / 2;
+ int count = countLessOrEqual(matrix, mid);
+
+ if (count < k) {
+ low = mid + 1;
+ } else {
+ high = mid;
+ }
+ }
+ return low;
 }
 
 private int countLessOrEqual(int[][] matrix, int target) {
-    int n = matrix.length;
-    int row = n - 1;
-    int col = 0;
-    int count = 0;
-    
-    // Start from bottom-left corner
-    while (row >= 0 && col < n) {
-        if (matrix[row][col] <= target) {
-            count += row + 1;  // All elements in this column up to row
-            col++;
-        } else {
-            row--;
-        }
-    }
-    return count;
+ int n = matrix.length;
+ int row = n - 1;
+ int col = 0;
+ int count = 0;
+
+ // Start from bottom-left corner
+ while (row >= 0 && col < n) {
+ if (matrix[row][col] <= target) {
+ count += row + 1; // All elements in this column up to row
+ col++;
+ } else {
+ row--;
+ }
+ }
+ return count;
 }
 ```
 **Time Complexity:** O(n log(Max-Min)) - The while loop runs log(Range) times. The countLessOrEqual runs in O(N) per iteration.

@@ -1,10 +1,11 @@
 
 ## L1: Assign Cookies
-**Question:** Assign cookies to children to maximize number of content children. Each child has greed factor g[i], each cookie has size s[j].  
-**Intuition:** Greedy approach - satisfy children with smallest greed using smallest sufficient cookies. Don't waste large cookies on children with small greed.  
+**Question:** Assign cookies to children to maximize number of content children. Each child has greed factor g[i], each cookie has size s[j].
+**Intuition:** Greedy approach - satisfy children with smallest greed using smallest sufficient cookies. Don't waste large cookies on children with small greed.
 **Logic:** Sort both arrays. Use two pointers - assign smallest cookie that satisfies current child.
 
 **Java:**
+
 ```java
 int findContentChildren(int[] g, int[] s) {
     Arrays.sort(g); // greed factors
@@ -27,11 +28,12 @@ int findContentChildren(int[] g, int[] s) {
 ---
 
 ## L2: Lemonade Change
-**Question:** Each customer pays with $5, $10, or $20. Lemonade costs $5. Return true if you can provide correct change to every customer.  
-**Intuition:** Greedy - prioritize using larger bills for change. Keep count of $5 and $10 bills.  
+**Question:** Each customer pays with $5, $10, or $20. Lemonade costs $5. Return true if you can provide correct change to every customer.
+**Intuition:** Greedy - prioritize using larger bills for change. Keep count of $5 and $10 bills.
 **Logic:** For $10, give one $5. For $20, prefer giving one $10 + one $5 over three $5s.
 
 **Java:**
+
 ```java
 boolean lemonadeChange(int[] bills) {
     int five = 0, ten = 0;
@@ -64,11 +66,12 @@ boolean lemonadeChange(int[] bills) {
 ---
 
 ## L3: Shortest Job First (SJF)
-**Question:** Find average waiting time when jobs are scheduled using Shortest Job First.  
-**Intuition:** Greedy - execute shortest jobs first to minimize total waiting time.  
+**Question:** Find average waiting time when jobs are scheduled using Shortest Job First.
+**Intuition:** Greedy - execute shortest jobs first to minimize total waiting time.
 **Logic:** Sort by burst time. Calculate cumulative waiting time.
 
 **Java:**
+
 ```java
 double shortestJobFirst(int[] bt) {
     Arrays.sort(bt);
@@ -89,11 +92,12 @@ double shortestJobFirst(int[] bt) {
 ---
 
 ## L4: Jump Game I
-**Question:** Check if you can reach the last index. Each element represents max jump length from that position.  
-**Intuition:** Track maximum reachable index at each step. If current index > max reachable, return false.  
+**Question:** Check if you can reach the last index. Each element represents max jump length from that position.
+**Intuition:** Track maximum reachable index at each step. If current index > max reachable, return false.
 **Logic:** Maintain maxReach, update it as you traverse.
 
 **Java:**
+
 ```java
 boolean canJump(int[] nums) {
     int maxReach = 0;
@@ -113,11 +117,12 @@ boolean canJump(int[] nums) {
 ---
 
 ## L5: Jump Game II
-**Question:** Find minimum number of jumps to reach last index.  
-**Intuition:** BFS-like approach. Track farthest reach in current jump. When current range exhausted, increment jumps.  
+**Question:** Find minimum number of jumps to reach last index.
+**Intuition:** BFS-like approach. Track farthest reach in current jump. When current range exhausted, increment jumps.
 **Logic:** Use two pointers - current range end and farthest reach.
 
 **Java:**
+
 ```java
 int jump(int[] nums) {
     if (nums.length <= 1) return 0;
@@ -147,17 +152,18 @@ int jump(int[] nums) {
 ---
 
 ## L6: Job Sequencing Problem
-**Question:** Schedule jobs to maximize profit. Each job has deadline and profit. Each job takes 1 unit time.  
-**Intuition:** Greedy - sort by profit (descending). Schedule each job as late as possible before deadline.  
+**Question:** Schedule jobs to maximize profit. Each job has deadline and profit. Each job takes 1 unit time.
+**Intuition:** Greedy - sort by profit (descending). Schedule each job as late as possible before deadline.
 **Logic:** Sort by profit. For each job, find latest available slot before deadline.
 
 **Java:**
+
 ```java
 class Job {
-    int id, deadline, profit;
-    Job(int i, int d, int p) {
-        id = i; deadline = d; profit = p;
-    }
+ int id, deadline, profit;
+ Job(int i, int d, int p) {
+ id = i; deadline = d; profit = p;
+ }
 }
 
 int[] jobScheduling(Job[] jobs, int n) {
@@ -225,23 +231,24 @@ int find(int[] parent, int x) {
     }
     return parent[x];
 }
-// Time: O(n log n + n * Î±(n)), Space: O(maxDeadline)
+// Time: O(n log n + n * alpha(n)), Space: O(maxDeadline)
 ```
 
 ---
 
 ## L7: N Meetings in One Room
-**Question:** Find maximum number of meetings that can be performed in one meeting room.  
-**Intuition:** Greedy - always choose meeting that ends earliest. This leaves maximum time for remaining meetings.  
+**Question:** Find maximum number of meetings that can be performed in one meeting room.
+**Intuition:** Greedy - always choose meeting that ends earliest. This leaves maximum time for remaining meetings.
 **Logic:** Sort by end time. Pick meeting if start time >= last end time.
 
 **Java:**
+
 ```java
 class Meeting {
-    int start, end, pos;
-    Meeting(int s, int e, int p) {
-        start = s; end = e; pos = p;
-    }
+ int start, end, pos;
+ Meeting(int s, int e, int p) {
+ start = s; end = e; pos = p;
+ }
 }
 
 int maxMeetings(int[] start, int[] end, int n) {
@@ -271,11 +278,12 @@ int maxMeetings(int[] start, int[] end, int n) {
 ---
 
 ## L8: Minimum Number of Platforms
-**Question:** Find minimum number of platforms required for railway station.  
-**Intuition:** Treat arrivals and departures as events. When train arrives, need platform. When departs, platform freed.  
+**Question:** Find minimum number of platforms required for railway station.
+**Intuition:** Treat arrivals and departures as events. When train arrives, need platform. When departs, platform freed.
 **Logic:** Sort arrivals and departures separately. Use two pointers to track current requirement.
 
 **Java:**
+
 ```java
 int findPlatform(int[] arr, int[] dep, int n) {
     Arrays.sort(arr);
@@ -304,21 +312,22 @@ int findPlatform(int[] arr, int[] dep, int n) {
 ---
 
 ## L9: Fractional Knapsack
-**Question:** Maximize value in knapsack. Can take fractions of items.  
-**Intuition:** Greedy - pick items with highest value-to-weight ratio first.  
+**Question:** Maximize value in knapsack. Can take fractions of items.
+**Intuition:** Greedy - pick items with highest value-to-weight ratio first.
 **Logic:** Sort by value/weight ratio (descending). Take items greedily.
 
 **Java:**
+
 ```java
 class Item {
-    int value, weight;
-    Item(int v, int w) { value = v; weight = w; }
+ int value, weight;
+ Item(int v, int w) { value = v; weight = w; }
 }
 
 double fractionalKnapsack(int W, Item[] items, int n) {
     // Sort by value/weight ratio (descending)
-    Arrays.sort(items, (a, b) -> 
-        Double.compare((double)b.value/b.weight, (double)a.value/a.weight));
+    Arrays.sort(items, (a, b) ->
+            Double.compare((double) b.value / b.weight, (double) a.value / a.weight));
 
     double totalValue = 0;
     int currentWeight = 0;
@@ -344,11 +353,12 @@ double fractionalKnapsack(int W, Item[] items, int n) {
 ---
 
 ## L10: Minimum Coins (Greedy - works for specific coin systems)
-**Question:** Find minimum coins needed to make amount.  
-**Intuition:** For canonical coin systems (like 1,5,10,25), greedy works. Always pick largest coin possible.  
+**Question:** Find minimum coins needed to make amount.
+**Intuition:** For canonical coin systems (like 1,5,10,25), greedy works. Always pick largest coin possible.
 **Logic:** Sort coins descending. Pick maximum of each coin.
 
 **Java:**
+
 ```java
 int minCoins(int[] coins, int amount) {
     Arrays.sort(coins);
@@ -372,11 +382,12 @@ int minCoins(int[] coins, int amount) {
 ---
 
 ## L11: Candy Distribution
-**Question:** Give candies to children. Each child must get at least 1. Children with higher rating get more than neighbors.  
-**Intuition:** Two passes - left to right ensures right neighbor constraint, right to left ensures left neighbor.  
+**Question:** Give candies to children. Each child must get at least 1. Children with higher rating get more than neighbors.
+**Intuition:** Two passes - left to right ensures right neighbor constraint, right to left ensures left neighbor.
 **Logic:** Initialize all with 1. Left pass for right neighbors. Right pass for left neighbors.
 
 **Java:**
+
 ```java
 int candy(int[] ratings) {
     int n = ratings.length;
@@ -439,11 +450,12 @@ int candyOptimized(int[] ratings) {
 ---
 
 ## L12: Insert Intervals
-**Question:** Insert new interval into sorted non-overlapping intervals. Merge if necessary.  
-**Intuition:** Three parts - intervals before new, merge overlapping with new, intervals after.  
+**Question:** Insert new interval into sorted non-overlapping intervals. Merge if necessary.
+**Intuition:** Three parts - intervals before new, merge overlapping with new, intervals after.
 **Logic:** Add all before, merge overlapping, add all after.
 
 **Java:**
+
 ```java
 int[][] insert(int[][] intervals, int[] newInterval) {
     List<int[]> result = new ArrayList<>();
@@ -478,11 +490,12 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 ---
 
 ## L13: Non-overlapping Intervals
-**Question:** Find minimum intervals to remove to make rest non-overlapping.  
-**Intuition:** Similar to meeting rooms. Keep intervals that end earliest. Remove others.  
+**Question:** Find minimum intervals to remove to make rest non-overlapping.
+**Intuition:** Similar to meeting rooms. Keep intervals that end earliest. Remove others.
 **Logic:** Sort by end time. Count non-overlapping intervals. Answer = total - count.
 
 **Java:**
+
 ```java
 int eraseOverlapIntervals(int[][] intervals) {
     if (intervals.length == 0) return 0;
@@ -508,11 +521,12 @@ int eraseOverlapIntervals(int[][] intervals) {
 ---
 
 ## L14: Merge Intervals
-**Question:** Merge all overlapping intervals.  
-**Intuition:** Sort by start time. Merge current with last if overlapping.  
+**Question:** Merge all overlapping intervals.
+**Intuition:** Sort by start time. Merge current with last if overlapping.
 **Logic:** Sort, then iterate and merge.
 
 **Java:**
+
 ```java
 int[][] merge(int[][] intervals) {
     if (intervals.length <= 1) return intervals;
@@ -542,11 +556,12 @@ int[][] merge(int[][] intervals) {
 ---
 
 ## L15: Page Faults (LRU)
-**Question:** Count page faults with LRU replacement.  
-**Intuition:** Keep track of recently used pages. Replace least recently used when capacity full.  
+**Question:** Count page faults with LRU replacement.
+**Intuition:** Keep track of recently used pages. Replace least recently used when capacity full.
 **Logic:** Use queue/deque to maintain LRU order.
 
 **Java:**
+
 ```java
 int pageFaults(int[] pages, int capacity) {
     LinkedHashSet<Integer> set = new LinkedHashSet<>();
@@ -577,11 +592,12 @@ int pageFaults(int[] pages, int capacity) {
 ---
 
 ## L16: Valid Parenthesis String
-**Question:** Check if string with *, (, ) is valid. * can be (, ), or empty.  
-**Intuition:** Track range of possible open brackets count. Min and max possible opens.  
+**Question:** Check if string with *, (, ) is valid. * can be (, ), or empty.
+**Intuition:** Track range of possible open brackets count. Min and max possible opens.
 **Logic:** Maintain minOpen and maxOpen. Update based on character.
 
 **Java:**
+
 ```java
 boolean checkValidString(String s) {
     int minOpen = 0, maxOpen = 0;
@@ -610,11 +626,12 @@ boolean checkValidString(String s) {
 ---
 
 ## L17: Boats to Save People
-**Question:** Each boat carries at most 2 people and has weight limit. Find minimum boats needed.  
-**Intuition:** Greedy two-pointer. Pair heaviest with lightest if possible.  
+**Question:** Each boat carries at most 2 people and has weight limit. Find minimum boats needed.
+**Intuition:** Greedy two-pointer. Pair heaviest with lightest if possible.
 **Logic:** Sort weights. Use two pointers from both ends.
 
 **Java:**
+
 ```java
 int numRescueBoats(int[] people, int limit) {
     Arrays.sort(people);
@@ -638,11 +655,12 @@ int numRescueBoats(int[] people, int limit) {
 ---
 
 ## L18: Gas Station (Circular Tour)
-**Question:** Find starting gas station to complete circular tour.  
-**Intuition:** If total gas >= total cost, solution exists. Track deficit, start from where current journey fails.  
+**Question:** Find starting gas station to complete circular tour.
+**Intuition:** If total gas >= total cost, solution exists. Track deficit, start from where current journey fails.
 **Logic:** One pass tracking current tank and deficit.
 
 **Java:**
+
 ```java
 int canCompleteCircuit(int[] gas, int[] cost) {
     int totalGas = 0, totalCost = 0;
@@ -669,11 +687,12 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 ---
 
 ## L19: Minimum Cost to Cut a Stick
-**Question:** Cut stick at given positions with minimum cost. Cost = length of stick being cut.  
-**Intuition:** Greedy doesn't work optimally here - this is actually a DP problem. But can use greedy heuristic.  
+**Question:** Cut stick at given positions with minimum cost. Cost = length of stick being cut.
+**Intuition:** Greedy doesn't work optimally here - this is actually a DP problem. But can use greedy heuristic.
 **Logic:** For pure greedy (suboptimal), sort cuts and process.
 
 **Java:**
+
 ```java
 // Note: This problem actually requires DP for optimal solution
 // Greedy approach is suboptimal
@@ -697,11 +716,12 @@ int minCostGreedy(int n, int[] cuts) {
 ---
 
 ## L20: Task Scheduler
-**Question:** Schedule tasks with cooldown period. Same task needs n intervals between executions.  
-**Intuition:** Most frequent task determines minimum intervals. Fill gaps with other tasks or idle.  
+**Question:** Schedule tasks with cooldown period. Same task needs n intervals between executions.
+**Intuition:** Most frequent task determines minimum intervals. Fill gaps with other tasks or idle.
 **Logic:** Count frequencies. Calculate slots needed for most frequent task.
 
 **Java:**
+
 ```java
 int leastInterval(char[] tasks, int n) {
     int[] freq = new int[26];
@@ -733,11 +753,12 @@ int leastInterval(char[] tasks, int n) {
 ---
 
 ## L21: Partition Labels
-**Question:** Partition string so that each letter appears in at most one part. Maximize parts.  
-**Intuition:** Greedy - track last occurrence of each character. Extend current partition until reaching last occurrence of all characters in partition.  
+**Question:** Partition string so that each letter appears in at most one part. Maximize parts.
+**Intuition:** Greedy - track last occurrence of each character. Extend current partition until reaching last occurrence of all characters in partition.
 **Logic:** Store last index of each char. Extend partition end as needed.
 
 **Java:**
+
 ```java
 List<Integer> partitionLabels(String s) {
     int[] lastIndex = new int[26];
@@ -768,11 +789,12 @@ List<Integer> partitionLabels(String s) {
 ---
 
 ## L22: Minimum Cost to Hire K Workers
-**Question:** Hire K workers with minimum cost given quality and wage expectations.  
-**Intuition:** Fix wage-to-quality ratio. Use max heap to maintain K workers with smallest qualities.  
+**Question:** Hire K workers with minimum cost given quality and wage expectations.
+**Intuition:** Fix wage-to-quality ratio. Use max heap to maintain K workers with smallest qualities.
 **Logic:** Sort by ratio. Use heap to track K smallest qualities.
 
 **Java:**
+
 ```java
 double mincostToHireWorkers(int[] quality, int[] wage, int K) {
     int n = quality.length;
@@ -783,8 +805,8 @@ double mincostToHireWorkers(int[] quality, int[] wage, int K) {
     }
 
     // Sort by wage/quality ratio
-    Arrays.sort(workers, (a, b) -> 
-        Double.compare(a.ratio(), b.ratio()));
+    Arrays.sort(workers, (a, b) ->
+            Double.compare(a.ratio(), b.ratio()));
 
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
     int qualitySum = 0;
@@ -808,8 +830,15 @@ double mincostToHireWorkers(int[] quality, int[] wage, int K) {
 
 class Worker {
     int quality, wage;
-    Worker(int q, int w) { quality = q; wage = w; }
-    double ratio() { return (double) wage / quality; }
+
+    Worker(int q, int w) {
+        quality = q;
+        wage = w;
+    }
+
+    double ratio() {
+        return (double) wage / quality;
+    }
 }
 // Time: O(n log n + n log k), Space: O(n + k)
 ```
